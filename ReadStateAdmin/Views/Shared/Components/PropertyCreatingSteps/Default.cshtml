@@ -1,0 +1,1039 @@
+﻿@model RealEstateAdmin.Models.FirstPage.PropertyCreatePageViewComponentViewModel
+@*
+    For more information on enabling MVC for empty projects, visit http://go.microsoft.com/fwlink/?LinkID=397860
+*@
+
+@switch (Model.ActionName)
+{
+    case "summary":
+        <div class="tab-pane active" id="summary">
+            <div class="col-md-12">
+                <div class="row">
+                    @{
+                        //var modelsummary = ((RealEstateAdmin.Models.FirstPage.PropertyCreatePage)(Model.Dynamic));
+                        var mymodelsummary = ((RealEstateAdmin.Models.ModelDtos.Other.PropertySummeryDto)(Model.EntryData));
+                    }
+                    <div class="col-md-3 bg-light p-5">
+                        <b> @RealEstateAdmin.Resources.Text.Title :</b> <span> @mymodelsummary.Title</span>
+                    </div>
+                    <div class="col-md-3 bg-light p-5">
+                        <b> @RealEstateAdmin.Resources.Text.YearOfBuild :</b> <span> @mymodelsummary.YearBuild</span>
+                    </div>
+                    <div class="col-md-3 bg-light p-5">
+                        <b> @RealEstateAdmin.Resources.Text.Size :</b> <span>@mymodelsummary.Size</span>
+                    </div>
+                    <div class="col-md-3 bg-light p-5">
+                        <b> @RealEstateAdmin.Resources.Text.Rooms :</b> <span>@mymodelsummary.Rooms</span>
+                    </div>
+                    <div class="col-md-3 bg-light p-5">
+                        <b> @RealEstateAdmin.Resources.Text.Price :</b> <span>@mymodelsummary.CalculatedPriceUnit</span>
+                    </div>
+                    <div class="col-md-3 bg-light p-5">
+                        <b> @RealEstateAdmin.Resources.Text.Bedrooms :</b> <span>@mymodelsummary.Bedrooms</span>
+                    </div>
+                    <div class="col-md-3 bg-light p-5">
+                        <b> @RealEstateAdmin.Resources.Text.Bathrooms :</b> <span>@mymodelsummary.Bathrooms</span>
+                    </div>
+                    <div class="col-md-3 bg-light p-5">
+                        <b> @RealEstateAdmin.Resources.Text.Garages :</b> <span>@mymodelsummary.Garages</span>
+                    </div>
+
+                </div>
+            </div>
+            <hr />
+            <div class="col-md-12">
+                <h4 class="text-center"> @RealEstateAdmin.Resources.Text.Images  </h4>
+                <div class="row">
+
+                    @foreach (var item in mymodelsummary.Images)
+                    {
+                        <div class="col-lg-3 col-md-4 col-sm-12">
+                            <div class="card">
+                                <img src="@item.TumbPath" alt="" class="card-img-top">
+                                <div class="card-body">
+                                    <p class="card-text">
+                                        @item.ImageCaption
+                                    </p>
+                                </div>
+                                <div class="card-footer">
+                                    <div>
+
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    }
+
+                </div>
+
+            </div>
+
+        </div>
+        break;
+    case "description":
+        <div class="tab-pane active" id="description">
+
+            <div class="row">
+                <div class="col-md-12">
+                    <div class=" m-b-20">
+                        @*<div class="card-header">
+                                <h3 class="card-title">Estate description</h3>
+                            </div>*@
+                        <div class="card-body">
+                            @{
+                                var model = ((RealEstateAdmin.Models.FirstPage.PropertyCreatePage)(Model.Dynamic));
+                                var mymodel = ((RealEstateAdmin.Models.ModelDtos.Estate.PropertyDto)(Model.EntryData));
+                            }
+                            <form asp-action="etest/@mymodel.Id/description" asp-controller="property" method="post">
+                                <input type="hidden" name="propertyId" value="@mymodel.Id" />
+                                <div class="form-row">
+                                    <div class="form-group col-md-4">
+                                        <div class="form-group">
+                                            <label class="form-label" for="title">@RealEstateAdmin.Resources.Text.Title</label>
+                                            <input type="text" class="form-control" value="@mymodel.Title" name="title" id="title" placeholder="Property Title">
+                                        </div>
+                                    </div>
+                                    <div class="form-group col-md-4">
+                                        <div class="form-group">
+                                            <label class="form-label" for="propertyUniqId">@RealEstateAdmin.Resources.Text.UniqId</label>
+                                            <input type="text" class="form-control" id="propertyUniqId" value="@mymodel.PropertyUniqId" name="propertyUniqId" placeholder="Property uniq id">
+                                        </div>
+                                    </div>
+                                    <div class="form-group col-md-4">
+                                        <div class="form-group">
+                                            <label class="form-label">@RealEstateAdmin.Resources.Text.PropertyType *</label>
+                                            <select name="propertyTypeId" class="form-control select2-show-search" data-live-search="true" data-live-search-style="startsWith" data-placeholder="Choose one (with searchbox)">
+                                                @foreach (var item in model.PropertyType)
+                                                {
+                                                    if (mymodel.PropertyTypeId == item.Id)
+                                                    {
+                                                        <option value="@item.Id" selected="selected">@item.Name </option>
+                                                    }
+                                                    else
+                                                    {
+                                                        <option value="@item.Id">@item.Name </option>
+                                                    }
+
+                                                }
+
+                                            </select>
+                                        </div>
+                                    </div>
+                                    <div class="form-group col-md-4">
+                                        <label class="form-label">@RealEstateAdmin.Resources.Text.PropertyStatus *</label>
+                                        <select name="propertyStatusId" class="form-control select2-show-search" data-placeholder="Choose one (with optgroup)">
+                                            @foreach (var item in model.PropertyStatus)
+                                            {
+                                                if (item.Id == mymodel.PropertyStatusId)
+                                                {
+                                                    <option value="@item.Id" selected="selected">@item.Name </option>
+                                                }
+                                                else
+                                                {
+                                                    <option value="@item.Id">@item.Name </option>
+                                                }
+                                            }
+                                        </select>
+                                    </div>
+                                    <div class="form-group col-md-4">
+                                        <label class="form-label">@RealEstateAdmin.Resources.Text.PropertyLabel *</label>
+                                        <select name="propertyLabelId" class="form-control select2-show-search" data-placeholder="Choose one (with optgroup)">
+                                            @foreach (var item in model.PropertyLabel)
+                                            {
+                                                if (item.Id == mymodel.PropertyLabelId)
+                                                {
+                                                    <option value="@item.Id" selected="selected">@item.Name </option>
+                                                }
+                                                else
+                                                {
+                                                    <option value="@item.Id">@item.Name </option>
+                                                }
+                                            }
+                                        </select>
+                                    </div>
+                                    <div class="form-group col-md-12">
+                                        <textarea name="description" style="width: 100%;" rows="10">@mymodel.Description</textarea>
+                                    </div>
+                                </div>
+                                <div class="text-center">
+                                    <a href="~/property" class="btn mx-2 btn-default"> <i class="fa fa-ban"></i> @RealEstateAdmin.Resources.Text.Cancel</a>
+                                    <button type="submit" class="btn mx-2 btn-primary "><i class="fa fa-dot-circle-o"></i> @RealEstateAdmin.Resources.Text.Save</button>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        break;
+    case "location":
+        <div class="tab-pane active" id="location">
+            <style>
+                #map {
+                    width: 100%;
+                    height: 400px;
+                    background-color: grey;
+                }
+            </style>
+            <div class="row">
+                <div class="col-md-12">
+                    <div class=" m-b-20">
+                        @*<div class="card-header">
+                                <h3 class="card-title">Estate description</h3>
+                            </div>*@
+                        <div class="card-body">
+                            @{
+                                var modelLocation = ((RealEstateAdmin.Models.FirstPage.PropertyLocationPage)(Model.Dynamic));
+                                var mymodelLocation = ((RealEstateAdmin.Models.ModelDtos.Estate.PropertyLocationDto)(Model.EntryData));
+                            }
+                            <form asp-action="etest/@mymodelLocation.PropertyId/location" asp-controller="property" method="post">
+                                <input type="hidden" name="propertyId" value="@mymodelLocation.PropertyId" />
+                                <div class="form-row">
+                                    @*<div class="form-group col-md-4">
+            <label class="form-label">Province / State</label>
+            <select name="RegionId" class="form-control select2-show-search" data-placeholder="Choose one (with optgroup)">
+                @foreach (var item in modelLocation.Region)
+                {
+                    if (item.Id == mymodelLocation.RegionId)
+                    {
+                        <option value="@item.Id" selected="selected">@item.Name </option>
+                    }
+                    else
+                    {
+                        <option value="@item.Id">@item.Name </option>
+                    }
+                }
+            </select>
+        </div>*@
+                                    @*<div class="form-group col-md-4">
+            <label class="form-label">City / Town</label>
+            <select name="propertyLabelId" class="form-control select2-show-search" data-placeholder="Choose one (with optgroup)">
+                @foreach (var item in modelLocation.City)
+                {
+                    if (item.Id == mymodelLocation.CityId)
+                    {
+                        <option value="@item.Id" selected="selected">@item.Name </option>
+                    }
+                    else
+                    {
+                        <option value="@item.Id">@item.Name </option>
+                    }
+                }
+            </select>
+        </div>
+        <div class="form-group col-md-4">
+            <div class="form-group">
+                <label class="form-label" for="title">Postcode / Zip</label>
+                <input type="text" class="form-control" value="@mymodelLocation.ZipCode" name="ZipCode" id="ZipCode" placeholder="ZipCode">
+            </div>
+        </div>*@
+
+                                    @*<div class="form-group col-md-4">
+            <div class="form-group">
+                <label class="form-label" for="title">Country</label>
+                <input type="text" class="form-control" name="Country" id="Country" value="@mymodelLocation.Country" placeholder="Country">
+            </div>
+        </div>*@
+                                    <div class="form-group col-md-4">
+                                        <div class="form-group">
+                                            <label class="form-label"> @RealEstateAdmin.Resources.Text.Country *</label>
+                                            <select name="Country" class="form-control select2-show-search" data-live-search="true" data-live-search-style="startsWith" data-placeholder="Choose one (with searchbox)">
+                                                @foreach (var item in modelLocation.Country)
+                                                {
+                                                    if (mymodelLocation.Country == item.Name)
+                                                    {
+                                                        <option value="@item.Name" selected="selected">@item.Name </option>
+                                                    }
+                                                    else
+                                                    {
+                                                        <option value="@item.Name">@item.Name </option>
+                                                    }
+                                                }
+                                            </select>
+                                        </div>
+                                    </div>
+                                    <div class="form-group col-md-4">
+                                        <div class="form-group">
+                                            <label class="form-label" for="title">@RealEstateAdmin.Resources.Text.Region</label>
+                                            <input type="text" class="form-control" name="Region" id="State" value="@mymodelLocation.Region">
+                                        </div>
+                                    </div>
+                                    <div class="form-group col-md-4">
+                                        <div class="form-group">
+                                            <label class="form-label" for="title">@RealEstateAdmin.Resources.Text.City</label>
+                                            <input type="text" class="form-control" name="City" id="City" value="@mymodelLocation.City">
+                                        </div>
+                                    </div>
+
+                                    <div class="form-group col-md-6">
+                                        <div class="form-group">
+                                            <label class="form-label" for="title">@RealEstateAdmin.Resources.Text.Address 1</label>
+                                            <input type="text" class="form-control" value="@mymodelLocation.AddressLine1" name="AddressLine1" id="title" placeholder="Address 1">
+                                        </div>
+                                    </div>
+                                    <div class="form-group col-md-6">
+                                        <div class="form-group">
+                                            <label class="form-label" for="propertyUniqId">@RealEstateAdmin.Resources.Text.Address 2</label>
+                                            <input type="text" class="form-control" id="propertyUniqId" value="@mymodelLocation.AddressLine2" name="AddressLine2" placeholder="Address 2">
+                                        </div>
+                                    </div>
+
+                                    <input type="hidden" name="GoogleMapsLatitude" id="GoogleMapsLatitude" value="@mymodelLocation.GoogleMapsLatitude" />
+                                    <input type="hidden" name="GoogleMapsLongitude" id="GoogleMapsLongitude" value="@mymodelLocation.GoogleMapsLongitude" />
+                                    <div id="map"></div>
+                                </div>
+
+                                <div class="text-center">
+                                    <a href="~/property" class="btn mx-2 btn-default"> <i class="fa fa-ban"></i> @RealEstateAdmin.Resources.Text.Cancel</a>
+                                    <button type="submit" class="btn mx-2 btn-primary "><i class="fa fa-dot-circle-o"></i> @RealEstateAdmin.Resources.Text.Save</button>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <script>
+                // Initialize and add the map
+                function initMap() {
+                    // The location of Uluru
+                    var uluru;
+                    if ($("#GoogleMapsLatitude").val() === "") {
+                        uluru = { lat: 47.482984, lng: 19.077423 };
+                    }
+                    else {
+                        uluru = {
+                            lat: parseFloat($("#GoogleMapsLatitude").val()),
+                            lng: parseFloat($("#GoogleMapsLongitude").val()),
+                        };
+                    }
+                    console.log(uluru);
+                    console.log($("#GoogleMapsLatitude").val());
+
+
+
+                    // The map, centered at Uluru
+                    var map = new google.maps.Map(
+                        document.getElementById('map'), { zoom: 14, center: uluru }
+                    );
+                    // The marker, positioned at Uluru
+                    //var marker = new google.maps.Marker({ position: uluru, map: map });
+                    var marker = new google.maps.Marker({
+                        position: uluru,
+                        map: map,
+                        title: 'Hello World!',
+                        draggable: true
+
+                    });
+                    google.maps.event.addListener(marker, 'dragend', function (marker) {
+                        var latLng = marker.latLng;
+                        $("#GoogleMapsLatitude").val(latLng.lat());
+                        $("#GoogleMapsLongitude").val(latLng.lng());
+                        codeLatLng(latLng.lat(), latLng.lng());
+                    });
+                    marker.setMap(map);
+                    geocoder = new google.maps.Geocoder();
+                    //alert(uluru.lat + "  " + uluru.lng);
+                    codeLatLng(uluru.lat, uluru.lng);
+                }
+
+                function codeLatLng(lat, lng) {
+
+                    var latlng = new google.maps.LatLng(lat, lng);
+                    geocoder.geocode({ 'latLng': latlng }, function (results, status) {
+                        if (status == google.maps.GeocoderStatus.OK) {
+                            console.log(results)
+                            if (results[1]) {
+                                //formatted address
+
+                                var countSplited = results[0].formatted_address.split(',').length;
+
+                                var countryName = results[0].formatted_address.split(',')[countSplited - 1];
+                                var cityName = results[0].formatted_address.split(',')[countSplited - 2];
+
+                                //$("#Country").val(countryName);
+                                //$("#City").val(cityName);
+                                //find country name
+                                for (var i = 0; i < results[0].address_components.length; i++) {
+                                    for (var b = 0; b < results[0].address_components[i].types.length; b++) {
+
+                                        //there are different types that might hold a city admin_area_lvl_1 usually does in come cases looking for sublocality type will be more appropriate
+                                        if (results[0].address_components[i].types[b] == "administrative_area_level_1") {
+                                            //this is the object you are looking for
+                                            city = results[0].address_components[i];
+                                            break;
+                                        }
+                                    }
+                                }
+                                //city data
+                                //alert(city.short_name);
+                                //alert(city.long_name);
+
+                                //$("#State").val(city.long_name);
+                            } else {
+                                alert("No results found");
+                            }
+                        } else {
+                            alert("Geocoder failed due to: " + status);
+                        }
+                    });
+                }
+
+
+
+            </script>
+            <script async defer src="https://maps.googleapis.com/maps/api/js?language=en&key=AIzaSyAtbR38BoND95lyxtvx4atDe0o1pyo6asQ&callback=initMap"></script>
+        </div>
+        break;
+    case "price":
+        <div class="tab-pane active" id="price">
+            <div class="row">
+                <div class="col-md-12">
+                    <div class=" m-b-20">
+                        @*<div class="card-header">
+                                <h3 class="card-title">Estate description</h3>
+                            </div>*@
+                        <div class="card-body">
+                            @{
+                                var modelPrice = ((RealEstateAdmin.Models.FirstPage.PropertyPricePage)(Model.Dynamic));
+                                var mymodelPrice = ((RealEstateAdmin.Models.ModelDtos.Estate.PropertyPriceDto)(Model.EntryData));
+                                var p = mymodelPrice.Price.ToString().Replace(",", ".");
+                            }
+                            <form asp-action="etest/@mymodelPrice.PropertyId/price" asp-controller="property" method="post">
+                                <input type="hidden" name="PropertyId" value="@mymodelPrice.PropertyId" />
+                                <div class="form-row">
+                                    <div class="form-group col-md-4">
+                                        <div class="form-group">
+                                            <label class="form-label" for="title">@RealEstateAdmin.Resources.Text.Price *</label>
+                                            <input type="number" class="form-control" value="@p" name="Price" id="Price" placeholder="Price" min="1">
+                                        </div>
+                                    </div>
+                                    <div class="form-group col-md-4">
+                                        <div class="form-group">
+                                            <label class="form-label"> @RealEstateAdmin.Resources.Text.Currency * </label>
+                                            <select name="CurrencyId" class="form-control select2-show-search" data-placeholder="Choose one (with searchbox)">
+                                                @foreach (var item in modelPrice.Currency)
+                                                {
+                                                    if (mymodelPrice.CurrencyId == item.Id)
+                                                    {
+                                                        <option value="@item.Id" selected="selected">@item.Name </option>
+                                                    }
+                                                    else
+                                                    {
+                                                        <option value="@item.Id">@item.Name </option>
+                                                    }
+                                                }
+
+                                            </select>
+                                        </div>
+                                    </div>
+                                    <div class="form-group col-md-4">
+                                        <label class="form-label">@RealEstateAdmin.Resources.Text.Unit *</label>
+                                        <select name="PriceScaleUnitId" class="form-control select2-show-search" data-placeholder="Choose one (with optgroup)">
+                                            @foreach (var item in modelPrice.PriceScaleUnit)
+                                            {
+                                                if (item.Id == mymodelPrice.PriceScaleUnitId)
+                                                {
+                                                    <option value="@item.Id" selected="selected">@item.Name </option>
+                                                }
+                                                else
+                                                {
+                                                    <option value="@item.Id">@item.Name </option>
+                                                }
+                                            }
+                                        </select>
+                                    </div>
+
+                                    <div class="form-group col-md-4">
+                                        <div class="form-group">
+                                            <label class="form-label" for="title">@RealEstateAdmin.Resources.Text.BeforePriceLabel</label>
+                                            <input type="text" class="form-control" value="@mymodelPrice.BeforePriceLabel" name="BeforePriceLabel" id="BeforePriceLabel" placeholder="Before Price Label">
+                                        </div>
+                                    </div>
+                                    <div class="form-group col-md-4">
+                                        <div class="form-group">
+                                            <label class="form-label" for="title">@RealEstateAdmin.Resources.Text.AfterPriceLabel</label>
+                                            <input type="text" class="form-control" value="@mymodelPrice.AfterPriceLabel" name="AfterPriceLabel" id="AfterPriceLabel" placeholder="After Price Label">
+                                        </div>
+                                    </div>
+                                    <div class="form-group col-md-4">
+                                        <div class="form-group">
+                                            <label class="form-label" for="PriceOnCall">  &nbsp;&nbsp; &nbsp;</label>
+                                            @if (mymodelPrice.PriceOnCall)
+                                            {
+                                                @*<input type="checkbox" checked class="custom-control-input" value="@mymodelPrice.PriceOnCall" name="PriceOnCall" id="PriceOnCall">*@
+
+                                                <label class="custom-control custom-checkbox">
+                                                    <input type="checkbox" class="custom-control-input" value="true" checked name="PriceOnCall" id="PriceOnCall">
+                                                    <span class="custom-control-label">@RealEstateAdmin.Resources.Text.PriceOnCall</span>
+                                                </label>
+                                            }
+                                            else
+                                            {
+                                                @*<input type="checkbox" class="custom-control-input" value="@mymodelPrice.PriceOnCall" name="PriceOnCall" id="PriceOnCall">*@
+                                                <label class="custom-control custom-checkbox">
+                                                    <input type="checkbox" class="custom-control-input" value="false" name="PriceOnCall" id="PriceOnCall">
+                                                    <span class="custom-control-label">@RealEstateAdmin.Resources.Text.PriceOnCall</span>
+                                                </label>
+                                            }
+
+
+
+                                        </div>
+                                    </div>
+                                    <div class="form-group col-md-4">
+                                        <div class="form-group">
+                                            <label class="form-label" for="title">@RealEstateAdmin.Resources.Text.Commission</label>
+                                            <input type="text" class="form-control" value="@mymodelPrice.Commission" name="Commission" id="Commission" placeholder="Commission">
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="text-center">
+                                    <a href="~/property" class="btn mx-2 btn-default"> <i class="fa fa-ban"></i> @RealEstateAdmin.Resources.Text.Cancel</a>
+                                    <button type="submit" class="btn mx-2 btn-primary "><i class="fa fa-dot-circle-o"></i> @RealEstateAdmin.Resources.Text.Save</button>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        break;
+    case "features":
+        <div class="tab-pane active" id="features">
+            <div class="row">
+                <div class="col-md-12">
+                    <div class=" m-b-20">
+                        @*<div class="card-header">
+                                <h3 class="card-title">Estate description</h3>
+                            </div>*@
+                        <div class="card-body">
+                            @{
+                                var modelFeature = ((RealEstateAdmin.Models.FirstPage.PropertyFeaturesPage)(Model.Dynamic));
+                                var mymodelFeature = ((List<RealEstateAdmin.Models.ModelDtos.BasicInformation.PropertyFeatureDto>
+                                    )(Model.EntryData));
+                            }
+                            <form asp-action="etest/@ViewBag.PropertyId/features" asp-controller="property" method="post">
+                                <input type="hidden" name="propertyId" value="@ViewBag.PropertyId" />
+                                <div class="row">
+                                    @foreach (var item in modelFeature.PropertyFeature)
+                                    {
+                                        if (mymodelFeature.Any(t => t.Id == item.Id))
+                                        {
+                                            <div class="form-group col-md-2">
+                                                <div class="form-group">
+                                                    <label class="form-label" for="SetPropertyFeaturesDto">  &nbsp;&nbsp; &nbsp;</label>
+                                                    <label class="custom-control custom-checkbox">
+                                                        <input type="checkbox" checked class="custom-control-input" value="@item.Id" name="propertyFeatureIds" id="SetPropertyFeaturesDto">
+                                                        <span class="custom-control-label">@item.Name</span>
+                                                    </label>
+                                                </div>
+                                            </div>
+                                        }
+                                        else
+                                        {
+                                            <div class="form-group col-md-2">
+                                                <div class="form-group">
+                                                    <label class="form-label" for="SetPropertyFeaturesDto">  &nbsp;&nbsp; &nbsp;</label>
+                                                    <label class="custom-control custom-checkbox">
+                                                        <input type="checkbox" class="custom-control-input" value="@item.Id" name="propertyFeatureIds" id="SetPropertyFeaturesDto">
+                                                        <span class="custom-control-label">@item.Name</span>
+                                                    </label>
+                                                </div>
+                                            </div>
+                                        }
+                                    }
+                                </div>
+                                <div class="text-center">
+                                    <a href="~/property" class="btn mx-2 btn-default"> <i class="fa fa-ban"></i> @RealEstateAdmin.Resources.Text.Cancel</a>
+                                    <button type="submit" class="btn mx-2 btn-primary "><i class="fa fa-dot-circle-o"></i> @RealEstateAdmin.Resources.Text.Save</button>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        break;
+    case "details":
+        <div class="tab-pane active" id="details">
+            <div class="row">
+                <div class="col-md-12">
+                    <div class=" m-b-20">
+                        @*<div class="card-header">
+                                <h3 class="card-title">Estate description</h3>
+                            </div>*@
+                        <div class="card-body">
+                            @{
+                                //var modelDetail = ((RealEstateAdmin.Models.FirstPage.PropertyPricePage)(Model.Dynamic));
+                                var mymodelDetail = ((RealEstateAdmin.Models.ModelDtos.Estate.PropertyDetailDto)(Model.EntryData));
+                            }
+                            <form asp-action="etest/@ViewBag.PropertyId/details" asp-controller="property" method="post">
+                                <input type="hidden" name="propertyId" value="@ViewBag.PropertyId" />
+                                <div class="form-row">
+                                    <div class="form-group col-md-4">
+                                        <div class="form-group">
+                                            <label class="form-label" for="title">@RealEstateAdmin.Resources.Text.Size</label>
+                                            <input type="number" class="form-control" value="@mymodelDetail.Size" name="Size" id="Size" placeholder="Size">
+                                        </div>
+                                    </div>
+                                    <div class="form-group col-md-4">
+                                        <div class="form-group">
+                                            <label class="form-label" for="title">@RealEstateAdmin.Resources.Text.LandArea</label>
+                                            <input type="number" min="0" class="form-control" value="@mymodelDetail.LandArea" name="LandArea" id="LandArea" placeholder="LandArea">
+                                        </div>
+                                    </div>
+                                    <div class="form-group col-md-4">
+                                        <div class="form-group">
+                                            <label class="form-label" for="title">@RealEstateAdmin.Resources.Text.Rooms</label>
+                                            <input type="number" min="0" class="form-control" value="@mymodelDetail.Rooms" name="Rooms" id="Rooms" placeholder="Rooms">
+                                        </div>
+                                    </div>
+                                    <div class="form-group col-md-4">
+                                        <div class="form-group">
+                                            <label class="form-label" for="title">@RealEstateAdmin.Resources.Text.Bedrooms</label>
+                                            <input type="number" min="0" class="form-control" value="@mymodelDetail.Bedrooms" name="Bedrooms" id="Bedrooms" placeholder="Bedrooms">
+                                        </div>
+                                    </div>
+
+                                    <div class="form-group col-md-4">
+                                        <div class="form-group">
+                                            <label class="form-label" for="title">@RealEstateAdmin.Resources.Text.Bathrooms</label>
+                                            <input type="number" min="0" class="form-control" value="@mymodelDetail.Bathrooms" name="Bathrooms" id="Bathrooms" placeholder="Bathrooms">
+                                        </div>
+                                    </div>
+                                    <div class="form-group col-md-4">
+                                        <div class="form-group">
+                                            <label class="form-label" for="title">@RealEstateAdmin.Resources.Text.Garages</label>
+                                            <input type="number" min="0" class="form-control" value="@mymodelDetail.Garages" name="Garages" id="Garages" placeholder="Garages">
+                                        </div>
+                                    </div>
+                                    <div class="form-group col-md-4">
+                                        <div class="form-group">
+                                            <label class="form-label" for="title">@RealEstateAdmin.Resources.Text.Garages @RealEstateAdmin.Resources.Text.Size</label>
+                                            <input type="number" min="0" class="form-control" value="@mymodelDetail.GaragesSize" name="GarageSize" id="GarageSize" placeholder="GarageSize">
+                                        </div>
+                                    </div>
+                                    <div class="form-group col-md-4">
+                                        <div class="form-group">
+                                            <label class="form-label" for="title">@RealEstateAdmin.Resources.Text.YearOfBuild</label>
+                                            <input type="number" min="0" class="form-control" value="@mymodelDetail.YearBuild" name="YearBuild" id="YearBuild" placeholder="YearBuild">
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="text-center">
+                                    <a href="~/property" class="btn mx-2 btn-default"> <i class="fa fa-ban"></i> @RealEstateAdmin.Resources.Text.Cancel</a>
+                                    <button type="submit" class="btn mx-2 btn-primary "><i class="fa fa-dot-circle-o"></i> @RealEstateAdmin.Resources.Text.Save</button>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        break;
+    case "additionaldetails":
+        <div class="tab-pane active" id="additionaldetails">
+
+            <div class="row">
+                <div class="col-md-12">
+                    <div class=" m-b-20">
+                        @*<div class="card-header">
+                                <h3 class="card-title">Estate description</h3>
+                            </div>*@
+                        <div class="card-body">
+                            @{
+                                //var modelDetail = ((RealEstateAdmin.Models.FirstPage.PropertyPricePage)(Model.Dynamic));
+                                var mymodelAdditionalDetail = ((List<RealEstateAdmin.Models.ModelDtos.Estate.PropertyAdditionalDetailDto>
+                                    )(Model.EntryData));
+                            }
+                            <form asp-action="etest/@ViewBag.PropertyId/additionaldetails" asp-controller="property" method="post">
+                                <input type="hidden" name="propertyId" value="@ViewBag.PropertyId" />
+                                <div class="form-row">
+                                    <div class="form-group col-md-6">
+                                        <div class="form-group">
+                                            <label class="form-label" for="title">@RealEstateAdmin.Resources.Text.Title</label>
+                                            <input type="text" class="form-control" name="Title" id="Title" placeholder="Title">
+                                        </div>
+                                    </div>
+                                    <div class="form-group col-md-6">
+                                        <div class="form-group">
+                                            <label class="form-label" for="title">@RealEstateAdmin.Resources.Text.Value</label>
+                                            <input type="text" class="form-control" name="Value" id="Value" placeholder="Value">
+                                        </div>
+                                    </div>
+
+                                </div>
+                                <div class="text-center">
+                                    <a href="~/property" class="btn mx-2 btn-default"> <i class="fa fa-ban"></i> @RealEstateAdmin.Resources.Text.Cancel</a>
+                                    <button type="submit" class="btn mx-2 btn-primary "><i class="fa fa-dot-circle-o"></i> @RealEstateAdmin.Resources.Text.Save</button>
+                                </div>
+                            </form>
+
+                            <div class="card my-4">
+                                <div class="card-header">@RealEstateAdmin.Resources.Text.AdditionalDetailsList</div>
+                                <div class="card-body">
+                                    <div class="col-md-12 col-sm-12 col-lg-12">
+                                        <table class="table" width="100%">
+                                            <tr>
+                                                <th>@RealEstateAdmin.Resources.Text.Title</th>
+                                                <th>@RealEstateAdmin.Resources.Text.Value</th>
+                                                <th>@RealEstateAdmin.Resources.Text.Actions</th>
+                                            </tr>
+                                            @foreach (var item in mymodelAdditionalDetail)
+                                            {
+                                                <tr>
+                                                    <td>@item.Title</td>
+                                                    <td>@item.Value</td>
+                                                    <td>
+                                                        <span class="fa fa-trash-o text-danger">
+
+                                                        </span>
+                                                    </td>
+                                                </tr>
+                                            }
+
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
+
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+        break;
+
+    case "media":
+        <div class="tab-pane active" id="media">
+
+            <div class="row">
+                <div class="col-md-12">
+                    <div class=" m-b-20">
+                        @*<div class="card-header">
+                                <h3 class="card-title">Estate description</h3>
+                            </div>*@
+                        <div class="card-body">
+                            @{
+                                //var modelDetail = ((RealEstateAdmin.Models.FirstPage.PropertyPricePage)(Model.Dynamic));
+                                var mymodelmedia = ((List<RealEstateAdmin.Models.ModelDtos.Estate.PropertyImageDto>
+                                    )(Model.EntryData));
+                            }
+                            <form asp-action="etest/@ViewBag.PropertyId/media" asp-controller="property" enctype="multipart/form-data" method="post">
+                                <input type="hidden" name="propertyId" value="@ViewBag.PropertyId" />
+                                <div class="form-row">
+                                    <div class="form-group col-md-3">
+                                        <div class="custom-file" style="margin-top: 28px;">
+                                            <input type="file" onchange="getFileName();" class="custom-file-input" id="image" name="image">
+                                            <label class="custom-file-label">@RealEstateAdmin.Resources.Text.ChooseFile</label>
+                                            <label class="fileName"></label>
+                                        </div>
+                                    </div>
+                                    <div class="form-group col-md-3">
+                                        <div class="form-group">
+                                            <label class="form-label" for="title">@RealEstateAdmin.Resources.Text.ImageCaption</label>
+                                            <input type="text" class="form-control" name="ImageCaption" id="ImageCaption" placeholder="Enter Image Caption">
+                                        </div>
+                                    </div>
+                                    <div class="form-group col-md-3">
+                                        <div class="form-group">
+                                            <label class="form-label" for="title">@RealEstateAdmin.Resources.Text.ImagePriority</label>
+                                            <input type="number" class="form-control" name="Priority" id="0">
+                                        </div>
+                                    </div>
+
+                                    <div class="form-group col-md-3">
+                                        <div class="form-group">
+                                            <label class="form-label" for="Is360View">&nbsp; &nbsp; &nbsp;</label>
+                                            <label class="custom-control custom-checkbox">
+                                                <input type="checkbox" class="custom-control-input" value="true" name="Is360View" id="Is360View">
+                                                <span class="custom-control-label">@RealEstateAdmin.Resources.Text.Is360View</span>
+                                            </label>
+                                        </div>
+                                    </div>
+                                    @*Is360View*@
+
+
+                                </div>
+                                <div class="text-center">
+                                    <a href="~/property" class="btn mx-2 btn-default"> <i class="fa fa-ban"></i> @RealEstateAdmin.Resources.Text.Cancel</a>
+                                    <button type="submit" class="btn mx-2 btn-primary "><i class="fa fa-dot-circle-o"></i> @RealEstateAdmin.Resources.Text.Save</button>
+                                </div>
+                            </form>
+                            <div class="UploadedImages" style="margin-top: 25px;">
+                                <div class="row">
+
+                                    @foreach (var item in mymodelmedia)
+                                    {
+                                        <div class="col-lg-3 col-md-4 col-sm-12">
+                                            <div class="card">
+                                                <img src="@item.TumbPath" alt="" class="card-img-top">
+                                                <div class="card-body">
+                                                    <p class="card-text">
+                                                        @item.ImageCaption
+                                                    </p>
+                                                </div>
+                                                <div class="card-footer">
+                                                    <div>
+                                                        <button type="button" onclick="DeleteMedia('formmedia-delete-@item.Id');" class="btn flex-nowrap btn-danger btn-block">@RealEstateAdmin.Resources.Text.Delete</button>
+                                                        <form asp-action="ImageDelete" asp-controller="Property" method="post" id="formmedia-delete-@item.Id">
+                                                            <input type="hidden" name="propertyId" value="@ViewBag.PropertyId" />
+                                                            <input type="hidden" name="id" value="@item.Id" />
+                                                        </form>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    }
+
+                                </div>
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <script>
+
+
+                function DeleteMedia(id) {
+                    if (confirm('Are you sure for deleting Image Property ? ')) {
+                        document.getElementById(id).submit();
+                    }
+                }
+
+                function getFileName() {
+                    var fullPath = document.getElementById('image').value;
+                    if (fullPath) {
+                        var startIndex = (fullPath.indexOf('\\') >= 0 ? fullPath.lastIndexOf('\\') : fullPath.lastIndexOf('/'));
+                        var filename = fullPath.substring(startIndex);
+                        if (filename.indexOf('\\') === 0 || filename.indexOf('/') === 0) {
+                            filename = filename.substring(1);
+                        }
+                        $(".custom-file-label").html(filename);
+
+                    }
+                }
+            </script>
+
+
+        </div>
+        break;
+    case "floors":
+
+        <div class="tab-pane active" id="floors">
+            <div class="row">
+                <div class="col-md-12">
+                    <div class=" m-b-20">
+                        @*<div class="card-header">
+                                <h3 class="card-title">Estate description</h3>
+                            </div>*@
+                        <div class="card-body">
+                            @{
+                                var modelDetail = ((RealEstateAdmin.Models.ModelDtos.Estate.PropertyFloorPlanDto)(Model.Dynamic));
+                                var mymodelFloorPlan = ((List<RealEstateAdmin.Models.ModelDtos.Estate.PropertyFloorPlanDto>
+                                    )(Model.EntryData));
+                            }
+                            <form asp-action="etest/@ViewBag.PropertyId/floors" asp-controller="property" enctype="multipart/form-data" method="post">
+                                <input type="hidden" name="propertyId" value="@ViewBag.PropertyId" />
+                                <input type="hidden" name="typeOfRequest" id="typeOfRequest" value="1" />
+                                <input type="hidden" name="Id" id="Id" value="" />
+                                <input type="hidden" name="ImageContentFullUrl" id="ImagePath" value="" />
+                                <input type="hidden" name="ImageContentTumblrUrl" id="TumbPath" value="" />
+                                @*1==create new floor
+                                    2==Edit selected floor*@
+                                <div class="form-row">
+                                    <div class="form-group col-md-4">
+                                        <div class="form-group">
+                                            <label class="form-label" for="title">@RealEstateAdmin.Resources.Text.FloorName *</label>
+                                            <input type="text" class="form-control" name="FloorName" required id="FloorName">
+                                        </div>
+                                    </div>
+                                    <div class="form-group col-md-4">
+                                        <div class="form-group">
+                                            <label class="form-label" for="title">@RealEstateAdmin.Resources.Text.FloorPrice</label>
+                                            <input type="number" class="form-control" min="0" name="FloorPrice" id="FloorPrice">
+                                        </div>
+                                    </div>
+                                    <div class="form-group col-md-4">
+                                        <div class="form-group">
+                                            <label class="form-label" for="PricePostfix ">@RealEstateAdmin.Resources.Text.PricePostfix</label>
+                                            <input type="text" class="form-control" name="PricePostfix" id="PricePostfix">
+                                        </div>
+                                    </div>
+                                    <div class="form-group col-md-4">
+                                        <div class="form-group">
+                                            <label class="form-label" for="PricePostfix ">@RealEstateAdmin.Resources.Text.FloorSize</label>
+                                            <input type="number" class="form-control" min="0" name="FloorSize" id="FloorSize">
+                                        </div>
+                                    </div>
+                                    <div class="form-group col-md-4">
+                                        <div class="form-group">
+                                            <label class="form-label" for="PricePostfix">@RealEstateAdmin.Resources.Text.SizePostfix</label>
+                                            <input type="text" class="form-control" name="SizePostfix" id="SizePostfix">
+                                        </div>
+                                    </div>
+                                    <div class="form-group col-md-4">
+                                        <div class="form-group">
+                                            <label class="form-label" for="Bedrooms">@RealEstateAdmin.Resources.Text.Bedrooms</label>
+                                            <input type="number" class="form-control" name="Bedrooms" min="0" id="Bedrooms">
+                                        </div>
+                                    </div>
+                                    <div class="form-group col-md-4">
+                                        <div class="form-group">
+                                            <label class="form-label" for="Bathrooms">@RealEstateAdmin.Resources.Text.Bathrooms</label>
+                                            <input type="number" class="form-control" name="Bathrooms" min="0" id="Bathrooms">
+                                        </div>
+                                    </div>
+                                    <div class="form-group col-md-4">
+                                        <div class="custom-file" style="margin-top: 28px;">
+
+                                            <input type="file" onchange="getFileName();" class="custom-file-input" name="image" id="image">
+                                            <label class="custom-file-label">@RealEstateAdmin.Resources.Text.ChooseFile</label>
+                                        </div>
+                                    </div>
+                                    <div class="form-group col-md-4">
+                                        <div class="form-group">
+                                            <label class="form-label" for="Bathrooms">@RealEstateAdmin.Resources.Text.ImageCaption</label>
+                                            <input type="text" class="form-control" name="ImageCaption" id="ImageCaption">
+                                        </div>
+                                    </div>
+                                    <div class="form-group col-md-4">
+                                        <div class="form-group">
+                                            <label class="form-label" for="Is360View">&nbsp; &nbsp; &nbsp;</label>
+                                            <label class="custom-control custom-checkbox">
+                                                <input type="checkbox" class="custom-control-input" value="true" name="Is360View" id="Is360View">
+                                                <span class="custom-control-label">@RealEstateAdmin.Resources.Text.Is360View</span>
+                                            </label>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="text-center">
+                                    <a href="~/property" class="btn mx-2 btn-default"> <i class="fa fa-ban"></i> @RealEstateAdmin.Resources.Text.Cancel</a>
+                                    <button type="submit" class="btn mx-2 btn-primary"><i class="fa fa-dot-circle-o"></i> @RealEstateAdmin.Resources.Text.Save</button>
+                                </div>
+                            </form>
+
+                            <div class="card my-4">
+                                <div class="card-header">@RealEstateAdmin.Resources.Text.FloorsList</div>
+                                <div class="card-body">
+                                    <div class="col-md-12 col-sm-12 col-lg-12">
+                                        <table class="table" width="100%">
+                                            <tr>
+                                                <th>@RealEstateAdmin.Resources.Text.Image</th>
+                                                <th>@RealEstateAdmin.Resources.Text.FloorName</th>
+                                                <th>@RealEstateAdmin.Resources.Text.FloorPrice</th>
+                                                <th>@RealEstateAdmin.Resources.Text.FloorSize</th>
+                                                <th>@RealEstateAdmin.Resources.Text.Actions</th>
+                                            </tr>
+                                            @foreach (var item in mymodelFloorPlan)
+                                            {
+                                                <tr>
+                                                    <td><img src="@item.TumbPath" alt="" class="img-fluid" style="max-width: 150px;" /></td>
+                                                    <td>@item.FloorName</td>
+                                                    <td>@item.FloorPrice</td>
+                                                    <td>@item.FloorSize @item.Is360View</td>
+                                                    <td>
+                                                        <span class="fa fa-trash-o text-danger" style="cursor:pointer" onclick="deletefloor('form-delete-@item.Id');">
+                                                        </span>
+                                                        <span class="fa fa-pencil-square-o text-info" style="cursor:pointer" onclick="editfloor(@item.Id);">
+                                                        </span>
+                                                        @*<form asp-action="/estate/@ViewBag.PropertyId/floors" asp-controller="Property" method="post" id="form-edit-@item.Id">
+                                                                <input type="hidden" name="propertyId" value="@ViewBag.PropertyId" />
+                                                                <input type="hidden" name="floorId" value="@item.Id" />
+                                                            </form>*@
+                                                        <form asp-action="FloorDelete" asp-controller="Property" method="post" id="form-delete-@item.Id">
+                                                            <input type="hidden" name="propertyId" value="@ViewBag.PropertyId" />
+                                                            <input type="hidden" name="id" value="@item.Id" />
+                                                        </form>
+
+                                                    </td>
+                                                </tr>
+                                            }
+
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <script>
+
+                                function getFileName() {
+                                    var fullPath = document.getElementById('image').value;
+                                    if (fullPath) {
+                                        var startIndex = (fullPath.indexOf('\\') >= 0 ? fullPath.lastIndexOf('\\') : fullPath.lastIndexOf('/'));
+                                        var filename = fullPath.substring(startIndex);
+                                        if (filename.indexOf('\\') === 0 || filename.indexOf('/') === 0) {
+                                            filename = filename.substring(1);
+                                        }
+                                        $(".custom-file-label").html(filename);
+
+                                    }
+                                }
+                            </script>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <script>
+            function deletefloor(id) {
+                if (confirm('Are you sure ? ')) {
+                    document.getElementById(id).submit();
+                }
+            }
+            function editfloor(id) {
+                //document.getElementById(id).submit();
+
+                var dataaa = "{ 'id': '" + id + "' }";
+                var url = "/property/GetFloor?id=" + id;
+                $.ajax({
+                    url: url,
+                    type: "GET",
+                    data: dataaa,
+                    contentType: "application/json; charset=utf-8",
+                    //dataType: "json",
+                    success: function (dd) {
+                        //var ttt = JSON.parse(gggg);
+                        console.log("v :  " + id + " " + dd.propertyId + " " + dd + " ");
+                        //floorName
+                        //floorPrice
+                        //pricePostfix
+                        //floorSize
+                        //sizePostfix
+                        //bedrooms
+                        //bathrooms
+                        //planDescription
+                        //imageCaption
+                        //is360View
+
+                        $("#FloorName").val(dd.floorName);
+                        $("#FloorPrice").val(dd.floorPrice);
+                        $("#PricePostfix").val(dd.pricePostfix);
+                        $("#FloorSize").val(dd.floorSize);
+                        $("#SizePostfix").val(dd.sizePostfix);
+                        $("#Bedrooms").val(dd.bedrooms);
+                        $("#Bathrooms").val(dd.bathrooms);
+                        $("#PlanDescription").val(dd.planDescription);
+                        $("#ImageCaption").val(dd.imageCaption);
+                        $("#Is360View").val(dd.is360View);
+                        $("#typeOfRequest").val("2");
+                        $("#Id").val(dd.id);
+                        $("#TumbPath").val(dd.tumbPath);
+                        $("#ImagePath").val(dd.imagePath);
+                        $("#back-to-top").click();
+                    },
+                    error: function (event, request, settings) {
+
+                    }
+                });
+
+            }
+        </script>
+        break;
+    default:
+        break;
+}

@@ -1,0 +1,103 @@
+﻿@model RealEstateAdmin.Models.ModelDtos.RBAC.PageManagmentCreate
+@{
+    ViewData["Title"] = RealEstateAdmin.Resources.Text.Create + " " + RealEstateAdmin.Resources.Text.PageManagment;
+}
+<div class="side-app">
+    <!--Page-Header-->
+    <div class="page-header">
+        <h4 class="page-title">@RealEstateAdmin.Resources.Text.Create @RealEstateAdmin.Resources.Text.PageManagment</h4>
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item"><a href="~/">@RealEstateAdmin.Resources.Text.Home</a></li>
+            <li class="breadcrumb-item"><a href="~/PageManagment/index">@RealEstateAdmin.Resources.Text.PageManagment</a></li>
+            <li class="breadcrumb-item active" aria-current="page">@RealEstateAdmin.Resources.Text.Create @RealEstateAdmin.Resources.Text.PageManagment</li>
+        </ol>
+    </div>
+    <!--/Page-Header-->
+
+    <div class="row">
+        <div class="col-md-12">
+            <div class="card m-b-20">
+                <div class="card-header">
+                    <h3 class="card-title">@RealEstateAdmin.Resources.Text.Create @RealEstateAdmin.Resources.Text.Property</h3>
+                </div>
+                <div class="card-body">
+                    <form asp-action="create" asp-controller="PageManagment" id="PageManagment-form" method="post">
+                        <input type="hidden" name="GeneratedTitle" id="GeneratedTitle" value="" />
+                        <div class="form-row">
+                            
+                            <div class="form-group col-md-3">
+                                <label class="form-label"> @RealEstateAdmin.Resources.Text.Menu</label>
+                                <select name="MenuId" id="MenuId" class="form-control select2-show-search" data-placeholder="Choose one (with optgroup)">
+                                    @foreach (var item in Model.MenuType)
+                                    {
+                                        <option value="@item.Id">@item.MenuTypeName </option>
+                                    }
+                                </select>
+                            </div>
+                            <div class="form-group col-md-3">
+                                <label class="form-label"> @RealEstateAdmin.Resources.Text.RoleType *</label>
+                                <select name="UserGroupId" id="UserGroupId" class="form-control select2-show-search" data-placeholder="Choose one (with optgroup)">
+                                    @foreach (var item in Model.RoleType)
+                                    {
+                                        <option value="@item.Id">@item.Name </option>
+                                    }
+                                </select>
+                            </div>
+
+                            <div class="form-group col-md-2">
+                                <div class="form-group">
+
+                                    <label class="custom-control custom-checkbox"></label>
+                                    <label class="custom-control custom-checkbox">
+                                        <input type="checkbox" class="custom-control-input" name="ReadPermission" id="ReadPermmition" value="true">
+                                        <span class="custom-control-label">@RealEstateAdmin.Resources.Text.ReadPermission</span>
+                                    </label>
+                                </div>
+                            </div>
+                            <div class="form-group col-md-2">
+                                <div class="form-group">
+
+                                    <label class="custom-control custom-checkbox"></label>
+                                    <label class="custom-control custom-checkbox">
+                                        <input type="checkbox" class="custom-control-input" name="UpdatePermission" id="UpdatePermmition" value="true">
+                                        <span class="custom-control-label">@RealEstateAdmin.Resources.Text.UpdatePermission</span>
+                                    </label>
+                                </div>
+                            </div>
+                            <div class="form-group col-md-2">
+                                <div class="form-group">
+
+                                    <label class="custom-control custom-checkbox"></label>
+                                    <label class="custom-control custom-checkbox">
+                                        <input type="checkbox" class="custom-control-input" name="DeletePermission" id="DeletePermmition" value="true">
+                                        <span class="custom-control-label">@RealEstateAdmin.Resources.Text.DeletePermission</span>
+                                    </label>
+                                </div>
+                            </div>
+                           
+                        </div>
+                        <div class="text-center">
+                            <button type="reset" class="btn mx-2 btn-default"> <i class="fa fa-ban"></i> @RealEstateAdmin.Resources.Text.Cancel</button>
+                            <button type="button" id="save" onclick="generateTitle();" class="btn mx-2 btn-primary "><i class="fa fa-dot-circle-o"></i> @RealEstateAdmin.Resources.Text.Save</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+
+
+</div>
+
+<script>
+    function generateTitle() {
+        //var title = $("#title").val() + ' ' + $("#propertyTypeId option:selected").html() + ' ' + $("#propertyStatusId option:selected").html() + ' ' + $("#propertyLabelId option:selected").html();
+        var title = $("#title").val() + ' ' + $("#propertyTypeId option:selected").html() + ' ' + $("#propertyStatusId option:selected").html() + ' ' + $("#propertyLabelId option:selected").html();
+        $("#GeneratedTitle").val(title);
+        //console.log(title);
+        document.getElementById('PageManagment-form').submit();
+    }
+</script>
+

@@ -1,0 +1,110 @@
+﻿@using RealEstateAdmin.Models.ModelDtos.Crm;
+@model RealEstateAdmin.Models.ModelDtos.Crm.WithdrawalDto
+
+@{
+    ViewData["Title"] = RealEstateAdmin.Resources.Text.UserCommission;
+
+    var list = (List<WithdrawalListDto>)ViewBag.WithdrawalList;
+}
+
+
+
+<div class="side-app">
+
+    <!--Page-Header-->
+    <div class="page-header">
+        <h4 class="page-title">@RealEstateAdmin.Resources.Text.UserCommission</h4>
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item"><a href="~/">@RealEstateAdmin.Resources.Text.Home</a></li>
+            <li class="breadcrumb-item"><a href="~/propertyfeature">@RealEstateAdmin.Resources.Text.User @RealEstateAdmin.Resources.Text.List</a></li>
+            <li class="breadcrumb-item active" aria-current="page">@RealEstateAdmin.Resources.Text.UserCommission</li>
+        </ol>
+    </div>
+    <!--/Page-Header-->
+
+    <div class="row">
+
+        <div class="col-12">
+            <div class="card m-b-20">
+                <div class="card-header">
+                    <h3 class="card-title">@RealEstateAdmin.Resources.Text.UserCommission</h3>
+                </div>
+                <div class="card-body">
+                    <div class="row">
+                        <div class="col-md-4">
+                            <form asp-action="Withdrawal">
+                                <input type="hidden" name="UserAccountId" value="@Model.UserAccountId" />
+                                <div class="form-group">
+                                    <input asp-for="Amount" class="form-control" />
+                                    <span asp-validation-for="Amount" class="text-danger"></span>
+                                </div>
+                                <div class="form-group">
+                                    <input type="submit" value="Withdrawal" class="btn btn-primary" />
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- end col -->
+
+    </div>
+    <!-- end row -->
+
+    <div class="row">
+
+        <div class="col-xl-12">
+            <div class="card m-b-20">
+                <div class="card-header">
+                    <h3 class="card-title">@RealEstateAdmin.Resources.Text.List</h3>
+                </div>
+                <div class="card-body">
+                    <div class="row mt-5">
+                        <div class="col-md-12">
+                            <div class="table-responsive">
+                                <table class="hover table-bordered border-top-0 border-bottom-0 grid" data-searching="false" data-paging="false" data-info="false">
+                                    <thead>
+                                        <tr>
+                                            <th>@RealEstateAdmin.Resources.Text.Name</th>
+                                            <th>@RealEstateAdmin.Resources.Text.Date</th>
+                                            <th>@RealEstateAdmin.Resources.Text.Actions</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        @foreach (var item in list)
+                                        {
+                                            <tr>
+                                                <td>@item.Amount</td>
+                                                <td>@item.DateCreated</td>
+                                                <td>
+                                                    <a href="#" onclick="deleteItem('deletefrom-'+@item.Id);" data-toggle="tooltip" data-placement="top" title="" data-original-title="@RealEstateAdmin.Resources.Text.DeleteThisItem"><span class="fa fa-trash text-primary m-2" style="font-size:14pt;"></span></a>
+                                                    <form action="~/users/deletewithdrawal" method="post" id="deletefrom-@item.Id">
+                                                        <input type="hidden" name="id" value="@item.Id" />
+                                                    </form>
+                                                </td>
+                                            </tr>
+                                        }
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- end col -->
+
+    </div>
+    <!-- end row -->
+
+</div>
+
+<script>
+    function deleteItem(id) {
+        if (confirm('@RealEstateAdmin.Resources.Text.AreYouSure')) {
+            document.getElementById(id).submit();
+        }
+    }
+</script>
+

@@ -1,0 +1,107 @@
+﻿@model List<RealEstateAdmin.Models.ModelDtos.Crm.CommissionListDto>
+@{
+    ViewData["Title"] = "Pay Commission";
+}
+
+    <div class="side-app">
+
+        <!-- Page-Header-->
+        <div class="page-header">
+            <h4 class="page-title">Pay Commission</h4>
+            <ol class="breadcrumb">
+                <li class="breadcrumb-item"><a href="~/">@RealEstateAdmin.Resources.Text.Home</a></li>
+                <li class="breadcrumb-item"><a href="~/commission">Commission Infromation</a></li>
+                <li class="breadcrumb-item active" aria-current="page">Pay Commission</li>
+            </ol>
+        </div>
+        <!--/Page-Header-->
+
+
+        <div class="row">
+
+            <div class="col-md-12 col-lg-12">
+                <div class="card">
+                    <div class="card-header">
+                        <div class="card-title">Pay Commission</div>
+                    </div>
+                    <div class="card-body">
+                        <div class="table-responsive">
+                            <table class="hover table-bordered border-top-0 border-bottom-0 grid">
+                                <thead>
+                                    <tr>
+                                        <th>Username</th>
+                                        <th>Title</th>
+                                        <th>Price</th>
+                                        <th>Commission</th>
+                                        <th>Earning</th>
+                                        <th></th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    @foreach (var item in Model)
+                                    {
+                                        <tr>
+                                            <td>@item.Username</td>
+                                            <td>@item.PropertyTitle</td>
+                                            <td>@item.PropertyPriceCurrency.Symbol @item.PropertyPrice.ToString("#,#.00")</td>
+                                            <td>% @item.CommissionPercent</td>
+                                            <td>@item.PropertyPriceCurrency.Symbol @Math.Round(item.Amount, 2, MidpointRounding.AwayFromZero).ToString("#,#.00")</td>
+                                            <td>
+                                                <a href="#" data-toggle="modal" class="payCommission" data-id="@item.Id" data-amount="@Math.Round(item.Amount, 0, MidpointRounding.AwayFromZero)" data-target="#PayCommission"><span class="fa fa-usd"></span></a>
+                                            </td>
+                                        </tr>
+                                    }
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+    </div>
+
+@section Scripts
+{
+    <script>
+        $("body").on("click", ".payCommission", function () {
+            $("#hId").val($(this).data("id"));
+            $("#txtAmount").val($(this).data("amount"));
+        });
+
+    </script>
+}
+
+<div class="modal fade" id="PayCommission" tabindex="-1" role="dialog" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <form asp-action="Pay" method="post">
+                <input type="hidden" name="cid" value="@ViewBag.cid" />
+                <input type="hidden" name="Id" id="hId" />
+                <div class="modal-header">
+                    <h5 class="modal-title" id="example-Modal3">Pay Commission</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+
+                    <div class="form-group">
+                        <label for="txtAmount">Amount</label>
+                        <input type="text" id="txtAmount" class="form-control" name="Amount" />
+                    </div>
+                    <div class="form-group">
+                        <label for="txtTransCode">Transaction Code</label>
+                        <input type="text" id="txtTransCode" class="form-control" name="PayCode" />
+                    </div>
+
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">@RealEstateAdmin.Resources.Text.Close</button>
+                    <button type="submit" class="btn btn-primary">Pay</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>

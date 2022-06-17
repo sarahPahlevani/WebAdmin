@@ -1,0 +1,213 @@
+﻿@model RealEstateAdmin.Models.FirstPage.RequestPage
+@{
+    ViewData["Title"] = RealEstateAdmin.Resources.Text.YourRequests;
+}
+
+
+
+<div class="side-app">
+
+    <!-- Page-Header-->
+    <div class="page-header">
+        <h4 class="page-title">@RealEstateAdmin.Resources.Text.YourRequests</h4>
+        <ol class="breadcrumb">
+            @*<li class="breadcrumb-item"><a href="#">Requests</a></li>*@
+            <li class="breadcrumb-item active" aria-current="page">@RealEstateAdmin.Resources.Text.Requests</li>
+        </ol>
+    </div>
+    <!--/Page-Header-->
+
+    <div class="row">
+
+        <div class="col-md-12 col-lg-12">
+            <div class="card">
+                <div class="card-header">
+                    <div class="card-title">@RealEstateAdmin.Resources.Text.YourRequests</div>
+                </div>
+                <div class="card-body">
+                    <div class="table-responsive">
+                        <table class="hover table-bordered border-top-0 border-bottom-0 grid" data-sort-col="3" data-sort-order="desc">
+                            <thead>
+                                <tr>
+                                    <th>@RealEstateAdmin.Resources.Text.Type</th>
+                                    <th>@RealEstateAdmin.Resources.Text.SharedInfo</th>
+                                    <th>@RealEstateAdmin.Resources.Text.Title</th>
+                                    <th>@RealEstateAdmin.Resources.Text.Date</th>
+                                    <th>@RealEstateAdmin.Resources.Text.Name</th>
+                                    <th>@RealEstateAdmin.Resources.Text.Phone</th>
+                                    <th>@RealEstateAdmin.Resources.Text.Email</th>
+                                    <th>@RealEstateAdmin.Resources.Text.Status</th>
+                                    @*<th>Actions</th>*@
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @if (Model.YourRequest != null)
+                                {
+                                    @foreach (var item in Model.YourRequest.OrderByDescending(r => r.DateCreated))
+                                    {
+                                <tr>
+                                    <td>
+                                        @item.RequestTypeName
+                                        <div><a href="~/estate/@item.PropertyId/summary" style="font-size: 11px; color: #999;">@item.PropertyTitle</a></div>
+                                    </td>
+                                    <td>@item.UserAccountSharedFullname<br /><span style="font-size: 11px; color: #999;">@item.NetworkSharedName</span></td>
+                                    <td>@item.Title</td>
+                                    <td>@item.DateCreated.ToString("yyyy-MM-dd HH:mm")</td>
+                                    <td>
+                                        @if (item.UserAccountIdRequester.HasValue)
+                                        {
+                                            <text>@item.RequesterFullname</text>
+                                        }
+                                        else
+                                        {
+                                            if (string.IsNullOrEmpty(item.RequesterFullname))
+                                            {
+                                                <span class="badge badge-warning"> @RealEstateAdmin.Resources.Text.Empty </span>
+                                            }
+                                            else
+                                            {
+                                                <text>@item.RequesterFullname</text>
+                                            }
+                                        }
+                                    </td>
+                                    <td>
+                                        @if (item.UserAccountIdRequester.HasValue)
+                                        {
+                                            <text>@item.RequesterPhone</text>
+                                        }
+                                        else
+                                        {
+                                            if (string.IsNullOrEmpty(item.RequesterPhone))
+                                            {
+                                        <span class="badge badge-warning"> @RealEstateAdmin.Resources.Text.Empty </span>
+                                            }
+                                            else
+                                            {
+                                                <text>@item.RequesterPhone</text>
+                                            }
+                                        }
+                                    </td>
+                                    <td>
+                                        @if (item.UserAccountIdRequester.HasValue)
+                                        {
+                                            <text>@item.RequesterEmail</text>
+                                        }
+                                        else
+                                        {
+                                            if (string.IsNullOrEmpty(item.RequesterEmail))
+                                            {
+                                        <span class="badge badge-warning"> @RealEstateAdmin.Resources.Text.Empty </span>
+                                            }
+                                            else
+                                            {
+                                                <text>@item.RequesterEmail</text>
+                                            }
+                                        }
+                                    </td>
+                                    <td>
+                                        @{
+                                            //var state = item.States.OrderByDescending(r => r.Id).FirstOrDefault();
+                                            @if (string.IsNullOrEmpty(item.LatestStateName))
+                                            {
+                                                @*<a href="~/requests/ChangeStatus/@item.Id" class="btn btn-success btn-sm">
+                    <span data-toggle="tooltip" data-placement="top" data-original-title="@RealEstateAdmin.Resources.Text.ChangeStatus">---</span>
+                </a>*@
+                                                <text>---</text>
+                                            }
+                                            else
+                                            {
+                                                if (item.LatestStateIsFinish.GetValueOrDefault(false))
+                                                {
+                                                    <a href="~/requests/ChangeStatus/@item.Id" class="btn btn-success btn-sm">
+                                                        <span data-toggle="tooltip" data-placement="top" data-original-title="@RealEstateAdmin.Resources.Text.ChangeStatus">@item.LatestStateName</span>
+                                                    </a>
+                                                }
+                                                else 
+                                                { 
+                                                    <a href="~/requests/ChangeStatus/@item.Id" class="btn btn-dark btn-sm">
+                                                        <span data-toggle="tooltip" data-placement="top" data-original-title="@RealEstateAdmin.Resources.Text.ChangeStatus">@item.LatestStateName</span>
+                                                    </a>
+                                                }
+                                            }
+                                        }
+                                    </td>
+                                    @*<td>
+            <span class="fa fa-info-circle text-info" data-toggle="tooltip" data-placement="top" title="" data-original-title="more info"></span>
+            <span class="fa fa-pencil-square-o" data-propertyId="@item.Id" data-toggle="tooltip" data-placement="top" title="" data-original-title="edit"></span>
+        </td>*@
+                                </tr>
+                                    }
+                                }
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+@*@if (Model.YourRequest != null)
+    {
+        //foreach (var item in Model.YourRequest)
+        //{
+            @Html.Partial("_ChangeStatus", item)
+        //}
+    }*@
+
+<!-- Message Modal -->
+@*<div class="modal fade" id="setStatusModal" tabindex="-1" role="dialog" aria-hidden="true">
+        <div class="modal-dialog modal-lg" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="example-Modal3">Change Status</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <form asp-action="ChangeStatus" method="post" asp-controller="Requests" id="frmChangeStatus">
+                        <div class="form-group">
+                            <label class="form-label"> Steps</label>
+                            <select class="form-control select2-show-search" name="WorkflowId" id="drpWorkflow">
+                                <option value="0">Step1</option>
+                                <option value="0">Step2</option>
+                                <option value="0">Step3</option>
+                                <option value="0">Step4</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+
+                        </div>
+                        <div class="form-group">
+                            <label for="Description" class="form-control-label">Description:</label>
+                            <textarea class="form-control" id="description" name="description" placeholder="Description:"></textarea>
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                    <button type="button" id="btnChangeStatus" class="btn btn-primary">Save</button>
+                </div>
+            </div>
+        </div>
+    </div>*@
+
+@section Scripts
+{
+    <script>
+
+        $('body').on("click", ".assignToAgent", function () {
+            //alert($(this).attr("data-id"));
+            $("#requestid").val($(this).attr("data-id"));
+            $("#drpnewagentid").val($(this).data("agentId"))
+        });
+        $('body').on("click", "#saveAssign", function () {
+            if (confirm('@RealEstateAdmin.Resources.Text.AreYouSure')) {
+                document.getElementById('submitForm').submit();
+            }
+        });
+
+    </script>
+}

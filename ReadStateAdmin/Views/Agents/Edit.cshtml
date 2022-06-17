@@ -1,0 +1,129 @@
+﻿@model RealEstateAdmin.Models.ModelDtos.Organization.AgentAccountDto
+
+@{
+    ViewData["Title"] = RealEstateAdmin.Resources.Text.Edit + " " + RealEstateAdmin.Resources.Text.Agent;
+}
+
+<div class="side-app">
+
+    <!--Page-Header-->
+    <div class="page-header">
+        <h4 class="page-title">@RealEstateAdmin.Resources.Text.Edit @RealEstateAdmin.Resources.Text.Agent</h4>
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item"><a href="~/">@RealEstateAdmin.Resources.Text.Home</a></li>
+            <li class="breadcrumb-item"><a href="~/agents">@RealEstateAdmin.Resources.Text.AgentsList</a></li>
+            <li class="breadcrumb-item active" aria-current="page">@RealEstateAdmin.Resources.Text.Create @RealEstateAdmin.Resources.Text.Agent</li>
+        </ol>
+    </div>
+    <!--/Page-Header-->
+    <!-- end row -->
+    <div class="row">
+        <div class="col-md-12">
+            <div class="card m-b-20">
+                <div class="card-header">
+                    <h3 class="card-title">@RealEstateAdmin.Resources.Text.Edit @RealEstateAdmin.Resources.Text.Agent</h3>
+                </div>
+                <div class="card-body">
+                    <form asp-action="Edit" asp-controller="Agents" method="post">
+                        @Html.HiddenFor(m => m.AgentId)
+                        @Html.HiddenFor(m => m.UserId)
+                        <div class="form-row">
+                            <div class="form-group col-md-4">
+                                <div class="form-group">
+                                    <label class="form-label" for="FirstName">@RealEstateAdmin.Resources.Text.Firstname</label>
+                                    <input type="text" class="form-control" asp-for="@Model.FirstName" placeholder="First Name">
+
+                                </div>
+                            </div>
+                            <div class="form-group col-md-4">
+                                <div class="form-group">
+                                    <label class="form-label" for="LastName">@RealEstateAdmin.Resources.Text.Lastname</label>
+                                    <input type="text" class="form-control" asp-for="@Model.LastName" placeholder="Last Name">
+                                </div>
+                            </div>
+                            <div class="form-group col-md-4">
+                                <div class="form-group">
+                                    <label class="form-label" for="exampleInputEmail1">@RealEstateAdmin.Resources.Text.MiddleName</label>
+                                    <input type="text" class="form-control" asp-for="@Model.MiddleName" placeholder="Enter Middle name">
+                                </div>
+                            </div>
+                            <div class="form-group col-md-4">
+                                <div class="form-group">
+                                    <label class="form-label" for="exampleInputEmail1">@RealEstateAdmin.Resources.Text.Username</label>
+                                    <input type="text" class="form-control" asp-for="@Model.UserName" placeholder="Enter Username">
+                                </div>
+                            </div>
+
+                            @*<div class="form-group col-md-4">
+                                <div class="form-group">
+                                    <label class="form-label" for="exampleInputEmail1">Password</label>
+                                    <input type="password" class="form-control" asp-for="@Model.PasswordSalt" placeholder="Enter Password">
+                                </div>
+                            </div>*@
+
+                            <div class="form-group col-md-4">
+                                <div class="form-group">
+                                    <label class="form-label" for="exampleInputEmail1">@RealEstateAdmin.Resources.Text.Email</label>
+                                    <input type="email" class="form-control" asp-for="@Model.Email" placeholder="Enter Email">
+                                </div>
+                            </div>
+
+                            @*<div class="form-group col-md-4">
+                                <div class="form-group">
+                                    <label class="form-label" for="exampleInputEmail1">Phone1</label>
+                                    <input type="text" class="form-control" asp-for="@Model.Phone01" placeholder="Enter Phone1">
+                                </div>
+                            </div>
+
+                            <div class="form-group col-md-4">
+                                <div class="form-group">
+                                    <label class="form-label" for="exampleInputEmail1">Phone2</label>
+                                    <input type="text" class="form-control" asp-for="@Model.Phone02" placeholder="Enter Phone2">
+                                </div>
+                            </div>
+
+                            <div class="form-group col-md-4">
+                                <div class="form-group">
+                                    <label class="form-label" for="exampleInputEmail1">Address01</label>
+                                    <input type="text" class="form-control" asp-for="@Model.Address01" placeholder="Enter Address01">
+                                </div>
+                            </div>
+
+                            <div class="form-group col-md-4">
+                                <div class="form-group">
+                                    <label class="form-label" for="exampleInputEmail1">Address02</label>
+                                    <input type="text" class="form-control" asp-for="@Model.Address02" placeholder="Enter Address02">
+                                </div>
+                            </div>
+                            <div class="form-group col-md-4">
+                                <div class="form-group">
+                                    <label class="form-label" for="exampleInputEmail1">Zip Code</label>
+                                    <input type="text" class="form-control" asp-for="@Model.ZipCode" placeholder="Enter Zip Code">
+                                </div>
+                            </div>*@
+                            <div class="form-group col-md-4">
+                                <div class="form-group">
+                                    @*<label class="custom-control custom-checkbox">
+                                        <input type="checkbox" class="custom-control-input" name="IsResponsible" @if (Model.IsResponsible) { <text>checked="checked"</text>}>
+                                        <span class="custom-control-label">Is responsible?</span>
+                                    </label>*@
+                                    <label class="custom-control custom-checkbox"></label>
+                                    <label class="custom-control custom-checkbox">
+                                        <input type="checkbox" class="custom-control-input" id="HasPublishingAuthorization" name="HasPublishingAuthorization" value="true" @if (Model.HasPublishingAuthorization) { <text>checked="checked"</text>}>
+                                        <span class="custom-control-label">@RealEstateAdmin.Resources.Text.HasPublishingAuthorization</span>
+                                    </label>
+                                </div>
+                            </div>
+                            
+                        </div>
+                        <div class="text-center">
+                            <a href="~/agents" class="btn mx-2 btn-default"> <i class="fa fa-ban"></i> @RealEstateAdmin.Resources.Text.Cancel</a>
+                            <button type="submit" class="btn mx-2 btn-primary "><i class="fa fa-dot-circle-o"></i> @RealEstateAdmin.Resources.Text.Save</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+

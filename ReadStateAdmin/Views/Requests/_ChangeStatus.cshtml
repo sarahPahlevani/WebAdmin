@@ -1,0 +1,76 @@
+﻿@model RealEstateAdmin.Models.ModelDtos.Crm.RequestListDto
+
+@{
+    Layout = "";
+
+    var latestStatus = Model.States.OrderByDescending(r => r.WorkflowStep.StepNumber).FirstOrDefault();
+}
+
+<!-- Stepper CSS -->
+<link href="~/css/stepper.css" rel="stylesheet">
+
+<div id="setStatusModal_@Model.Id" class="modal fade" tabindex="-1" role="dialog" aria-hidden="true">
+    <div class="modal-dialog modal-lg" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="example-Modal3">Change Status</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <form method="post" asp-action="ChangeStatus" asp-controller="Requests" id="signup-form">
+                    <div>
+                        <ul class="request-steps">
+                            @{ var i = 1; }
+                            @foreach (var item in Model.Workflow.WorkflowStep.OrderBy(r=>r.StepNumber))
+                            {
+                                var active = "";
+                                if (latestStatus != null)
+                                {
+                                    active = item.StepNumber <= latestStatus.WorkflowStep.Id ? "active" : "";
+                                }
+                                <li class="item @active" data-contentId="request_tab_content_@item.Id">
+                                    <span>@i</span>
+                                    @item.Name
+                                </li>
+                                i++;
+                            }
+                        </ul>
+
+                        <div class="request-step-contents">
+                            @{ i = 0;}
+                            @foreach (var item in Model.Workflow.WorkflowStep.OrderBy(r=>r.StepNumber))
+                            {
+                            <div class="item" id="request_tab_content_@item.Id" @if (i > 0) { <text> style="display: none;" </text> }>
+                                <h4>@item.Name</h4>
+
+                                <div class="form-group">
+                                    <label for="Description" class="form-control-label">@RealEstateAdmin.Resources.Text.Description</label>
+                                    <textarea class="form-control" id="description" name="description" placeholder="Description:" rows="7"></textarea>
+                                </div>
+                                <div class="form-group">
+                                    <div class="custom-control custom-checkbox">
+                                        <input type="checkbox" class="custom-control-input" id="chkIsDone" name="chkIsDone">
+                                        <label class="custom-control-label" for="chkIsDone">Is done?</label>
+                                    </div>
+                                </div>
+                            </div>
+                            i++;
+                            }
+                        </div>
+                    </div>
+                    <div class="form-group">
+
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">@RealEstateAdmin.Resources.Text.Close</button>
+                <button type="submit" class="btn btn-primary" id="btnChangeStatus">@RealEstateAdmin.Resources.Text.Save</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+

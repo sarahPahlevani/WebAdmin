@@ -1,0 +1,253 @@
+﻿@using Microsoft.AspNetCore.Http;
+@using RealEstateAdmin.Models.ModelDtos.RBAC;
+@inject IHttpContextAccessor httpContextAccessor
+@model List<UserGroupPermissionDto>
+@{
+    ViewData["Title"] = RealEstateAdmin.Resources.Text.PageManagment;
+
+    var userGroupId = (int)ViewBag.UserGroupId;
+    var userGroupName = (string)ViewBag.UserGroupName;
+    var menuList = (List<MenuDto>)ViewBag.MenuList;
+}
+
+@section PageMap{
+    <!-- Page-Header-->
+    <div class="page-header">
+        <h4 class="page-title">@RealEstateAdmin.Resources.Text.PageManagment @RealEstateAdmin.Resources.Text.Description</h4>
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item"><a href="~/">@RealEstateAdmin.Resources.Text.Home</a></li>
+            <li class="breadcrumb-item active" aria-current="page"> @RealEstateAdmin.Resources.Text.PageManagment @RealEstateAdmin.Resources.Text.List</li>
+        </ol>
+    </div>
+    <!--/Page-Header-->
+}
+
+
+<div class="row">
+    <div class="col-md-12">
+        <div class="card">
+            <div class="card-header">
+                <div class="card-title">@RealEstateAdmin.Resources.Text.PageManagment @RealEstateAdmin.Resources.Text.Description</div>
+                <div class="new-button-ontable"> <span class="btn btn-info btn-sm create-permission" data-toggle="modal" data-target="#createPermissionModal" data-userGroupId="@userGroupId"> <i class="fa fa-plus"></i> @RealEstateAdmin.Resources.Text.New</span></div>
+            </div>
+            <div class="card-body">
+                <div class="table-responsive">
+                    <table class="hover table-bordered border-top-0 border-bottom-0 grid">
+                        <thead>
+                            <tr>
+                                <th class="wd-15p">@RealEstateAdmin.Resources.Text.RoleType</th>
+                                <th class="wd-20p">@RealEstateAdmin.Resources.Text.Menu</th>
+                                <th class="wd-25p">@RealEstateAdmin.Resources.Text.ReadPermission</th>
+                                <th class="wd-15p">@RealEstateAdmin.Resources.Text.UpdatePermission</th>
+                                <th class="wd-10p">@RealEstateAdmin.Resources.Text.DeletePermission</th>
+                                <th class="wd-25p">@RealEstateAdmin.Resources.Text.Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach (var item in Model)
+                            {
+                                <tr>
+
+                                    <td>@item.UserGroup.name</td>
+                                    <td>@item.Menu.Name</td>
+                                    <td>
+                                        @if (item.ReadPermission)
+                                        {
+                                            <i class="fa fa-check badge-success"></i>
+                                        }
+                                        else
+                                        {
+                                            <i class="fa fa-times badge-warning"></i>
+                                        }
+                                    </td>
+                                    <td>
+                                        @if (item.UpdatePermission)
+                                        {
+                                            <i class="fa fa-check badge-success"></i>
+                                        }
+                                        else
+                                        {
+                                            <i class="fa fa-times badge-warning"></i>
+                                        }
+                                    </td>
+                                    <td>
+                                        @if (item.DeletePermission)
+                                        {
+                                            <i class="fa fa-check badge-success"></i>
+                                        }
+                                        else
+                                        {
+                                            <i class="fa fa-times badge-warning"></i>
+                                        }
+                                    </td>
+                                    <td class="action">
+                                        <span class="text-info edit-permission" data-id="@item.Id" data-menu="@item.Menu.Name" data-role="@item.UserGroup.name" data-read="@item.ReadPermission" data-update="@item.UpdatePermission" data-delete="@item.DeletePermission" data-toggle="modal" data-target="#editPermissionModal">
+                                            <i class="fa fa-pencil-square-o" data-toggle="tooltip" data-placement="top" title="" data-original-title="@RealEstateAdmin.Resources.Text.MoreInfoAndEdit"></i>
+                                        </span>
+
+                                        <span class="fa fa-trash-o text-danger" data-id="@item.Id" onclick="publish('delete-'+@item.Id,'@RealEstateAdmin.Resources.Text.AreYouSure');" data-toggle="tooltip" data-placement="top" title="" data-original-title="@RealEstateAdmin.Resources.Text.DeleteThisItem"></span>
+                                        <form action="~/PageManagment/Delete" method="post" style="display: inline-block" id="delete-@item.Id">
+                                            <input type="hidden" name="UserGroupPermissionId" value="@item.Id" />
+                                        </form>
+                                    </td>
+                                </tr>
+                            }
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<!-- New Modal -->
+<div class="modal fade" id="createPermissionModal" tabindex="-1" role="dialog" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">@RealEstateAdmin.Resources.Text.Permissions</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <form asp-action="Create" method="post" id="frmCreatePermission">
+                    <input type="hidden" name="newUserGroupId" id="newUserGroupId" value="@userGroupId" />
+                    <div class="form-group">
+                        <label class="form-label">@RealEstateAdmin.Resources.Text.RoleType</label>
+                        <input id="newRoleName" class="form-control" value="@userGroupName" disabled />
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">@RealEstateAdmin.Resources.Text.Menu</label>
+                        <select name="newMenuId" id="newMenuId" class="form-control select2-show-search">
+                            @foreach (var item in menuList)
+                            {
+                                <option value="@item.Id">@item.Name</option>
+                            }
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <div class="custom-control custom-checkbox">
+                            <input type="checkbox" class="custom-control-input" name="newRead" id="chkNewRead" value="true">
+                            <label class="custom-control-label" for="chkNewRead">@RealEstateAdmin.Resources.Text.ReadPermission</label>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <div class="custom-control custom-checkbox">
+                            <input type="checkbox" class="custom-control-input" name="newUpdate" id="chkNewUpdate" value="true">
+                            <label class="custom-control-label" for="chkNewUpdate">@RealEstateAdmin.Resources.Text.UpdatePermission</label>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <div class="custom-control custom-checkbox">
+                            <input type="checkbox" class="custom-control-input" name="newDelete" id="chkNewDelete" value="true">
+                            <label class="custom-control-label" for="chkNewDelete">@RealEstateAdmin.Resources.Text.DeletePermission</label>
+                        </div>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" id="btnCreate" class="btn btn-primary">@RealEstateAdmin.Resources.Text.Save</button>
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">@RealEstateAdmin.Resources.Text.Close</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<!-- Edit Modal -->
+<div class="modal fade" id="editPermissionModal" tabindex="-1" role="dialog" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">@RealEstateAdmin.Resources.Text.Permissions</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <form asp-action="Edit" method="post" id="frmEditPermission">
+                    <input type="hidden" name="editId" id="editId" value="" />
+                    <div class="form-group">
+                        <label class="form-label">@RealEstateAdmin.Resources.Text.RoleType</label>
+                        <input id="txtRoleName" class="form-control" value="" disabled />
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">@RealEstateAdmin.Resources.Text.Menu</label>
+                        <input id="txtMenuName" class="form-control" value="" disabled />
+                    </div>
+                    <div class="form-group">
+                        <div class="custom-control custom-checkbox">
+                            <input type="checkbox" class="custom-control-input" name="editRead" id="chkEditRead" value="true">
+                            <label class="custom-control-label" for="chkEditRead">@RealEstateAdmin.Resources.Text.ReadPermission</label>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <div class="custom-control custom-checkbox">
+                            <input type="checkbox" class="custom-control-input" name="editUpdate" id="chkEditUpdate" value="true">
+                            <label class="custom-control-label" for="chkEditUpdate">@RealEstateAdmin.Resources.Text.UpdatePermission</label>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <div class="custom-control custom-checkbox">
+                            <input type="checkbox" class="custom-control-input" name="editDelete" id="chkEditDelete" value="true">
+                            <label class="custom-control-label" for="chkEditDelete">@RealEstateAdmin.Resources.Text.DeletePermission</label>
+                        </div>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" id="btnEdit" class="btn btn-primary">@RealEstateAdmin.Resources.Text.Save</button>
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">@RealEstateAdmin.Resources.Text.Close</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+@section Scripts{
+
+    <script>
+
+        $('body').on("click", ".create-permission", function () {
+            $("#newMenuId").val(0);
+            $("#chkNewRead").prop("checked", false);
+            $("#chkNewUpdate").prop("checked", false);
+            $("#chkNewDelete").prop("checked", false);
+        });
+
+
+        $('body').on("click", ".edit-permission", function () {
+            $("#editId").val($(this).data("id"));
+            $("#txtMenuName").val($(this).data("menu"));
+            $("#txtRoleName").val($(this).data("role"));
+
+            var isread = $(this).data("read") == "True" ? true : false;
+            var isupdate = $(this).data("update") == "True" ? true : false;
+            var isdelete = $(this).data("delete") == "True" ? true : false;
+            $("#chkEditRead").prop("checked", isread);
+            $("#chkEditUpdate").prop("checked", isupdate);
+            $("#chkEditDelete").prop("checked", isdelete);
+        });
+
+
+
+        $("#btnCreate").on("click", function () {
+            $("#frmCreatePermission").submit();
+        });
+
+        $("#btnEdit").on("click", function () {
+            $("#frmEditPermission").submit();
+        });
+
+        function publish(id, ttext) {
+            if (confirm(ttext)) {
+                document.getElementById(id).submit();
+            }
+        }
+
+    </script>
+
+}

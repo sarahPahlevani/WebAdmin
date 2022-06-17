@@ -1,0 +1,155 @@
+﻿@using Microsoft.AspNetCore.Http;
+@inject IHttpContextAccessor httpContextAccessor
+@model List<RealEstateAgency.Dtos.Other.PaginationListDtos.PropertyPaginationListDto>
+@{
+    ViewData["Title"] = @RealEstateAdmin.Resources.Text.PropertyList;
+
+    var _user = new CurrentUser(httpContextAccessor).Get;
+}
+
+@section PageMap{
+    <!-- Page-Header-->
+    <div class="page-header">
+        <h4 class="page-title">@RealEstateAdmin.Resources.Text.Estate @RealEstateAdmin.Resources.Text.Description</h4>
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item"><a href="~/">@RealEstateAdmin.Resources.Text.Home</a></li>
+            <li class="breadcrumb-item active" aria-current="page">@RealEstateAdmin.Resources.Text.Estate @RealEstateAdmin.Resources.Text.List</li>
+        </ol>
+    </div>
+    <!--/Page-Header-->
+}
+
+
+<div class="row">
+    <div class="col-md-12 col-lg-12">
+        <div class="card">
+            <div class="card-header">
+                <div class="card-title">@RealEstateAdmin.Resources.Text.Estate @RealEstateAdmin.Resources.Text.Description</div>
+                <div class="new-button-ontable"> <a class="btn btn-info btn-sm" href="~/property/create"> <i class="fa fa-plus"></i> @RealEstateAdmin.Resources.Text.New @RealEstateAdmin.Resources.Text.Estate</a></div>
+            </div>
+            <div class="card-body">
+                <div class="table-responsive">
+                    <table class="table table-striped table-bordered grid">
+                        <thead>
+                            <tr>
+                                <th class="wd-15p">@RealEstateAdmin.Resources.Text.Title</th>
+                                <th class="wd-15p">@RealEstateAdmin.Resources.Text.Price</th>
+                                <th class="wd-20p">@RealEstateAdmin.Resources.Text.PropertyType</th>
+                                <th class="wd-15p">@RealEstateAdmin.Resources.Text.PropertyStatus</th>
+                                <th class="wd-10p">@RealEstateAdmin.Resources.Text.PropertyLabel</th>
+                                <th class="wd-25p">@RealEstateAdmin.Resources.Text.Status</th>
+                                <th class="wd-25p">@RealEstateAdmin.Resources.Text.Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach (var item in Model)
+                            {
+                                <tr>
+                                    <td>@item.Title</td>
+                                    <td><text>@item.PriceSymbol @item.CalculatedPriceUnit</text></td>
+                                    <td>@item.PropertyTypeName</td>
+                                    <td>@item.PropertyStatusName</td>
+                                    <td>@item.PropertyLabelName</td>
+                                    <td>
+                                        @if (item.IsPublished)
+                                        {
+                                            <span class="badge badge-success">@RealEstateAdmin.Resources.Text.Published</span>
+                                        }
+                                        else if (!item.IsPublished && item.CheckReadyPublish /*&& item.ReadyForPublish*/)
+                                        {
+                                            <span class="badge badge-warning">@RealEstateAdmin.Resources.Text.ReadyForPublish</span>
+                                        }
+                                        else
+                                        {
+                                            <span class="badge badge-danger">@RealEstateAdmin.Resources.Text.NotReady</span>
+
+                                        }
+                                    </td>
+                                    <td class="action">
+                                        <a href="~/estate/@item.Id/summary"> <span class="fa fa-pencil-square-o" data-propertyId="@item.Id" style="color: #000aff;" data-toggle="tooltip" data-placement="top" title="" data-original-title="@RealEstateAdmin.Resources.Text.MoreInfoAndEdit"></span></a>
+                                        <span class="fa fa-trash-o" data-propertyId="@item.Id" onclick="publish('delete-'+@item.Id,'@RealEstateAdmin.Resources.Text.AreYouSure');" style="color: red;" data-toggle="tooltip" data-placement="top" title="" data-original-title="@RealEstateAdmin.Resources.Text.DeleteThisItem"></span>
+
+                                        <form action="~/Property/Delete" method="post" style="display: inline-block" id="delete-@item.Id">
+                                            <input type="hidden" name="propertyId" value="@item.Id" />
+                                        </form>
+
+                                        @*<button type="button" class="btn btn-pink">View modal</button>*@
+                                        @*<span class="fa fa-star-o" data-propertyId="@item.Id" onclick="changeCommision(@item.Id);" data-toggle="modal" data-target="#smallModal" style="color: red;" data-toggle="tooltip" data-placement="top" title="" data-original-title="Change commision"></span>*@
+
+                                        @if (_user.HasPublishingAuthorization.GetValueOrDefault(false))
+                                        {
+                                            @if (item.IsPublished)
+                                            {
+                                                <span class="fa fa-times-rectangle-o" data-propertyId="@item.Id" onclick="publish('unpublish-'+@item.Id , '@RealEstateAdmin.Resources.Text.AreYouSure');" style="color: red;" data-toggle="tooltip" data-placement="top" title="" data-original-title="@RealEstateAdmin.Resources.Text.Unpublish"></span>
+                                                <form action="~/Property/UnPublish" method="post" id="unpublish-@item.Id">
+                                                    <input type="hidden" name="propertyId" value="@item.Id" />
+                                                </form>
+                                            }
+                                            else if (!item.IsPublished && item.CheckReadyPublish /*&& item.ReadyForPublish*/)
+                                            {
+                                                <span class="fa fa-check-square-o" data-propertyId="@item.Id" onclick="publish('publish-'+@item.Id , '@RealEstateAdmin.Resources.Text.AreYouSure');" style="color: green;" data-toggle="tooltip" data-placement="top" title="" data-original-title="@RealEstateAdmin.Resources.Text.Publish"></span>
+                                                <form action="~/Property/publish" method="post" id="publish-@item.Id">
+                                                    <input type="hidden" name="propertyId" value="@item.Id" />
+                                                </form>
+                                            }
+                                        }
+                                    </td>
+                                </tr>
+                            }
+                        </tbody>
+                        @*
+                            <tfoot>
+                                <tr>
+                                    <th>Name</th>
+                                    <th>Position</th>
+                                    <th>Office</th>
+                                    <th>Age</th>
+                                    <th>Start date</th>
+                                    <th>Salary</th>
+                                </tr>
+                            </tfoot>*@
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<div id="smallModal" class="modal fade" aria-hidden="true" style="display: none;">
+    <div class="modal-dialog modal-sm" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h6 class="tx-14 mg-b-0 tx-uppercase tx-inverse tx-bold">@RealEstateAdmin.Resources.Text.ChangeCommition</h6>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">×</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <form action="~/Property/changeCommition" method="post" id="changeCommitionForm">
+                    <input type="hidden" name="PropId" id="PropId" value="" />
+                    <input type="number" class="form-control" name="txtChangeCommision" id="txtChangeCommision" value="" />
+                </form>
+            </div><!-- modal-body -->
+            <div class="modal-footer">
+                <button type="button" onclick="document.getElementById('changeCommitionForm').submit();" class="btn btn-primary">@RealEstateAdmin.Resources.Text.SaveChanges</button>
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">@RealEstateAdmin.Resources.Text.Close</button>
+            </div>
+        </div>
+    </div><!-- modal-dialog -->
+</div>
+
+
+
+<script>
+    function publish(id, ttext) {
+        if (confirm(ttext)) {
+            document.getElementById(id).submit();
+        }
+    }
+
+    function changeCommision(propId) {
+        $("#PropId").val(propId);
+    }
+</script>
+

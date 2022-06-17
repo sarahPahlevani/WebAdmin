@@ -1,0 +1,167 @@
+﻿@using RealEstateAdmin.Models.ModelDtos.BasicInformation;
+@using RealEstateAdmin.Models.ModelDtos.Infrastructure;
+@model RealEstateAdmin.Models.ModelDtos.BasicInformation.PropertyFeatureDto
+
+@{
+    ViewData["Title"] = RealEstateAdmin.Resources.Text.Edit + " " + RealEstateAdmin.Resources.Text.PropertyFeature;
+
+    var langList = (IEnumerable<PropertyFeatureTranslateDto>)ViewBag.LangList;
+    var langs = (IEnumerable<LanguageDto>)ViewBag.Langs;
+
+    var blockList = new List<int>();
+    blockList.Add(langs.FirstOrDefault(r => r.IsDefault).Id);
+    blockList.AddRange(langList.Select(r => r.LanguageId).ToList());
+    langs = langs.Where(r => !blockList.Contains(r.Id));
+}
+
+
+
+<div class="side-app">
+
+    <!--Page-Header-->
+    <div class="page-header">
+        <h4 class="page-title">@RealEstateAdmin.Resources.Text.Edit @RealEstateAdmin.Resources.Text.PropertyFeature</h4>
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item"><a href="~/">@RealEstateAdmin.Resources.Text.Home</a></li>
+            <li class="breadcrumb-item"><a href="~/propertyfeature">@RealEstateAdmin.Resources.Text.PropertyFeatureList</a></li>
+            <li class="breadcrumb-item active" aria-current="page">@RealEstateAdmin.Resources.Text.Edit @RealEstateAdmin.Resources.Text.PropertyFeature</li>
+        </ol>
+    </div>
+    <!--/Page-Header-->
+
+    <div class="row">
+
+        <div class="col-12">
+            <div class="card m-b-20">
+                <div class="card-header">
+                    <h3 class="card-title">@RealEstateAdmin.Resources.Text.Edit @RealEstateAdmin.Resources.Text.PropertyFeature</h3>
+                </div>
+                <div class="card-body">
+                    <div class="row">
+                        <div class="col-md-12">
+                            <form asp-action="Edit">
+                                <input type="hidden" asp-for="Id" name="Id" />
+                                <div class="form-group">
+                                    <label asp-for="Name" class="control-label"></label>
+                                    <input asp-for="Name" class="form-control" />
+                                    <span asp-validation-for="Name" class="text-danger"></span>
+                                </div>
+                                <div class="form-group">
+                                    <i id="showIcon" class="@Model.Icon" style="font-size: 50px;"></i>
+                                    <input asp-for="Icon" type="hidden" value="@Model.Icon" />
+                                    <div class="row" style="max-height: 200px; overflow: auto; border: 1px solid #ccc; padding: 10px;">
+                                        @foreach (var faItem in (List<string>)ViewBag.FaList)
+                                        {
+                                            <div class="col-1 mb-2 text-center">
+                                                <a href="#" class="list-icon"><i class="fa @faItem" style="font-size: 25px;"></i></a>
+                                            </div>
+                                        }
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <input type="submit" value="Save" class="btn btn-primary" />
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- end col -->
+
+    </div>
+    <!-- end row -->
+
+    <div class="row">
+
+        <div class="col-xl-12">
+            <div class="card m-b-20">
+                <div class="card-header">
+                    <h3 class="card-title">@RealEstateAdmin.Resources.Text.TranslateList</h3>
+                </div>
+                <div class="card-body">
+                    @if (langs.Count() > 0)
+                    {
+                        <div class="row">
+                            <div class="col-12">
+                                <form asp-action="CreateLang">
+                                    <div class="form-row">
+                                        <input type="hidden" name="pfId" value="@Model.Id" />
+                                        <div class="form-group mb-2 col-4">
+                                            <select name="LangId" id="LangId" class="custom-select">
+                                                @foreach (var i in langs)
+                                                {
+                                                    <option value="@i.Id">@i.Code</option>
+                                                }
+                                            </select>
+                                            <span validation-for="LangId" class="text-danger"></span>
+                                        </div>
+                                        <div class="form-group mb-2 col-4">
+                                            <input type="text" name="lName" class="form-control" />
+                                            <span validation-for="lName" class="text-danger"></span>
+                                        </div>
+                                        <input type="submit" value="@RealEstateAdmin.Resources.Text.Add" class="btn btn-primary mb-2" />
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                    }
+
+                    <div class="row mt-5">
+                        <div class="col-md-12">
+                            <div class="table-responsive">
+                                <table class="hover table-bordered border-top-0 border-bottom-0 grid" data-searching="false" data-paging="false" data-info="false">
+                                    <thead>
+                                        <tr>
+                                            <th>@RealEstateAdmin.Resources.Text.Language</th>
+                                            <th>@RealEstateAdmin.Resources.Text.Name</th>
+                                            <th>@RealEstateAdmin.Resources.Text.Actions</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        @foreach (var item in langList)
+                                        {
+                                            <tr>
+                                                <td>@item.Language.Code</td>
+                                                <td>@item.Name</td>
+                                                <td>
+                                                    <a href="#" onclick="deleteItem('deletefrom-'+@item.Id);" data-toggle="tooltip" data-placement="top" title="" data-original-title="@RealEstateAdmin.Resources.Text.DeleteThisItem"><span class="fa fa-trash text-primary m-2" style="font-size:14pt;"></span></a>
+                                                    <form action="~/propertyfeature/deletelang" method="post" id="deletefrom-@item.Id">
+                                                        <input type="hidden" name="id" value="@item.Id" />
+                                                    </form>
+                                                </td>
+                                            </tr>
+                                        }
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- end col -->
+
+    </div>
+    <!-- end row -->
+
+</div>
+
+@section Scripts{
+    <script>
+    function deleteItem(id) {
+        if (confirm('@RealEstateAdmin.Resources.Text.AreYouSure')) {
+            document.getElementById(id).submit();
+        }
+    }
+    </script>
+
+    <script>
+        $('.list-icon').click(function () {
+            var val = $('i', this).attr('class');
+            $('#Icon').val(val);
+            $('#showIcon').attr('class', val);
+            return false;
+        });
+    </script>
+}

@@ -1,0 +1,140 @@
+﻿@using RealEstateAdmin.Models.ModelDtos.Infrastructure
+@model RealEstateAdmin.Models.ModelDtos.RBAC.UserAccountDto
+
+@{
+    ViewData["Title"] = RealEstateAdmin.Resources.Text.Edit + " " + @RealEstateAdmin.Resources.Text.User;
+}
+
+<div class="side-app">
+
+    <!--Page-Header-->
+    <div class="page-header">
+        <h4 class="page-title">@RealEstateAdmin.Resources.Text.Edit @RealEstateAdmin.Resources.Text.User</h4>
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item"><a href="~/">@RealEstateAdmin.Resources.Text.Home</a></li>
+            <li class="breadcrumb-item"><a href="~/users">@RealEstateAdmin.Resources.Text.User @RealEstateAdmin.Resources.Text.List</a></li>
+            <li class="breadcrumb-item active" aria-current="page">@RealEstateAdmin.Resources.Text.Edit @RealEstateAdmin.Resources.Text.User</li>
+        </ol>
+    </div>
+    <!--/Page-Header-->
+    <!-- end row -->
+    <div class="row">
+        <div class="col-md-12">
+            <div class="card m-b-20">
+                <div class="card-header">
+                    <h3 class="card-title">@RealEstateAdmin.Resources.Text.Edit @RealEstateAdmin.Resources.Text.User</h3>
+                </div>
+                <div class="card-body">
+                    <form asp-action="Edit" asp-controller="Users" method="post">
+                        @Html.HiddenFor(m => m.Id)
+                        <div class="form-row">
+                            <div class="form-group col-md-4">
+                                <div class="form-group">
+                                    <label class="form-label" for="FirstName">@RealEstateAdmin.Resources.Text.Firstname</label>
+                                    <input type="text" class="form-control" asp-for="@Model.FirstName">
+
+                                </div>
+                            </div>
+                            <div class="form-group col-md-4">
+                                <div class="form-group">
+                                    <label class="form-label" for="MiddleName">@RealEstateAdmin.Resources.Text.MiddleName</label>
+                                    <input type="text" class="form-control" asp-for="@Model.MiddleName">
+                                </div>
+                            </div>
+                            <div class="form-group col-md-4">
+                                <div class="form-group">
+                                    <label class="form-label" for="LastName">@RealEstateAdmin.Resources.Text.Lastname</label>
+                                    <input type="text" class="form-control" asp-for="@Model.LastName">
+                                </div>
+                            </div>
+
+                            <div class="form-group col-md-6">
+                                <div class="form-group">
+                                    <label class="form-label" for="exampleInputEmail1">@RealEstateAdmin.Resources.Text.Username</label>
+                                    <input type="text" class="form-control" asp-for="@Model.UserName">
+                                </div>
+                            </div>
+                            <div class="form-group col-md-6">
+                                <div class="form-group">
+                                    <label class="form-label" for="Email">@RealEstateAdmin.Resources.Text.Email</label>
+                                    <input type="email" class="form-control" asp-for="@Model.Email" placeholder="Enter Email">
+                                </div>
+                            </div>
+
+
+                            <div class="form-group col-md-6">
+                                <div class="form-group">
+                                    <label class="form-label" for="Phone01">@RealEstateAdmin.Resources.Text.Phone 1</label>
+                                    <input type="text" class="form-control" asp-for="@Model.Phone01">
+                                </div>
+                            </div>
+
+                            <div class="form-group col-md-6">
+                                <div class="form-group">
+                                    <label class="form-label" for="exampleInputEmail1">@RealEstateAdmin.Resources.Text.Phone 2</label>
+                                    <input type="text" class="form-control" asp-for="@Model.Phone02">
+                                </div>
+                            </div>
+
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label class="form-label" for="CountryId">Country</label>
+                                    <select name="CountryId" class="form-control select2-show-search" data-live-search="true" data-live-search-style="startsWith" data-placeholder="Choose one (with searchbox)">
+                                        @foreach (var item in (List<CountryDto>)ViewBag.CountryList)
+                                        {
+                                            if (Model.CountryId == item.Id)
+                                            {
+                                                <option value="@item.Id" selected="selected">@item.Name</option>
+                                            }
+                                            else
+                                            {
+                                                <option value="@item.Id">@item.Name</option>
+                                            }
+                                        }
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label class="form-label">City</label>
+                                    @Html.TextBoxFor(m => m.City, new { @class = "form-control" })
+                                </div>
+                            </div>
+                            <div class="form-group col-md-12">
+                                <div class="form-group">
+                                    <label class="form-label" for="Address01">@RealEstateAdmin.Resources.Text.Address 1</label>
+                                    <input type="text" class="form-control" asp-for="@Model.Address01">
+                                </div>
+                            </div>
+                            <div class="form-group col-md-12">
+                                <div class="form-group">
+                                    <label class="form-label" for="Address02">@RealEstateAdmin.Resources.Text.Address 2</label>
+                                    <input type="text" class="form-control" asp-for="@Model.Address02">
+                                </div>
+                            </div>
+
+                            <div class="form-group col-md-4">
+                                <div class="form-group">
+                                    <label class="form-label" for="ZipCode">@RealEstateAdmin.Resources.Text.ZipCode</label>
+                                    <input type="text" class="form-control" asp-for="@Model.ZipCode">
+                                </div>
+                            </div>
+                            <div class="form-group col-md-4">
+                                <div class="form-group">
+                                    <label class="form-label" for="VatCode">@RealEstateAdmin.Resources.Text.VatCode</label>
+                                    <input type="text" class="form-control" asp-for="@Model.VatCode">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="text-center">
+                            <a href="~/users" class="btn mx-2 btn-default"> <i class="fa fa-ban"></i> @RealEstateAdmin.Resources.Text.Cancel</a>
+                            <button type="submit" class="btn mx-2 btn-primary "><i class="fa fa-dot-circle-o"></i> @RealEstateAdmin.Resources.Text.Save</button>
+
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+

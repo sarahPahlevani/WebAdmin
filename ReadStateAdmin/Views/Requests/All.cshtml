@@ -1,0 +1,228 @@
+﻿@model RealEstateAdmin.Models.FirstPage.RequestPage
+@{
+    ViewData["Title"] = RealEstateAdmin.Resources.Text.AllRequest;
+}
+
+<style>
+    .assignToAgent {
+        cursor: pointer;
+    }
+</style>
+<div class="side-app">
+
+    <!-- Page-Header-->
+    <div class="page-header">
+        <h4 class="page-title">@RealEstateAdmin.Resources.Text.AllRequest</h4>
+        <ol class="breadcrumb">
+            @*
+                <li class="breadcrumb-item"><a href="#">Requests</a></li>*@
+            <li class="breadcrumb-item active" aria-current="page">@RealEstateAdmin.Resources.Text.Requests</li>
+        </ol>
+    </div>
+    <!--/Page-Header-->
+
+    <div class="row">
+
+        <div class="col-md-12 col-lg-12">
+            <div class="card">
+                <div class="card-header">
+                    <div class="card-title">@RealEstateAdmin.Resources.Text.AllRequest</div>
+                </div>
+                <div class="card-body">
+                    <div class="table-responsive">
+                        <table class="hover table-bordered border-top-0 border-bottom-0 grid" data-sort-col="3" data-sort-order="desc">
+                            <thead>
+                                <tr>
+                                    <th>@RealEstateAdmin.Resources.Text.Type</th>
+                                    <th>@RealEstateAdmin.Resources.Text.SharedInfo</th>
+                                    <th>@RealEstateAdmin.Resources.Text.Title</th>
+                                    <th>@RealEstateAdmin.Resources.Text.Date</th>
+                                    <th>@RealEstateAdmin.Resources.Text.Agent</th>
+                                    <th>@RealEstateAdmin.Resources.Text.State</th>
+                                    <th>@RealEstateAdmin.Resources.Text.Actions</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @if (Model.AllRequest != null)
+                                {
+                                    @foreach (var item in Model.AllRequest.OrderByDescending(r => r.DateCreated))
+                                    {
+                                        <tr>
+                                            <td>
+                                                @item.RequestTypeName
+                                                <div><a href="~/estate/@item.PropertyId/summary" style="font-size: 11px; color: #999;">@item.PropertyTitle</a></div>
+                                            </td>
+                                            <td>@item.UserAccountSharedFullname<br /><span style="font-size: 11px; color: #999;">@item.NetworkSharedName</span></td>
+                                            <td>@item.Title</td>
+                                            <td>@item.DateCreated.ToString("yyyy-MM-dd HH:mm")</td>
+                                            <td>
+                                                @if (!item.IsAssigned)
+                                                {
+                                                <span class="badge badge-danger">
+                                                    @RealEstateAdmin.Resources.Text.NotAssigned
+                                                </span>
+                                                }
+                                                else
+                                                {
+                                                    <text>@item.AgentName</text>
+                                                }
+
+                                            </td>
+                                            <td>
+                                                @{
+                                                    //var state = item.States.OrderByDescending(r => r.Id).FirstOrDefault();
+                                                    if (string.IsNullOrEmpty(item.LatestStateName))
+                                                    {
+                                                        <text>---</text>
+                                                    }
+                                                    else
+                                                    {
+                                                        if (item.LatestStateIsFinish.GetValueOrDefault(false))
+                                                        {
+                                                            <a href="@Url.Action("HistoryStatus", new { id = item.Id })" class="btn btn-success btn-sm">
+                                                                <span data-toggle="tooltip" data-placement="top" data-original-title="@RealEstateAdmin.Resources.Text.HistoryOfStatus">@item.LatestStateName</span>
+                                                            </a>
+                                                        }
+                                                        else
+                                                        {
+                                                            <a href="@Url.Action("HistoryStatus", new { id = item.Id })" class="btn btn-dark btn-sm">
+                                                                <span data-toggle="tooltip" data-placement="top" data-original-title="@RealEstateAdmin.Resources.Text.HistoryOfStatus">@item.LatestStateName</span>
+                                                            </a>
+                                                        }
+                                                    }
+                                                }
+                                            </td>
+                                            <td>
+                                                <div style="display:none" class="description-@item.Id">@item.Description</div>
+                                                <span class="text-warning assignToAgent pointer-event" data-id="@item.Id" data-agetntid="@item.AgentId" data-toggle="modal" data-target="#assignAgentModal">
+                                                    <i class="fa fa-user-circle animated infinite slower heartBeat" data-toggle="tooltip" data-placement="top" data-original-title="@RealEstateAdmin.Resources.Text.AssignAgent"></i>
+                                                </span>
+
+                                                <span class="text-info showMoreInfo pointer-event" data-id="@item.Id" style="cursor:pointer" data-toggle="modal" data-target="#MoreInfoModal">
+                                                    <i class="fa fa-info-circle animated infinite slower heartBeat" data-toggle="tooltip" data-placement="top" data-original-title="@RealEstateAdmin.Resources.Text.MoreInfoAndEdit"></i>
+                                                </span>
+                                            </td>
+                                        </tr>
+                                    }
+                                }
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+
+    </div>
+
+</div>
+
+
+<div id="smallModal" class="modal fade" aria-hidden="true" style="display: none;">
+    <div class="modal-dialog modal-sm" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h6 class="tx-14 mg-b-0 tx-uppercase tx-inverse tx-bold">@RealEstateAdmin.Resources.Text.ChangeCommition</h6>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">×</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <form action="~/Requests/changeCommition" method="post" id="changeCommitionForm">
+                    <input type="hidden" name="requestid" id="requestid" value="" />
+                    <input type="number" class="form-control" name="txtChangeCommision" id="txtChangeCommision" value="" />
+                </form>
+            </div><!-- modal-body -->
+            <div class="modal-footer">
+                <button type="button" onclick="document.getElementById('changeCommitionForm').submit();" class="btn btn-primary">@RealEstateAdmin.Resources.Text.SaveChanges</button>
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">@RealEstateAdmin.Resources.Text.Close</button>
+            </div>
+        </div>
+    </div><!-- modal-dialog -->
+</div>
+
+<!-- Message Modal -->
+<div class="modal fade" id="assignAgentModal" tabindex="-1" role="dialog" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="example-Modal3">@RealEstateAdmin.Resources.Text.AssignAgent</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <form asp-action="Assign" method="post" asp-controller="Requests" id="submitForm">
+                    <div class="form-group">
+                        <label class="form-label"> @RealEstateAdmin.Resources.Text.Agent</label>
+                        <select class="form-control select2-show-search" name="agentid" id="drpnewagentid" data-placeholder="select new agent">
+                            @if (Model.Agents != null)
+                            {
+                                foreach (var item in Model.Agents)
+                                {
+                                    <option value="@item.Id">@item.FirstName @item.LastName</option>
+                                }
+                            }
+                        </select>
+                    </div>
+                    <input type="hidden" name="assingRequestId" id="assingRequestId" value="" />
+
+                    <div class="form-group">
+                        <label for="Description" class="form-control-label">@RealEstateAdmin.Resources.Text.Description</label>
+                        <textarea class="form-control" id="description" name="description" placeholder="Description:"></textarea>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" id="saveAssign" class="btn btn-primary">@RealEstateAdmin.Resources.Text.Save</button>
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">@RealEstateAdmin.Resources.Text.Close</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+<div class="modal fade" id="MoreInfoModal" tabindex="-1" role="dialog" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="example-Modal3">@RealEstateAdmin.Resources.Text.MoreInformation</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <p class="RequestDescription"></p>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">@RealEstateAdmin.Resources.Text.Close</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts
+{
+    <script>
+        
+        $('body').on("click", ".assignToAgent", function () {
+            $("#assingRequestId").val($(this).attr("data-id"));
+        });
+        $('body').on("click", "#saveAssign", function () {
+            if (confirm('@RealEstateAdmin.Resources.Text.AreYouSure')) {
+                document.getElementById('submitForm').submit();
+            }
+        });
+
+        $('body').on("click", ".showMoreInfo", function () {
+            var id = $(this).attr("data-id");
+            $(".RequestDescription").html($(".description-" + id).html());
+        });
+
+        function changeCommision(propId) {
+            $("#requestid").val(propId);
+        }
+    </script>
+}

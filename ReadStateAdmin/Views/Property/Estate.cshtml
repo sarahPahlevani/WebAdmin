@@ -1,0 +1,78 @@
+﻿@model RealEstateAdmin.Models.FirstPage.PropertyCreatePageViewComponentViewModel
+@{
+    ViewData["Title"] = RealEstateAdmin.Resources.Text.Edit + " " + RealEstateAdmin.Resources.Text.Property;
+    //int propertyId = Page
+    //var routeName = ViewContext.ActionDescriptor..AttributeRouteInfo.Name;
+    var propertyId = Convert.ToInt32(ViewContext.RouteData.Values["propertyId"].ToString());
+}
+
+@section PageMap{
+    <!--Page-Header-->
+    <div class="page-header">
+        <h4 class="page-title">@RealEstateAdmin.Resources.Text.Edit @RealEstateAdmin.Resources.Text.Property</h4>
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item"><a href="~/">@RealEstateAdmin.Resources.Text.Home</a></li>
+            <li class="breadcrumb-item"><a href="~/property/index">@RealEstateAdmin.Resources.Text.PropertyList</a></li>
+            <li class="breadcrumb-item active" aria-current="page">@RealEstateAdmin.Resources.Text.Edit @RealEstateAdmin.Resources.Text.Property</li>
+        </ol>
+    </div>
+    <!--/Page-Header-->
+}
+
+
+    <div class="row">
+        <div class="col-md-12">
+
+            <div class="card">
+                <div class="card-header">
+                    <h3 class="card-title">@RealEstateAdmin.Resources.Text.Edit @RealEstateAdmin.Resources.Text.Property</h3>
+                </div>
+                <div class="card-body p-6">
+                    <div class="alert alert-info" role="alert">
+                        <h4 class="alert-heading">Requirement for Publish Property:</h4>
+                        <ul>
+                            <li>Enter title, type and status of description tab</li>
+                            <li>Enter price and unit of price</li>
+                            <li>Enter size of property</li>
+                            <li>Minimum one picture</li>
+                        </ul>
+                    </div>
+                    <div class="panel panel-primary">
+                        <div class=" tab-menu-heading">
+                            <div class="tabs-menu1 ">
+                                <!-- Tabs  data-toggle="tab"-->
+                                <ul class="nav panel-tabs">
+                                    <li id="tab-summary" class="ttf "><a href="/estate/@propertyId/summary">@RealEstateAdmin.Resources.Text.Summary</a></li>
+                                    <li id="tab-description" class="ttf "><a href="/estate/@propertyId/description">@RealEstateAdmin.Resources.Text.Description</a></li>
+                                    <li id="tab-location" class="ttf "><a href="/estate/@propertyId/location">@RealEstateAdmin.Resources.Text.Location</a></li>
+                                    <li id="tab-price" class="ttf "><a href="/estate/@propertyId/price">@RealEstateAdmin.Resources.Text.Price</a></li>
+                                    <li id="tab-features" class="ttf "><a href="/estate/@propertyId/features">@RealEstateAdmin.Resources.Text.Features</a></li>
+                                    <li id="tab-details" class="ttf "><a href="/estate/@propertyId/details">@RealEstateAdmin.Resources.Text.Details</a></li>
+                                    <li id="tab-additionaldetails" class="ttf "><a href="/estate/@propertyId/additionaldetails">@RealEstateAdmin.Resources.Text.AdditionalDetails</a></li>
+                                    <li id="tab-media" class="ttf"><a href="/estate/@propertyId/media">@RealEstateAdmin.Resources.Text.Media</a></li>
+                                    <li id="tab-floors" class="ttf"><a href="/estate/@propertyId/floors">@RealEstateAdmin.Resources.Text.Floors</a></li>
+                                </ul>
+                            </div>
+                        </div>
+                        <div class="panel-body tabs-menu-body">
+                            <div class="tab-content">
+                                @await Component.InvokeAsync("PropertyCreatingSteps", Model)
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+<input type="hidden" name="name" id="actionName" value="@ViewBag.ActionName" />
+@section Scripts
+{
+    <script>
+        var actionName = $("#actionName").val();
+
+        $(".ttf").removeClass("active");
+        $("#tab-" + actionName + " a").addClass("active");
+
+    </script>
+}

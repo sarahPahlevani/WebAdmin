@@ -1,0 +1,65 @@
+﻿@model List<RealEstateAdmin.Models.ModelDtos.BasicInformation.PropertyFeatureDto>
+
+@{
+    ViewData["Title"] = RealEstateAdmin.Resources.Text.PropertyFeatureList;
+}
+
+<div class="side-app">
+
+    <!-- Page-Header-->
+    <div class="page-header">
+        <h4 class="page-title">@RealEstateAdmin.Resources.Text.PropertyFeatureList</h4>
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item"><a href="~/">@RealEstateAdmin.Resources.Text.Home</a></li>
+            <li class="breadcrumb-item active" aria-current="page">@RealEstateAdmin.Resources.Text.PropertyFeatureList</li>
+        </ol>
+    </div>
+    <!--/Page-Header-->
+
+    <div class="row">
+
+        <div class="col-md-12 col-lg-12">
+            <div class="card">
+                <div class="card-header">
+                    <div class="card-title">@RealEstateAdmin.Resources.Text.PropertyFeatureList</div>
+                    <div class="new-button-ontable"> <a class="btn btn-info btn-sm" href="~/propertyfeature/create"> <i class="fa fa-plus"></i> @RealEstateAdmin.Resources.Text.New @RealEstateAdmin.Resources.Text.PropertyFeature </a></div>
+                </div>
+                <div class="card-body">
+                    <div class="table-responsive">
+                        <table class="hover table-bordered border-top-0 border-bottom-0 grid">
+                            <thead>
+                                <tr>
+                                    <th>@RealEstateAdmin.Resources.Text.Name</th>
+                                    <th>@RealEstateAdmin.Resources.Text.Actions</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @foreach (var item in Model)
+                                {
+                                    <tr>
+                                        <td><i class="@item.Icon"></i> @item.Name</td>
+                                        <td>
+                                            <a href="~/propertyfeature/edit/@item.Id" data-toggle="tooltip" data-placement="top" title="" data-original-title="@RealEstateAdmin.Resources.Text.MoreInfoAndEdit"><span class="fa fa-edit text-primary m-2" style="font-size:14pt;color: #000aff!important"></span></a>
+                                            <a href="#" onclick="deleteItem('deletefrom-'+@item.Id);" data-toggle="tooltip" data-placement="top" title="" data-original-title="@RealEstateAdmin.Resources.Text.DeleteThisItem"><span class="fa fa-trash text-primary m-2" style="font-size:14pt;"></span></a>
+                                            <form action="~/propertyfeature/delete" method="post" id="deletefrom-@item.Id">
+                                                <input type="hidden" name="id" value="@item.Id" />
+                                            </form>
+
+                                        </td>
+                                    </tr>
+                                }
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<script>
+    function deleteItem(id) {
+        if (confirm('@RealEstateAdmin.Resources.Text.AreYouSure')) {
+            document.getElementById(id).submit();
+        }
+    }
+</script>

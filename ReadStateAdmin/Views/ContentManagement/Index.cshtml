@@ -1,0 +1,78 @@
+﻿@model List<RealEstateAdmin.Models.ModelDtos.CMS.ContentDto>
+@{
+    ViewData["Title"] = RealEstateAdmin.Resources.Text.ContentPage;
+}
+
+@*<h2>Index</h2>*@
+
+@section PageMap{
+    <!-- Page-Header-->
+    <div class="page-header">
+        <h4 class="page-title">@RealEstateAdmin.Resources.Text.ContentPage</h4>
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item"><a href="~/">@RealEstateAdmin.Resources.Text.Home</a></li>
+            <li class="breadcrumb-item active" aria-current="page">@RealEstateAdmin.Resources.Text.ContentPage</li>
+        </ol>
+    </div>
+    <!--/Page-Header-->
+}
+
+
+<div class="row">
+    <div class="col-md-12 col-lg-12">
+        <div class="card">
+            <div class="card-header">
+                <div class="card-title">@RealEstateAdmin.Resources.Text.ContentPage</div>
+                <div class="new-button-ontable"> <a class="btn btn-info btn-sm" href="~/ContentManagement/create"> <i class="fa fa-plus"></i> @RealEstateAdmin.Resources.Text.New</a></div>
+            </div>
+            <div class="card-body">
+                <div class="table-responsive">
+                    <table class="table table-striped table-bordered grid" data-sort-col="1" data-sort-order="asc">
+                        <thead>
+                            <tr>
+                                <th class="wd-15p">@RealEstateAdmin.Resources.Text.Title</th>
+                                <th class="wd-15p">@RealEstateAdmin.Resources.Text.Parent</th>
+                                <th class="wd-15p">@RealEstateAdmin.Resources.Text.IsMenu</th>
+                                <th class="wd-25p">@RealEstateAdmin.Resources.Text.Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach (var item in Model)
+                            {
+                            <tr>
+                                <td>@item.Title</td>
+                                <td>@item.Parent?.Title</td>
+                                <td>
+                                    @if (item.IsMenu)
+                                    {
+                                        <i class="fa fa-check text-success"></i>
+                                    }
+                                    else
+                                    {
+                                        <i class="fa fa-remove text-danger"></i>
+                                    }
+                                </td>
+                                <td class="action">
+                                    <a href="~/ContentManagement/edit/@item.Id"> <span class="fa fa-pencil-square-o" data-propertyId="@item.Id" style="color: #000aff;" data-toggle="tooltip" data-placement="top" title="" data-original-title="@RealEstateAdmin.Resources.Text.MoreInfoAndEdit"></span></a>
+                                    <span class="fa fa-trash-o" data-propertyId="@item.Id" onclick="publish('delete-'+@item.Id,'@RealEstateAdmin.Resources.Text.AreYouSure');" style="color: red;" data-toggle="tooltip" data-placement="top" title="" data-original-title="@RealEstateAdmin.Resources.Text.DeleteThisItem"></span>
+                                    <form action="~/ContentManagement/Delete" method="post" style="display: inline-block" id="delete-@item.Id">
+                                        <input type="hidden" name="id" value="@item.Id" />
+                                    </form>
+                                </td>
+                            </tr>
+                            }
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    function publish(id, ttext) {
+        if (confirm(ttext)) {
+            document.getElementById(id).submit();
+        }
+    }
+</script>

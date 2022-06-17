@@ -1,0 +1,226 @@
+﻿@model RealEstateAdmin.Models.VmRequestStatus
+
+@{
+    ViewData["Title"] = RealEstateAdmin.Resources.Text.ChangeStatus;
+    var latestStatus = Model.Request.States.OrderByDescending(r => r.Id).FirstOrDefault();
+    var lastStatus = Model.Request.Workflow.WorkflowStep.FirstOrDefault(r => r.IsFinish);
+}
+
+@section Head
+{
+    <!-- Stepper CSS -->
+    <link href="~/css/stepper.css" rel="stylesheet">
+}
+
+@section PageMap{
+
+    <!--Page-Header-->
+    <div class="page-header">
+        <h4 class="page-title">@RealEstateAdmin.Resources.Text.Request - @RealEstateAdmin.Resources.Text.ChangeStatus</h4>
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item"><a href="~/">@RealEstateAdmin.Resources.Text.Home</a></li>
+            <li class="breadcrumb-item"><a href="~/requests">@RealEstateAdmin.Resources.Text.RequestList</a></li>
+            <li class="breadcrumb-item active" aria-current="page">@RealEstateAdmin.Resources.Text.ChangeStatus</li>
+        </ol>
+    </div>
+    <!--/Page-Header-->
+}
+
+<!-- end row -->
+<div class="row">
+    <div class="col-md-12">
+        <div class="card m-b-20">
+            <div class="card-header">
+                <h3 class="card-title">
+                    <a href="~/estate/@Model.Request.PropertyId/summary">@Model.Request.PropertyTitle</a>
+                    <br />
+                    <span style="font-size: 12px; color: #888;">@Model.Request.RequestType.Name</span>
+                </h3>
+            </div>
+            <div class="card-body">
+                <form asp-action="ChangeStatus" asp-controller="Requests" method="post">
+                    <div class="form-row">
+                        <div class="w-100">
+                            <input type="hidden" id="RequestId" name="RequestId" value="@Model.Request.Id" />
+                            <input type="hidden" id="Step" name="Step" value="@latestStatus.WorkflowStep.Id" />
+                            <ul class="request-steps">
+                                @{ var stepList = Model.Request.Workflow.WorkflowStep.OrderBy(r => r.StepNumber).ToList(); }
+                                @if (Model.Request.IsDone)
+                                {
+                                    @*for (int i = 0; i < stepList.Count; i++)
+                                    {
+                                        <li class="active" data-id="@stepList[i].Id" data-index="@i" data-name="@stepList[i].Name">
+                                            <span>@{var j = i + 1;} @j</span>
+                                            @stepList[i].Name
+                                        </li>
+                                    }*@
+
+                                    for (int i = 0; i < stepList.Count; i++)
+                                    {
+                                        var active = "";
+                                        //var disable = "";
+                                        if (latestStatus != null)
+                                        {
+                                            active = stepList[i].Id <= latestStatus.WorkflowStep.Id ? "active" : "";
+                                        }
+                                        <li class="@active" data-id="@stepList[i].Id" data-index="@i" data-name="@stepList[i].Name">
+                                            <span>@{var j = i + 1;} @j</span>
+                                            @stepList[i].Name
+                                        </li>
+                                    }
+
+                                }
+                                else
+                                {
+                                    for (int i = 0; i < stepList.Count; i++)
+                                    {
+                                        var active = "";
+                                        //var disable = "";
+                                        if (latestStatus != null)
+                                        {
+                                            active = stepList[i].Id <= latestStatus.WorkflowStep.Id ? "active" : "";
+                                        }
+                                        <li class="item @active" data-id="@stepList[i].Id" data-index="@i" data-name="@stepList[i].Name">
+                                            <span>@{var j = i + 1;} @j</span>
+                                            @stepList[i].Name
+                                        </li>
+                                    }
+                                }
+
+                                @*@foreach (var item in Model.Request.Workflow.WorkflowStep.OrderBy(r => r.StepNumber))
+        {
+            var active = "";
+            var disable = "";
+            if (latestStatus != null)
+            {
+                active = item.StepNumber <= latestStatus.WorkflowStep.StepNumber ? "active" : "";
+            }
+            <li class="item @active" data-id="@item.Id" data-index="@i" data-name="@item.Name">
+                <span>@i</span>
+                @item.Name
+            </li>
+            i++;
+        }*@
+                            </ul>
+
+                            <div class="request-step-contents">
+                                <h4 id="step-name">@latestStatus.WorkflowStep.StepNumber - @latestStatus.WorkflowStep.Name</h4>
+                                <div class="form-group">
+                                    <textarea class="form-control" id="Description" name="Description" rows="10">@latestStatus.Description</textarea>
+                                </div>
+                                <div id="divIsDone" class="form-group">
+                                    <div class="custom-control custom-checkbox">
+                                        <input type="checkbox" class="custom-control-input" id="IsDone" name="IsDone" value="true" @if (Model.Request.IsDone) { <text>checked</text> }>
+                                        <label class="custom-control-label" for="IsDone">@RealEstateAdmin.Resources.Text.IsFinish</label>
+                                    </div>
+                                </div>
+                            </div>
+
+                            @*<div class="request-step-contents">
+                                    @{ i = 0;}
+                                    @foreach (var item in Model.Workflow.WorkflowStep.OrderBy(r => r.StepNumber))
+                                    {
+                                        <div class="item" id="request_tab_content_@item.Id" @if (i > 0) { <text> style="display: none;" </text> }>
+                                            <h4>@item.Name</h4>
+
+                                            <div class="form-group">
+                                                <label for="Description" class="form-control-label">Description:</label>
+                                                <textarea class="form-control" id="description" name="description" placeholder="Description:" rows="7"></textarea>
+                                            </div>
+                                            <div class="form-group">
+                                                <div class="custom-control custom-checkbox">
+                                                    <input type="checkbox" class="custom-control-input" id="chkIsDone" name="chkIsDone">
+                                                    <label class="custom-control-label" for="chkIsDone">Is done?</label>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        i++;
+                                    }
+                                </div>*@
+                        </div>
+                    </div>
+                    <div class="text-center">
+                        <a href="~/requests" class="btn mx-2 btn-default"> <i class="fa fa-ban"></i> @RealEstateAdmin.Resources.Text.Cancel</a>
+                        @*<button type="reset" class="btn mx-2 btn-default"> <i class="fa fa-ban"></i> Cancel</button>*@
+                    <button type="submit" class="btn mx-2 btn-primary "><i class="fa fa-dot-circle-o"></i> @RealEstateAdmin.Resources.Text.Save</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="row">
+
+    <div class="col-md-12 col-lg-12">
+        <div class="card">
+            <div class="card-header">
+                <div class="card-title">@RealEstateAdmin.Resources.Text.HistoryOfStatus</div>
+            </div>
+            <div class="card-body">
+                <div class="table-responsive">
+                    <table class="hover table-bordered border-top-0 border-bottom-0 grid tbl-lang" data-sort-col="2" data-sort-order="desc">
+                        <thead>
+                            <tr>
+                                <th>@RealEstateAdmin.Resources.Text.Status</th>
+                                <th>@RealEstateAdmin.Resources.Text.Agent</th>
+                                <th>@RealEstateAdmin.Resources.Text.Date</th>
+                                <th>@RealEstateAdmin.Resources.Text.Description</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @if (Model.History != null)
+                            {
+                                foreach (var item in Model.History.OrderByDescending(r => r.Id))
+                                {
+                                    var date = "";
+                                    if (item.StartStepDate.HasValue)
+                                    {
+                                        date = item.StartStepDate.Value.ToString("yyyy-MM-dd HH:mm");
+                                    }
+
+                                    <tr>
+                                        <td>@item.WorkflowStep.Name</td>
+                                        <td>@item.AgentName</td>
+                                        <td>@date</td>
+                                        <td>@item.Description</td>
+                                    </tr>
+                                }
+                            }
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</div>
+
+
+
+@section Scripts
+{
+
+    <script>
+        $(".request-steps li.item").click(function () {
+            var obj = $(this);
+            var objIndex = obj.data('index');
+            var objName = obj.data('name');
+            var stepId = obj.data('id');
+            $('#Step').val(stepId);
+            $('#step-name').text((objIndex+1) + ' - ' + objName);
+            var objParent = obj.parent();
+
+            $('li.item', objParent).removeClass('active');
+            var cIndex = $('li.item', objParent).index(obj);
+            $('li.item', objParent).each(function (i) {
+                if (i <= cIndex)
+                    $(this).addClass('active');
+            })
+
+            //$('.item', objTabContent).hide();
+            //objContent.show();
+        });
+
+    </script>
+}

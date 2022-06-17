@@ -1,0 +1,98 @@
+﻿@model RealEstateAdmin.Models.FirstPage.PropertyCreatePage
+@{
+    ViewData["Title"] = RealEstateAdmin.Resources.Text.Create + " " + RealEstateAdmin.Resources.Text.Property;
+}
+<div class="side-app">
+    <!--Page-Header-->
+    <div class="page-header">
+        <h4 class="page-title">@RealEstateAdmin.Resources.Text.Create @RealEstateAdmin.Resources.Text.Property</h4>
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item"><a href="~/">@RealEstateAdmin.Resources.Text.Home</a></li>
+            <li class="breadcrumb-item"><a href="~/property/index">@RealEstateAdmin.Resources.Text.Property</a></li>
+            <li class="breadcrumb-item active" aria-current="page">@RealEstateAdmin.Resources.Text.Create @RealEstateAdmin.Resources.Text.Property</li>
+        </ol>
+    </div>
+    <!--/Page-Header-->
+
+    <div class="row">
+        <div class="col-md-12">
+            <div class="card m-b-20">
+                <div class="card-header">
+                    <h3 class="card-title">@RealEstateAdmin.Resources.Text.Create @RealEstateAdmin.Resources.Text.Property</h3>
+                </div>
+                <div class="card-body">
+                    <form asp-action="create" asp-controller="Property" id="Property-form" method="post">
+                        <input type="hidden" name="GeneratedTitle" id="GeneratedTitle" value="" />
+                        <div class="form-row">
+                            <div class="form-group col-md-4">
+                                <div class="form-group">
+                                    <label class="form-label" for="exampleInputEmail1">@RealEstateAdmin.Resources.Text.Title</label>
+                                    <input type="text" class="form-control" name="title" id="title" placeholder="Property Title">
+                                </div>
+                            </div>
+                            <div class="form-group col-md-4">
+                                <div class="form-group">
+                                    <label class="form-label" for="exampleInputEmail1">@RealEstateAdmin.Resources.Text.UniqId</label>
+                                    <input type="text" class="form-control" id="propertyUniqId" name="propertyUniqId" placeholder="Property uniq id">
+                                </div>
+                            </div>
+                            <div class="form-group col-md-4">
+                                <div class="form-group">
+                                    <label class="form-label"> @RealEstateAdmin.Resources.Text.PropertyType *</label>
+                                    <select name="propertyTypeId" id="propertyTypeId" class="form-control select2-show-search" data-placeholder="Choose one (with searchbox)">
+                                        @foreach (var item in Model.PropertyType)
+                                        {
+                                            <option value="@item.Id">@item.Name </option>
+                                        }
+
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="form-group col-md-4">
+                                <label class="form-label"> @RealEstateAdmin.Resources.Text.PropertyStatus *</label>
+                                <select name="propertyStatusId" id="propertyStatusId" class="form-control select2-show-search" data-placeholder="Choose one (with optgroup)">
+                                    @foreach (var item in Model.PropertyStatus)
+                                    {
+                                        <option value="@item.Id">@item.Name </option>
+                                    }
+                                </select>
+                            </div>
+                            <div class="form-group col-md-4">
+                                <label class="form-label"> @RealEstateAdmin.Resources.Text.PropertyLabel *</label>
+                                <select name="propertyLabelId" id="propertyLabelId" class="form-control select2-show-search" data-placeholder="Choose one (with optgroup)">
+                                    @foreach (var item in Model.PropertyLabel)
+                                    {
+                                        <option value="@item.Id">@item.Name </option>
+                                    }
+                                </select>
+                            </div>
+                            <div class="form-group col-md-12">
+                                @*<textarea class="content" name="description"></textarea>*@
+                                <textarea name="description" style="width: 100%;" rows="10"></textarea>
+                            </div>
+                        </div>
+                        <div class="text-center">
+                            <button type="reset" class="btn mx-2 btn-default"> <i class="fa fa-ban"></i> @RealEstateAdmin.Resources.Text.Cancel</button>
+                            <button type="button" id="save" onclick="generateTitle();" class="btn mx-2 btn-primary "><i class="fa fa-dot-circle-o"></i> @RealEstateAdmin.Resources.Text.Save</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+
+
+</div>
+
+<script>
+    function generateTitle() {
+        //var title = $("#title").val() + ' ' + $("#propertyTypeId option:selected").html() + ' ' + $("#propertyStatusId option:selected").html() + ' ' + $("#propertyLabelId option:selected").html();
+        var title = $("#title").val() + ' ' + $("#propertyTypeId option:selected").html() + ' ' + $("#propertyStatusId option:selected").html() + ' ' + $("#propertyLabelId option:selected").html();
+        $("#GeneratedTitle").val(title);
+        //console.log(title);
+        document.getElementById('Property-form').submit();
+    }
+</script>
+

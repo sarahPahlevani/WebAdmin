@@ -1,0 +1,47 @@
+﻿@model IEnumerable<RealEstateAdmin.Models.ModelDtos.Crm.RequestStateListDto>
+
+<div class="row">
+
+    <div class="col-md-12 col-lg-12">
+        <div class="card">
+            <div class="card-header">
+                <div class="card-title">@RealEstateAdmin.Resources.Text.HistoryOfStatus</div>
+            </div>
+            <div class="card-body">
+                <div class="table-responsive">
+                    <table class="hover table-bordered border-top-0 border-bottom-0 grid tbl-lang" data-sort-col="2" data-sort-order="desc">
+                        <thead>
+                            <tr>
+                                <th>@RealEstateAdmin.Resources.Text.Status</th>
+                                <th>@RealEstateAdmin.Resources.Text.Agent</th>
+                                <th>@RealEstateAdmin.Resources.Text.Date</th>
+                                <th>@RealEstateAdmin.Resources.Text.Description</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @if (Model != null)
+                            {
+                                foreach (var item in Model.OrderByDescending(r => r.Id))
+                                {
+                                    var date = "";
+                                    if (item.StartStepDate.HasValue)
+                                    {
+                                        date = item.StartStepDate.Value.ToString("yyyy-MM-dd HH:mm");
+                                    }
+
+                                    <tr>
+                                        <td>@item.WorkflowStep.Name</td>
+                                        <td>@item.AgentName</td>
+                                        <td>@date</td>
+                                        <td>@item.Description</td>
+                                    </tr>
+                                }
+                            }
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</div>

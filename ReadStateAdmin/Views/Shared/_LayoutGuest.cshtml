@@ -1,0 +1,113 @@
+﻿<!DOCTYPE html>
+<html>
+
+<head>
+    <!-- Meta data -->
+    <meta charset="UTF-8">
+    <meta name='viewport' content='width=device-width, initial-scale=1.0, user-scalable=0'>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta content="Reallist- Bootstrap Responsive Real estate Classifieds, Dealer, Rentel, Builder and Agent Multipurpose HTML Template" name="description">
+    <meta content="Spruko Technologies Private Limited" name="author">
+    <meta name="keywords" content="html template, real estate websites, real estate html template, property websites, premium html templates, real estate company website, bootstrap real estate template, real estate marketplace html template, listing website template, property listing html template, real estate bootstrap template, real estate html5 template, real estate listing template, property template, property dealer website" />
+
+    <!-- Favicon -->
+    <link rel="icon" href="~/favicon.ico" type="image/x-icon" />
+    <link rel="shortcut icon" type="image/x-icon" href="~/favicon.ico" />
+
+    <!-- Title -->
+    <title>@ViewData["Title"]</title>
+    <link rel="stylesheet" href="~/assets/fonts/fonts/font-awesome.min.css">
+
+    <!-- Bootstrap Css -->
+    <link href="~/assets/plugins/bootstrap-4.3.1-dist/css/bootstrap.min.css" rel="stylesheet" />
+
+    <!-- Dashboard Css -->
+    <link href="~/assets/css/style.css" rel="stylesheet" />
+    <link href="~/assets/css/admin-custom.css" rel="stylesheet" />
+    <!-- Data table css -->
+    <link href="../assets/plugins/datatable/dataTables.bootstrap4.min.css" rel="stylesheet" />
+    <link href="../assets/plugins/datatable/jquery.dataTables.min.css" rel="stylesheet" />
+    <!-- Sidemenu Css -->
+    <link href="~/assets/plugins/toggle-sidebar/sidemenu.css" rel="stylesheet" />
+    <!-- select2 Plugin -->
+    <link href="../assets/plugins/select2/select2.min.css" rel="stylesheet" />
+    <!-- Custom scroll bar css-->
+    <link href="~/assets/plugins/scroll-bar/jquery.mCustomScrollbar.css" rel="stylesheet" />
+
+    <!-- WYSIWYG Editor css -->
+    <link href="../assets/plugins/wysiwyag/richtext.css" rel="stylesheet" />
+    <!---Font icons-->
+    <link href="~/assets/css/icons.css" rel="stylesheet" />
+    <link href="~/assets/plugins/iconfonts/icons.css" rel="stylesheet" />
+    <link rel="stylesheet" href="~/assets/fonts/fonts/font-awesome.min.css">
+
+    <link rel="stylesheet" href="~/css/site.css">
+</head>
+
+
+<body class="app sidebar-mini">
+    <!--Loader-->
+    <div id="global-loader">
+        <img src="~/assets/images/loader.svg" class="loader-img" alt="">
+    </div>
+    <!--/Loader-->
+
+    <!--Page-->
+    <div class="page">
+        @RenderBody()
+    </div>
+
+    <!-- Back to top -->
+    <a href="#top" id="back-to-top"><i class="fa fa-chevron-up"></i></a>
+
+    <!-- JQuery js-->
+    <script src="~/assets/js/vendors/jquery-3.2.1.min.js"></script>
+
+    <!-- Bootstrap js -->
+    <script src="~/assets/plugins/bootstrap-4.3.1-dist/js/popper.min.js"></script>
+    <script src="~/assets/plugins/bootstrap-4.3.1-dist/js/bootstrap.min.js"></script>
+
+    <!--JQuery Sparkline Js-->
+    <script src="~/assets/js/vendors/jquery.sparkline.min.js"></script>
+
+    <!-- Circle Progress Js-->
+    <script src="~/assets/js/vendors/circle-progress.min.js"></script>
+
+    <!-- Star Rating Js-->
+    <script src="~/assets/plugins/rating/jquery.rating-stars.js"></script>
+
+    <!--Counters -->
+    <script src="~/assets/plugins/counters/counterup.min.js"></script>
+    <script src="~/assets/plugins/counters/waypoints.min.js"></script>
+
+    <!-- Fullside-menu Js-->
+    <script src="~/assets/plugins/toggle-sidebar/sidemenu.js"></script>
+    <!-- WYSIWYG Editor js -->
+    <script src="~/assets/plugins/wysiwyag/jquery.richtext.js"></script>
+    <script src="~/assets/js/formeditor.js"></script>
+    <!-- CHARTJS CHART -->
+    <script src="~/assets/plugins/chart/Chart.bundle.js"></script>
+    <script src="~/assets/plugins/chart/utils.js"></script>
+    <!-- Data tables -->
+    <script src="~/assets/plugins/datatable/jquery.dataTables.min.js"></script>
+    <script src="~/assets/plugins/datatable/dataTables.bootstrap4.min.js"></script>
+    <script src="~/assets/js/datatable.js"></script>
+    <!--Select2 js -->
+    <script src="~/assets/plugins/select2/select2.full.min.js"></script>
+    <!-- Custom scroll bar Js-->
+    <script src="~/assets/plugins/scroll-bar/jquery.mCustomScrollbar.concat.min.js"></script>
+    <!-- Inline js -->
+    <script src="~/assets/js/select2.js"></script>
+    <script src="~/assets/js/formelements.js"></script>
+    <!-- ECharts Plugin -->
+    <script src="~/assets/plugins/echarts/echarts.js"></script>
+    <script src="~/assets/plugins/echarts/echarts.js"></script>
+    <script src="~/assets/js/index1.js"></script>
+
+    <!-- Custom Js-->
+    <script src="~/assets/js/admin-custom.js"></script>
+    <script src="~/js/site.js" asp-append-version="true"></script>
+
+    @RenderSection("scripts", required: false)
+</body>
+</html>

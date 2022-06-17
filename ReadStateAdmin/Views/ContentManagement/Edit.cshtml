@@ -1,0 +1,173 @@
+﻿@using RealEstateAdmin.Models.ModelDtos.CMS;
+@using RealEstateAdmin.Models.ModelDtos.Infrastructure;
+@model ContentDto
+@{
+    ViewData["Title"] = RealEstateAdmin.Resources.Text.Edit + " " + RealEstateAdmin.Resources.Text.ContentPage;
+
+    var parentsList = (List<ContentDto>)ViewBag.ParentList;
+
+    var langList = (IEnumerable<ContentTranslateDto>)ViewBag.LangList;
+    var langs = (IEnumerable<LanguageDto>)ViewBag.Langs;
+
+    var blockList = new List<int>();
+    blockList.Add(langs.FirstOrDefault(r => r.IsDefault).Id);
+    blockList.AddRange(langList.Select(r => r.LanguageId).ToList());
+    langs = langs.Where(r => !blockList.Contains(r.Id));
+}
+
+<!--Page-Header-->
+<div class="page-header">
+    <h4 class="page-title">@RealEstateAdmin.Resources.Text.Edit @RealEstateAdmin.Resources.Text.ContentPage</h4>
+    <ol class="breadcrumb">
+        <li class="breadcrumb-item"><a href="~/">@RealEstateAdmin.Resources.Text.Home</a></li>
+        <li class="breadcrumb-item"><a href="~/ContentManagement">@RealEstateAdmin.Resources.Text.ContentPage</a></li>
+        <li class="breadcrumb-item active" aria-current="page">@RealEstateAdmin.Resources.Text.Edit @RealEstateAdmin.Resources.Text.ContentPage</li>
+    </ol>
+</div>
+<!--/Page-Header-->
+<div class="row">
+    <div class="col-md-12">
+        <div class="card m-b-20">
+            <div class="card-header">
+                <h3 class="card-title">@RealEstateAdmin.Resources.Text.Edit @RealEstateAdmin.Resources.Text.ContentPage</h3>
+            </div>
+            <div class="card-body">
+                <form asp-action="edit" asp-controller="ContentManagement" id="ContentManagement-form" method="post">
+                    @Html.HiddenFor(m => m.Id)
+                    <div class="form-group">
+                        <div class="custom-control custom-checkbox">
+                            <input type="checkbox" class="custom-control-input" asp-for="@Model.IsMenu" name="IsMenu" id="IsMenu">
+                            <label class="custom-control-label" for="IsMenu">@RealEstateAdmin.Resources.Text.IsMenu</label>
+                        </div>
+                    </div>
+                    <div class="form-group" id="divParents" @if (Model.IsMenu) { <text> style="display: none;" </text> }>
+                        <div class="row">
+                            <div class="col-4">
+                                <label class="form-label" for="Title">@RealEstateAdmin.Resources.Text.Parent</label>
+                                <select id="ParentId" name="ParentId" class="custom-select">
+                                    <option value="">@RealEstateAdmin.Resources.Text.WithoutParent</option>
+                                    @foreach (var p in parentsList)
+                                    {
+                                        if (p.Id == Model.ParentId)
+                                        {
+                                            <option value="@p.Id" selected>@p.Title</option>
+                                        }
+                                        else
+                                        {
+                                            <option value="@p.Id">@p.Title</option>
+                                        }
+                                    }
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label" for="Title">@RealEstateAdmin.Resources.Text.Title</label>
+                        <input type="text" class="form-control" name="Title" id="Title" value="@Model.Title">
+                    </div>
+                    <div class="form-group" id="divBody" @if (Model.IsMenu) { <text> style="display: none;" </text> }>
+                        @Html.TextAreaFor(m => m.Body, new { @class = "form-control content", @rows = "15" })
+                    </div>
+                    <div class="text-center">
+                        <a href="~/ContentManagement" class="btn mx-2 btn-default"> <i class="fa fa-ban"></i> @RealEstateAdmin.Resources.Text.Cancel</a>
+                        <button type="submit" id="save" class="btn mx-2 btn-primary "><i class="fa fa-dot-circle-o"></i> @RealEstateAdmin.Resources.Text.Save</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="row">
+
+    <div class="col-xl-12">
+        <div class="card m-b-20">
+            <div class="card-header">
+                <h3 class="card-title">@RealEstateAdmin.Resources.Text.TranslateList</h3>
+            </div>
+            <div class="card-body">
+                @if (langs.Count() > 0)
+                {
+                    <div class="row">
+                        <div class="col-12">
+                            <form asp-action="CreateLang">
+                                <div class="form-row">
+                                    <input type="hidden" name="cId" value="@Model.Id" />
+                                    <div class="form-group mb-2 col-4">
+                                        <select name="LangId" id="LangId" class="custom-select">
+                                            @foreach (var i in langs)
+                                            {
+                                                <option value="@i.Id">@i.Code</option>
+                                            }
+                                        </select>
+                                        <span validation-for="LangId" class="text-danger"></span>
+                                    </div>
+                                    <input type="submit" value="@RealEstateAdmin.Resources.Text.Add" class="btn btn-primary mb-2" />
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                }
+
+                <div class="row mt-5">
+                    <div class="col-md-12">
+                        <div class="table-responsive">
+                            <table class="hover table-bordered border-top-0 border-bottom-0 grid" data-searching="false" data-paging="false" data-info="false">
+                                <thead>
+                                    <tr>
+                                        <th>@RealEstateAdmin.Resources.Text.Language</th>
+                                        <th>@RealEstateAdmin.Resources.Text.Title</th>
+                                        <th>@RealEstateAdmin.Resources.Text.Actions</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    @foreach (var item in langList)
+                                    {
+                                        <tr>
+                                            <td>@item.Language.Code</td>
+                                            <td>@item.Title</td>
+                                            <td>
+                                                <a href="~/ContentManagement/editlang/@item.Id"> <span class="fa fa-pencil-square-o" data-propertyId="@item.Id" style="color: #000aff;" data-toggle="tooltip" data-placement="top" title="" data-original-title="@RealEstateAdmin.Resources.Text.MoreInfoAndEdit"></span></a>
+                                                <a href="#" onclick="deleteItem('deletefrom-'+@item.Id);" data-toggle="tooltip" data-placement="top" title="" data-original-title="@RealEstateAdmin.Resources.Text.DeleteThisItem"><span class="fa fa-trash text-primary m-2" style="font-size:14pt;"></span></a>
+                                                <form action="~/ContentManagement/deletelang" method="post" id="deletefrom-@item.Id">
+                                                    <input type="hidden" name="id" value="@item.Id" />
+                                                </form>
+                                            </td>
+                                        </tr>
+                                    }
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- end col -->
+
+</div>
+
+
+@section Scripts{
+
+    <script>
+    function deleteItem(id) {
+        if (confirm('@RealEstateAdmin.Resources.Text.AreYouSure')) {
+            document.getElementById(id).submit();
+        }
+    }
+    </script>
+
+    <script>
+        $("#IsMenu").on("change", function () {
+            if ($(this).prop('checked')) {
+                $("#divParents").hide();
+                $("#divBody").hide();
+            } else {
+                $("#divParents").show();
+                $("#divBody").show();
+            }
+        });
+    </script>
+
+}

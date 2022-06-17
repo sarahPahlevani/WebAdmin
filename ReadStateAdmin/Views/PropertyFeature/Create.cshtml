@@ -1,0 +1,70 @@
+﻿@model RealEstateAdmin.Models.ModelDtos.BasicInformation.PropertyFeatureDto
+@{
+    ViewData["Title"] = RealEstateAdmin.Resources.Text.Create + " " + RealEstateAdmin.Resources.Text.PropertyFeature;
+}
+
+<div class="side-app">
+
+    <!--Page-Header-->
+    <div class="page-header">
+        <h4 class="page-title">@RealEstateAdmin.Resources.Text.Create @RealEstateAdmin.Resources.Text.PropertyFeature</h4>
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item"><a href="~/">@RealEstateAdmin.Resources.Text.Home</a></li>
+            <li class="breadcrumb-item"><a href="~/propertyfeature">@RealEstateAdmin.Resources.Text.PropertyFeatureList</a></li>
+            <li class="breadcrumb-item active" aria-current="page">@RealEstateAdmin.Resources.Text.Create @RealEstateAdmin.Resources.Text.PropertyFeature</li>
+        </ol>
+    </div>
+    <!--/Page-Header-->
+    <div class="row">
+        <div class="col-xl-12">
+            <div class="card m-b-20">
+                <div class="card-header">
+                    <h3 class="card-title">@RealEstateAdmin.Resources.Text.Create @RealEstateAdmin.Resources.Text.PropertyFeature</h3>
+                </div>
+                <div class="card-body">
+                    <div class="row">
+                        <div class="col-md-12">
+                            <form asp-action="Create">
+                                <div class="form-group">
+                                    <label asp-for="Name" class="control-label"></label>
+                                    <input asp-for="Name" class="form-control" />
+                                    <span asp-validation-for="Name" class="text-danger"></span>
+                                </div>
+                                <div class="form-group">
+                                    <i id="showIcon" class="fa fa-list" style="font-size: 50px;"></i>
+                                    <input asp-for="Icon" type="hidden" />
+                                    <div class="row" style="max-height: 200px; overflow: auto; border: 1px solid #ccc; padding: 10px;">
+                                        @foreach (var faItem in (List<string>)ViewBag.FaList)
+                                        {
+                                            <div class="col-1 mb-2 text-center">
+                                                <a href="#" class="list-icon"><i class="fa @faItem" style="font-size: 25px;"></i></a>
+                                            </div>
+                                        }
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <input type="submit" value="@RealEstateAdmin.Resources.Text.Save" class="btn btn-primary" />
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- end col -->
+
+    </div>
+    <!-- end row -->
+
+</div>
+
+@section Scripts{ 
+    <script>
+        $('.list-icon').click(function () {
+            var val = $('i', this).attr('class');
+            $('#Icon').val(val);
+            $('#showIcon').attr('class', val);
+            return false;
+        });
+    </script>
+}

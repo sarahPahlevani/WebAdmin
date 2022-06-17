@@ -1,0 +1,127 @@
+﻿@model RealEstateAdmin.Models.ModelDtos.RBAC.ContentPage
+@{
+    ViewData["Title"] = RealEstateAdmin.Resources.Text.Create + " " + RealEstateAdmin.Resources.Text.ContentPage;
+}
+@section Head{
+
+    <link href="~/assets/css/Texteditor.css" rel="stylesheet" />
+}
+<div class="side-app">
+    <!--Page-Header-->
+    <div class="page-header">
+        <h4 class="page-title">@RealEstateAdmin.Resources.Text.Create @RealEstateAdmin.Resources.Text.PageManagment</h4>
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item"><a href="~/">@RealEstateAdmin.Resources.Text.Home</a></li>
+            <li class="breadcrumb-item"><a href="~/PageManagment/index">@RealEstateAdmin.Resources.Text.ContentPage</a></li>
+            <li class="breadcrumb-item active" aria-current="page">@RealEstateAdmin.Resources.Text.Create @RealEstateAdmin.Resources.Text.ContentPage</li>
+        </ol>
+    </div>
+    <!--/Page-Header-->
+
+    <div class="row">
+        <div class="col-xl-12">
+            <div class="card m-b-20">
+                <div class="card-header">
+                    <h3 class="card-title">@RealEstateAdmin.Resources.Text.Create @RealEstateAdmin.Resources.Text.ContentPage</h3>
+                </div>
+                <div class="card-body">
+                    <div class="card-body">
+                        <div class="row">
+                            <div class="col-md-12">
+                                <form onsubmit="return mySubmitFunction()" asp-action="Create">
+                                    <div class="row">
+                                        <div class="col-md-6">
+                                            <div class="form-group">
+                                                <label asp-for="Title" class="control-label"></label>
+                                                <input id="title" asp-for="Title" class="form-control" />
+                                                <span asp-validation-for="Title" class="text-danger"></span>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-4">
+                                            <div class="form-group">
+
+                                                <label class="custom-control custom-checkbox"></label>
+                                                <label class="custom-control custom-checkbox">
+                                                    <input type="checkbox" class="custom-control-input" asp-for="@Model.IsMainPage" name="IsMainPage" id="IsMainPage" value="false">
+                                                    <span class="custom-control-label">@RealEstateAdmin.Resources.Text.IsMainPage</span>
+                                                </label>
+                                            </div>
+                                        </div>
+                                        </div>
+                                        <div class="form-group  col-md-12">
+                                            <label asp-for="ContentHeader" class="control-label"></label>
+                                            <textarea id="ContentHeader" asp-for="ContentHeader" style="width: 100%;" rows="3" class="control-label"></textarea>
+
+                                            <span asp-validation-for="ContentHeader" class="text-danger"></span>
+                                        </div>
+                                        <div class="form-group  col-md-12">
+                                            <label asp-for="ContectDetail" class="control-label"></label>
+
+                                            <textarea id="ContectDetail" name="ContectDetail" asp-for="ContectDetail" style="width: 100%;" rows="10" class="control-label"></textarea>
+
+                                            <span asp-validation-for="ContectDetail" class="text-danger"></span>
+                                        </div>
+                                        <div class="form-group  col-md-12">
+                                            <label asp-for="ContentFooter" class="control-label"></label>
+                                            <textarea id="ContentFooter" asp-for="ContentFooter" style="width: 100%;" rows="3" class="control-label"></textarea>
+                                            <span asp-validation-for="ContentFooter" class="text-danger"></span>
+                                        </div>
+                                        <div class="form-group">
+                                            <input type="submit" value="@RealEstateAdmin.Resources.Text.Save" class="btn btn-primary" />
+                                        </div>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+
+
+    </div>
+</div>
+@section Scripts{
+    <script src="~/assets/js/texteditor.js"></script>
+    
+    <script>
+        
+
+         $(document).ready(function () {
+            $("#ContectDetail").Editor();
+            $("#ContentFooter").Editor();
+            $("#ContentHeader").Editor();
+        });
+
+
+        //$('#submit').mousedown(function () {
+
+         
+        //    var querystring = 'Title=' + "'" + $("#title").val() + "'&"
+        //        + 'ContentHeader=' + "'" + $(".Editor-editor")[0].innerHTML + "'&"
+        //        + 'ContectDetail=' + "'" + $(".Editor-editor")[1].innerHTML + "'&" 
+        //        + 'ContentFooter=' + "'" + $(".Editor-editor")[2].innerHTML + "'"
+        //    $.ajax({
+        //        url: '/ContentManage/Create?' + querystring,
+        //        contentType: "application/json; charset=utf-8",
+        //        dataType: "json",
+        //        type: 'POST'
+        //    });
+           
+        //});
+
+        
+        function mySubmitFunction() {
+
+            console.log("");
+            $("#ContentHeader").val($(".Editor-editor")[0].innerHTML);
+            $("#ContectDetail").val($(".Editor-editor")[1].innerHTML);
+            $("#ContentFooter").val($(".Editor-editor")[2].innerHTML);
+            return true;
+        }
+
+    </script>
+}
+
+

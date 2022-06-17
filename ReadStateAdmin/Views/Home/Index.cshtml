@@ -1,0 +1,446 @@
+﻿@{
+    ViewData["Title"] = "Home & Share";
+}
+
+<div class="side-app">
+
+    <!-- Page-Header-->
+    <div class="page-header">
+        <h4 class="page-title">@RealEstateAdmin.Resources.Text.Dashboard</h4>
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item active" aria-current="page">@RealEstateAdmin.Resources.Text.Dashboard</li>
+        </ol>
+    </div>
+    <!-- /Page-Header-->
+
+    <div class="row">
+        <div class="col-sm-12 col-md-6 col-lg-6 col-xl-3">
+            <div class="card overflow-hidden">
+                <div class="card-header">
+                    <h3 class="card-title">@RealEstateAdmin.Resources.Text.TotalProperties</h3>
+                    @*<div class="card-options"> <a class="btn btn-sm btn-primary" href="#">View</a> </div>*@
+                </div>
+                <div class="card-body ">
+                    <h2 class="text-dark  mt-0 font-weight-bold text-center">@ViewBag.PropertyCount</h2>
+                    <div class="progress progress-sm mt-0 mb-2">
+                        <div class="progress-bar bg-primary w-100" role="progressbar"></div>
+                    </div>
+                    @*<div class=""><i class="fa fa-caret-up text-green"></i>10% than last year</div>*@
+                </div>
+            </div>
+        </div>
+        <div class=" col-sm-12 col-md-6 col-lg-6 col-xl-3">
+            <div class="card overflow-hidden">
+                <div class="card-header">
+                    <h3 class="card-title">@RealEstateAdmin.Resources.Text.TotalAgents</h3>
+                    @*<div class="card-options"> <a class="btn btn-sm btn-secondary" href="#">View</a> </div>*@
+                </div>
+                <div class="card-body ">
+                    <h2 class="text-dark  mt-0 font-weight-bold text-center">@ViewBag.AgentCount</h2>
+                    <div class="progress progress-sm mt-0 mb-2">
+                        <div class="progress-bar bg-secondary w-100" role="progressbar"></div>
+                    </div>
+                    @*<div class=""><i class="fa fa-caret-down text-danger"></i>12% than last year</div>*@
+                </div>
+            </div>
+        </div>
+        <div class=" col-sm-12 col-md-6 col-lg-6 col-xl-3">
+            <div class="card overflow-hidden">
+                <div class="card-header">
+                    <h3 class="card-title">@RealEstateAdmin.Resources.Text.TotalSales</h3>
+                    @*<div class="card-options"> <a class="btn btn-sm btn-warning" href="#">View</a> </div>*@
+                </div>
+                <div class="card-body ">
+                    <h2 class="text-dark  mt-0 font-weight-bold text-center">@ViewBag.TotalSales</h2>
+                    <div class="progress progress-sm mt-0 mb-2">
+                        <div class="progress-bar bg-warning w-100" role="progressbar"></div>
+                    </div>
+                    @*<div class=""><i class="fa fa-caret-down text-danger"></i>5% than last year</div>*@
+                </div>
+            </div>
+        </div>
+        @*@if (ViewData["Role"].ToString() == "Agent")
+        {
+            <style>
+                @@media (min-width: 1280px) {
+                    .Dash-info {
+                        -ms-flex: 0 0 20%;
+                        flex: 0 0 25%;
+                        max-width: 25%;
+                    }
+                }
+            </style>
+        }*@
+
+        @if (ViewData["Role"].ToString() == "Administrator" || ViewData["Role"].ToString() == "RealEstateAdministrator")
+        {
+            @*<div class="col-sm-12 col-md-6 col-lg-6 col-xl-3 Dash-info">
+                <div class="card overflow-hidden">
+                    <div class="card-header">
+                        <h3 class="card-title">Commission & Earn</h3>
+                    </div>
+                    <div class="card-body">
+                        <div class="row">
+                            <div class="col-6"><h2 class="text-dark  mt-0  font-weight-bold text-center">$@Math.Round((decimal)ViewBag.TotalCommission, 2, MidpointRounding.AwayFromZero) </h2></div>
+                            <div class="col-6"><h2 class="text-dark  mt-0  font-weight-bold text-center">$@Math.Round((decimal)ViewBag.TotalEarn, 2, MidpointRounding.AwayFromZero) </h2></div>
+                        </div>
+                        <div class="progress progress-sm mt-0 mb-2">
+                            <div class="progress-bar bg-info w-100" role="progressbar"></div>
+                        </div>
+
+                        @if (ViewBag.ShowButtonPayCommission == true)
+                        {
+                            <div class="card-options"> <a class="btn btn-sm btn-danger btn-block" href="~/commission">Pay Commission</a> </div>
+                        }
+                    </div>
+                </div>
+            </div>*@
+        }
+
+
+        <div class="col-sm-12 col-md-6 col-lg-6 col-xl-3">
+            <div class="card overflow-hidden">
+                <div class="card-header">
+                    <h3 class="card-title">@RealEstateAdmin.Resources.Text.TotalShares</h3>
+                    @*<div class="card-options"> <a class="btn btn-sm btn-info" href="#">View</a> </div>*@
+                </div>
+                <div class="card-body ">
+                    <h2 class="text-dark  mt-0  font-weight-bold text-center">@ViewBag.SharedCount</h2>
+                    <div class="progress progress-sm mt-0 mb-2">
+                        <div class="progress-bar bg-info w-100" role="progressbar"></div>
+                    </div>
+                    @*<div class=""><i class="fa fa-caret-up text-success"></i>15% than last year</div>*@
+                </div>
+            </div>
+        </div>
+
+    </div>
+    <div class="row">
+        @*<div class="col-xl-8 col-lg-12 col-md-12">
+                <div class="card">
+                    <div class="card-header">
+                        <h3 class="card-title">Last Year Overview</h3>
+                    </div>
+                    <div class="card-body">
+                        <div class="chart-wrapper">
+                            <canvas id="sales-status" class="chart-dropshadow"></canvas>
+                        </div>
+                    </div>
+                </div>
+            </div>*@
+        @{string requestClass = "col-xl-8";}
+        @if (ViewData["Role"].ToString() == "Agent")
+        {
+            requestClass = "col-xl-12";
+        }
+        <div class="@requestClass col-lg-12 col-md-12">
+            <div class="card">
+                <div class="card-header">
+                    <h3 class="card-title">@RealEstateAdmin.Resources.Text.RequestList</h3>
+                    <div class="card-options">
+                        <a class="btn btn-sm btn-primary " href="/requests"><i class="fa fa-pagelines"></i> @RealEstateAdmin.Resources.Text.ShowAll</a>
+                    </div>
+                </div>
+                <div class="card-body">
+
+                    @{
+                        var myRequestList = ((List<RealEstateAdmin.Models.ModelDtos.Crm.RequestListDto>
+                            )(ViewData["YourRequest"]));
+
+                    }
+                    <div class="custom-controls-stacked checklist-task">
+                        @foreach (var item in myRequestList)
+                        {
+                            <label class="custom-control custom-checkbox mb-3 checklist-desc">
+                                @*<input type="checkbox" class="custom-control-input" name="example-checkbox1" value="option1" checked="">*@
+                                <span class=""><a href="~/requests/ChangeStatus/@item.Id">@item.Title</a></span>
+                                <span class="check-data d-flex mt-1">
+                                    <span class="text-muted">@item.DateCreated.ToString("yyyy-MM-dd HH:mm")</span>
+                                    <span class="check-icon ml-auto">
+                                        @*<span class="text-muted" data-toggle="tooltip" data-placement="top" data-original-title="Edit"><i class="fa fa-pencil-square-o "></i> </span>
+        <span class="text-muted" data-toggle="tooltip" data-placement="top" data-original-title="Delete"><i class="fa fa-trash-o"></i></span>*@
+                                        @{
+                                            //var state = item.States.OrderByDescending(r => r.Id).FirstOrDefault();
+                                            if (string.IsNullOrEmpty(item.LatestStateName))
+                                            {
+                                                <text>---</text>
+                                            }
+                                            else
+                                            {
+                                                if (item.LatestStateIsFinish.GetValueOrDefault(false))
+                                                {
+                                                    <span class="badge badge-success" data-id="@item.Id">
+                                                        @item.LatestStateName
+                                                    </span>
+                                                }
+                                                else
+                                                {
+                                                    <span class="badge badge-dark" data-id="@item.Id">
+                                                        @item.LatestStateName
+                                                    </span>
+                                                }
+                                            }
+                                        }
+                                    </span>
+                                </span>
+                            </label>
+                        }
+
+
+
+                    </div>
+                </div>
+            </div>
+        </div>
+        @if (ViewData["Role"].ToString() == "Administrator" || ViewData["Role"].ToString() == "RealEstateAdministrator")
+        {
+
+            <div class="col-xl-4 col-lg-12 col-md-12">
+                <div class="card">
+                    <div class="card-header">
+                        <h3 class="card-title">@RealEstateAdmin.Resources.Text.AgentsList</h3>
+                    </div>
+                    <div class="card-body">
+                        @if (ViewData["AgentList"] != null)
+                        {
+
+
+                            <div class="activity">
+
+                                @{
+                                    var agentList = ((List<RealEstateAdmin.Models.ModelDtos.Organization.AgentListDto>
+                                  )(ViewData["AgentList"]));
+                                }
+                                @foreach (var item in agentList)
+                                {
+                                    <img src="~/assets/images/faces/male/24.jpg" alt="" class="img-activity">
+                                    <div class="time-activity">
+                                        <div class="item-activity">
+                                            <p class="mb-0"><b>@item.FirstName @item.LastName</b></p>
+                                            <small class="text-muted ">@*30 mins ago*@ &nbsp;</small>
+                                        </div>
+                                    </div>
+                                }
+
+
+                            </div>
+                        }
+                    </div>
+                </div>
+            </div>
+        }
+    </div>
+
+    @*<div class="row">
+
+            <div class="col-sm-12 col-md-12 col-lg-12 col-xl-8">
+                <div class="card">
+                    <div class="card-header">
+                        <div class="card-title">Commission Detail</div>
+                    </div>
+                    <div class="card-body p-0">
+                        <table class="table table-bordered table-striped" >
+                            <tr>
+                                <th>Username</th>
+                                <th>Title</th>
+                                <th>Price</th>
+                                <th>Commission</th>
+                                <th>Earning</th>
+                            </tr>
+                            @foreach (var item in (List<RealEstateAgency.Dtos.ModelDtos.Crm.CommissionDto>)ViewData["CommissionList"])
+                            {
+                                <tr>
+                                    <td>@item.UserName</td>
+                                    <td>@item.PropertyTitle</td>
+                                    <td>@item.CurrencySymbol @item.PropertyPrice </td>
+                                    <td>@item.CommissionPercent</td>
+                                    <td>@item.CurrencySymbol @Math.Round(item.TotalCommission.GetValueOrDefault(0), 2, MidpointRounding.AwayFromZero) </td>
+                                </tr>
+                            }
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>*@
+
+
+
+    @*
+        <div class="row">
+
+            <div class="col-sm-12 col-md-12 col-lg-12 col-xl-8">
+                    <div class="card">
+                        <div class="card-header">
+                            <div class="card-title">Agents Team</div>
+                        </div>
+                        <div class="card-body">
+                            <div class="ibox teams mb-30 bg-boxshadow">
+                                <!-- Ibox Content -->
+                                <div class="ibox-content teams">
+                                    <!-- Members -->
+                                    <div class="avatar-list avatar-list-stacked">
+                                        <span class="avatar brround cover-image cover-image" data-image-src="../assets/images/faces/female/12.jpg"></span>
+                                        <span class="avatar brround cover-image cover-image" data-image-src="../assets/images/faces/female/21.jpg"></span>
+                                        <span class="avatar brround cover-image cover-image" data-image-src="../assets/images/faces/female/29.jpg"></span>
+                                        <span class="avatar brround cover-image cover-image" data-image-src="../assets/images/faces/female/2.jpg"></span>
+                                        <span class="avatar brround cover-image cover-image" data-image-src="../assets/images/faces/male/34.jpg"></span>
+                                        <span class="avatar brround cover-image cover-image">+8</span>
+                                    </div>
+                                    <!-- Team Board Details -->
+                                    <div class="teams-board-details mt-3">
+                                        <h4 class="font-weight-semibold">About Agents Team</h4>
+                                        <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Quam velit quisquam veniam excepturi. Contrary to popular belief, Lorem Ipsum is not simply random text classical Latin </p>
+                                    </div>
+                                    <!-- Progress Details -->
+                                    <span class="font-weight-semibold">Status of current properties:</span>
+                                    <div class="progress-details-teams mt-2 mb-4">
+                                        <div class="stat-percent mb-2">58%</div>
+                                        <div class="progress progress-sm ">
+                                            <div class="progress-bar bg-primary w-50" role="progressbar"></div>
+                                        </div>
+                                    </div>
+                                    <div class="row mt-2">
+                                        <div class="col-4">
+                                            <div class="teams-rank text-muted">Homes</div>
+                                            <span>180</span>
+                                        </div>
+                                        <div class="col-4">
+                                            <div class="teams-rank text-muted">Apartments</div>
+                                            <span>1200</span>
+                                        </div>
+                                        <div class="col-4">
+                                            <div class="teams-rank text-muted">BUDGET</div>
+                                            <span>$36,25,854</span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+        </div>
+
+    *@
+
+    @*<div class="row">
+            <div class="col-xl-4 col-lg-12 col-md-12">
+                <div class="card">
+                    <div class="card-header">
+                        <h3 class="card-title">Clients Overview</h3>
+                    </div>
+                    <div class="card-body">
+                        <div class="chats-wrap">
+                            <div class="chat-details p-2">
+                                <h6 class="mb-0">
+                                    <span class="font-weight-normal">Good</span>
+                                    <span class="float-right p-1">78%</span>
+                                </h6>
+                                <div class="progress progress-sm mt-3">
+                                    <div class="progress-bar progress-bar-striped progress-bar-animated bg-success w-35"></div>
+                                </div>
+                            </div>
+                            <div class="chat-details p-2">
+                                <h6 class="mb-0">
+                                    <span class="font-weight-normal">Satisfied</span>
+                                    <span class="float-right p-1">82%</span>
+                                </h6>
+                                <div class="progress progress-sm mt-3">
+                                    <div class="progress-bar progress-bar-striped progress-bar-animated bg-primary w-75"></div>
+                                </div>
+                            </div>
+                            <div class="chat-details p-2">
+                                <h6 class="mb-0">
+                                    <span class="font-weight-normal">Excellent</span>
+                                    <span class="float-right p-1">89%</span>
+                                </h6>
+                                <div class="progress progress-sm mt-3">
+                                    <div class="progress-bar progress-bar-striped progress-bar-animated bg-secondary w-65"></div>
+                                </div>
+                            </div>
+                            <div class="chat-details p-2">
+                                <h6 class="mb-0">
+                                    <span class="font-weight-normal">Average</span>
+                                    <span class="float-right p-1">40%</span>
+                                </h6>
+                                <div class="progress progress-sm mt-3">
+                                    <div class="progress-bar progress-bar-striped progress-bar-animated bg-warning w-80"></div>
+                                </div>
+                            </div>
+                            <div class="chat-details p-2">
+                                <h6 class="mb-0">
+                                    <span class="font-weight-normal">Unsatisfied</span>
+                                    <span class="float-right p-1">20%</span>
+                                </h6>
+                                <div class="progress progress-sm mt-3">
+                                    <div class="progress-bar progress-bar-striped progress-bar-animated bg-info w-80"></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-xl-4 col-lg-6 col-md-12">
+                <div class="card">
+                    <div class="arrow-ribbon bg-secondary">Sale</div>
+                    <div class="item-card7-img">
+                        <div class="item-card7-imgs">
+                            <a href="realestate.html"></a>
+                            <img src="../assets/images/products/pictures/h1.jpg" alt="img" class="cover-image">
+                        </div>
+                        <div class="item-card7-overlaytext">
+                            <a href="realestate.html" class="text-white"> 2BHK House</a>
+                            <span class="mb-0">$389</span>
+                        </div>
+                    </div>
+                    <div class="card-body">
+                        <div class="item-card7-desc">
+                            <a href="realestate.html" class="text-dark"><h4 class="font-weight-semibold">House for Sale</h4></a>
+                        </div>
+                        <div class="item-card7-text">
+                            <ul class="icon-card mb-0">
+                                <li class=""><a href="#" class="icons text-muted"><i class="icon icon-location-pin text-muted mr-1"></i>  Los Angles</a></li>
+                                <li><a href="#" class="icons text-muted"><i class="icon icon-event text-muted mr-1"></i> 5 hours ago</a></li>
+                                <li class="mb-0"><a href="#" class="icons text-muted"><i class="icon icon-user text-muted mr-1"></i> Sally Peake</a></li>
+                                <li class="mb-0"><a href="#" class="icons text-muted"><i class="icon icon-phone text-muted mr-1"></i> 567 9876 087</a></li>
+                            </ul>
+                            <p class="mb-0">Quam velit quisquam veniam excepturi popular..</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-xl-4 col-lg-6 col-md-12">
+                <div class="card">
+                    <div class="arrow-ribbon bg-primary">Rent</div>
+                    <div class="item-card7-img">
+                        <div class="item-card7-imgs">
+                            <a href="#"></a>
+                            <img src="../assets/images/products/pictures/j2.jpg" alt="img" class="cover-image">
+                        </div>
+                        <div class="item-card7-overlaytext">
+                            <a href="#" class="text-white">Laxury Room</a>
+                            <span class="mb-0">$854</span>
+                        </div>
+                    </div>
+                    <div class="card-body">
+                        <div class="item-card7-desc">
+                            <a href="#" class="text-dark"><h4 class="font-weight-semibold">Laxury Room for rent</h4></a>
+                        </div>
+                        <div class="item-card7-text">
+                            <ul class="icon-card mb-0">
+                                <li class=""><a href="#" class="icons text-muted"><i class="icon icon-location-pin text-muted mr-1"></i>  Los Angles</a></li>
+                                <li><a href="#" class="icons text-muted"><i class="icon icon-event text-muted mr-1"></i> 5 hours ago</a></li>
+                                <li class="mb-0"><a href="#" class="icons text-muted"><i class="icon icon-user text-muted mr-1"></i> Sally Peake</a></li>
+                                <li class="mb-0"><a href="#" class="icons text-muted"><i class="icon icon-briefcase text-muted mr-1"></i>Beauty Span</a></li>
+                            </ul>
+                            <p class="mb-0">Quam velit quisquam veniam excepturi popular..</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>*@
+
+</div>
+
+@section Scripts{
+    <script src="~/assets/js/index1.js"></script>
+}

@@ -1,0 +1,56 @@
+﻿@using Microsoft.AspNetCore.Http;
+@inject IHttpContextAccessor httpContextAccessor
+@model List<RealEstateAdmin.Models.ModelDtos.RBAC.UserGroupDto>
+
+@{
+    ViewData["Title"] = @RealEstateAdmin.Resources.Text.PageManagment;
+}
+
+@section PageMap{
+    <!-- Page-Header-->
+    <div class="page-header">
+        <h4 class="page-title">@RealEstateAdmin.Resources.Text.PageManagment @RealEstateAdmin.Resources.Text.Description</h4>
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item"><a href="~/">@RealEstateAdmin.Resources.Text.Home</a></li>
+            <li class="breadcrumb-item active" aria-current="page"> @RealEstateAdmin.Resources.Text.PageManagment @RealEstateAdmin.Resources.Text.List</li>
+        </ol>
+
+    </div>
+    <!--/Page-Header-->
+}
+
+
+<div class="row">
+    <div class="col-md-12 col-lg-12">
+        <div class="card">
+            <div class="card-header">
+                <div class="card-title">@RealEstateAdmin.Resources.Text.PageManagment @RealEstateAdmin.Resources.Text.Description</div>
+                @*<div class="new-button-ontable"> <a class="btn btn-info btn-sm" href="~/PageManagment/create"> <i class="fa fa-plus"></i> @RealEstateAdmin.Resources.Text.New @RealEstateAdmin.Resources.Text.PageManagment</a></div>*@
+            </div>
+            <div class="card-body">
+                <div class="table-responsive">
+                    <table class="hover table-bordered border-top-0 border-bottom-0 grid">
+                        <thead>
+                            <tr>
+                                <th class="wd-15p">@RealEstateAdmin.Resources.Text.Name</th>
+                                <th class="wd-25p">@RealEstateAdmin.Resources.Text.Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach (var item in Model)
+                            {
+                                <tr>
+                                    <td>@item.Name</td>
+                                    <td class="action">
+                                        <a href="~/PageManagment/permissions/@item.Id?name=@item.Name"> <span class="fa fa-key text-success" data-propertyId="@item.Id" data-toggle="tooltip" data-placement="top" title="" data-original-title="@RealEstateAdmin.Resources.Text.Permissions"></span></a>                               
+                                    </td>
+                                </tr>
+                            }
+                        </tbody>
+
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,23 @@
+﻿@using Microsoft.AspNetCore.Http;
+@inject IHttpContextAccessor httpContextAccessor
+@{
+    var msgErrorInQuery = httpContextAccessor.HttpContext.Request.Query["err"].ToString();
+}
+<div class="row mt-3">
+    <div class="col">
+        @if (TempData["MsgSuccess"] != null)
+        {
+            <div class="alert alert-success" role="alert">
+                @TempData["MsgSuccess"]
+            </div>
+        }
+
+        @if (TempData["MsgError"] != null || !string.IsNullOrEmpty(msgErrorInQuery))
+        {
+            <div class="alert alert-danger" role="alert">
+                @TempData["MsgError"]
+                @msgErrorInQuery
+            </div>
+        }
+    </div>
+</div>

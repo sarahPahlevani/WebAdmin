@@ -1,0 +1,122 @@
+﻿@model List<RealEstateAdmin.Models.ModelDtos.RBAC.UserAccountListDto>
+@{
+    ViewData["Title"] = RealEstateAdmin.Resources.Text.User + " " + @RealEstateAdmin.Resources.Text.List;
+}
+
+    <div class="side-app">
+
+        <!-- Page-Header-->
+        <div class="page-header">
+            <h4 class="page-title">@RealEstateAdmin.Resources.Text.User @RealEstateAdmin.Resources.Text.List</h4>
+            <ol class="breadcrumb">
+                <li class="breadcrumb-item"><a href="~/">@RealEstateAdmin.Resources.Text.Home</a></li>
+                <li class="breadcrumb-item active" aria-current="page">@RealEstateAdmin.Resources.Text.User @RealEstateAdmin.Resources.Text.List</li>
+            </ol>
+        </div>
+        <!--/Page-Header-->
+
+        <div class="row">
+
+            <div class="col-md-12 col-lg-12">
+                <div class="card">
+                    <div class="card-header">
+                        <div class="card-title">@RealEstateAdmin.Resources.Text.User @RealEstateAdmin.Resources.Text.List</div>
+                        <div class="new-button-ontable"> <a class="btn btn-info btn-sm" href="~/users/create"> <i class="fa fa-plus"></i> @RealEstateAdmin.Resources.Text.New @RealEstateAdmin.Resources.Text.User </a></div>
+                    </div>
+                    <div class="card-body">
+                        <div class="table-responsive">
+                            <table class="hover table-bordered border-top-0 border-bottom-0 grid">
+                                <thead>
+                                    <tr>
+                                        <th>@RealEstateAdmin.Resources.Text.Username</th>
+                                        <th>@RealEstateAdmin.Resources.Text.Firstname</th>
+                                        <th>@RealEstateAdmin.Resources.Text.Lastname</th>
+                                        <th>@RealEstateAdmin.Resources.Text.Email</th>
+                                        <th>@RealEstateAdmin.Resources.Text.Group</th>
+                                        <th>@RealEstateAdmin.Resources.Text.Actions</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    @foreach (var item in Model)
+                                    {
+                                        <tr>
+                                            <td>@item.UserName</td>
+                                            <td>@item.FirstName</td>
+                                            <td>@item.LastName</td>
+                                            <td>@item.Email</td>
+                                            <td>@item.UserGroupName</td>
+                                            <td>
+                                                <a href="~/Users/edit/@item.Id" data-toggle="tooltip" data-placement="top" title="" data-original-title="@RealEstateAdmin.Resources.Text.MoreInfoAndEdit"><span class="fa fa-edit text-info m-1" style="font-size:12pt;"></span></a>
+                                                <a href="#" onclick="deleteItem('deletefrom-'+@item.Id);" data-toggle="tooltip" data-placement="top" title="" data-original-title="@RealEstateAdmin.Resources.Text.DeleteThisItem"><span class="fa fa-trash text-danger m-1" style="font-size:12pt;"></span></a>
+                                                <a href="#" data-toggle="modal" class="text-success change-pass" data-id="@item.Id" data-target="#ChangePassModal" title="Change Password"><span class="fa fa-key"></span></a>
+                                                <form action="~/users/delete" method="post" id="deletefrom-@item.Id">
+                                                    <input type="hidden" name="id" value="@item.Id" />
+                                                </form>
+                                            </td>
+                                        </tr>
+                                    }
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+<div class="modal fade" id="ChangePassModal" tabindex="-1" role="dialog" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <form id="frmChangePass" asp-action="ChangePassword" method="post">
+                <input type="hidden" id="uid" name="uid" value="" />
+                <div class="modal-header">
+                    <h5 class="modal-title" id="example-Modal3">Change Password</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+
+                    <div class="form-group">
+                        <label for="txtNewPass">New Password</label>
+                        <input type="text" id="txtNewPass" class="form-control" name="NewPass" pattern=".{8,16}" title="8 to 16 char" required />
+                    </div>
+                    <div class="form-group">
+                        <label for="txtConfirmNewPass">Confirm New Password</label>
+                        <input type="text" id="txtConfirmNewPass" class="form-control" name="ConfirmNewPass" pattern=".{8,16}" title="8 to 16 char" required />
+                    </div>
+
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">@RealEstateAdmin.Resources.Text.Close</button>
+                    <button type="submit" class="btn btn-primary">@RealEstateAdmin.Resources.Text.Save</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+
+@section Scripts
+{
+    <script>
+        function deleteItem(id) {
+            if (confirm('@RealEstateAdmin.Resources.Text.AreYouSure')) {
+                document.getElementById(id).submit();
+            }
+        }
+
+        $("body").on("click", ".change-pass", function () {
+            $("#uid").val($(this).data("id"));
+        });
+
+        $("body").on("submit", "#frmChangePass", function () {
+            if ($('#txtNewPass').val() != $('#txtConfirmNewPass').val()) {
+                alert('Confirm password is invalid');
+                return false;
+            }
+        });
+
+    </script>
+}

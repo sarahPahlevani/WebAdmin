@@ -1,0 +1,558 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <!-- 
+    Microsoft ResX Schema 
+    
+    Version 2.0
+    
+    The primary goals of this format is to allow a simple XML format 
+    that is mostly human readable. The generation and parsing of the 
+    various data types are done through the TypeConverter classes 
+    associated with the data types.
+    
+    Example:
+    
+    ... ado.net/XML headers & schema ...
+    <resheader name="resmimetype">text/microsoft-resx</resheader>
+    <resheader name="version">2.0</resheader>
+    <resheader name="reader">System.Resources.ResXResourceReader, System.Windows.Forms, ...</resheader>
+    <resheader name="writer">System.Resources.ResXResourceWriter, System.Windows.Forms, ...</resheader>
+    <data name="Name1"><value>this is my long string</value><comment>this is a comment</comment></data>
+    <data name="Color1" type="System.Drawing.Color, System.Drawing">Blue</data>
+    <data name="Bitmap1" mimetype="application/x-microsoft.net.object.binary.base64">
+        <value>[base64 mime encoded serialized .NET Framework object]</value>
+    </data>
+    <data name="Icon1" type="System.Drawing.Icon, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+        <value>[base64 mime encoded string representing a byte array form of the .NET Framework object]</value>
+        <comment>This is a comment</comment>
+    </data>
+                
+    There are any number of "resheader" rows that contain simple 
+    name/value pairs.
+    
+    Each data row contains a name, and value. The row also contains a 
+    type or mimetype. Type corresponds to a .NET class that support 
+    text/value conversion through the TypeConverter architecture. 
+    Classes that don't support this are serialized and stored with the 
+    mimetype set.
+    
+    The mimetype is used for serialized objects, and tells the 
+    ResXResourceReader how to depersist the object. This is currently not 
+    extensible. For a given mimetype the value must be set accordingly:
+    
+    Note - application/x-microsoft.net.object.binary.base64 is the format 
+    that the ResXResourceWriter will generate, however the reader can 
+    read any of the formats listed below.
+    
+    mimetype: application/x-microsoft.net.object.binary.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Binary.BinaryFormatter
+            : and then encoded with base64 encoding.
+    
+    mimetype: application/x-microsoft.net.object.soap.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Soap.SoapFormatter
+            : and then encoded with base64 encoding.
+
+    mimetype: application/x-microsoft.net.object.bytearray.base64
+    value   : The object must be serialized into a byte array 
+            : using a System.ComponentModel.TypeConverter
+            : and then encoded with base64 encoding.
+    -->
+  <xsd:schema id="root" xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
+    <xsd:import namespace="http://www.w3.org/XML/1998/namespace" />
+    <xsd:element name="root" msdata:IsDataSet="true">
+      <xsd:complexType>
+        <xsd:choice maxOccurs="unbounded">
+          <xsd:element name="metadata">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" />
+              </xsd:sequence>
+              <xsd:attribute name="name" use="required" type="xsd:string" />
+              <xsd:attribute name="type" type="xsd:string" />
+              <xsd:attribute name="mimetype" type="xsd:string" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="assembly">
+            <xsd:complexType>
+              <xsd:attribute name="alias" type="xsd:string" />
+              <xsd:attribute name="name" type="xsd:string" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="data">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+                <xsd:element name="comment" type="xsd:string" minOccurs="0" msdata:Ordinal="2" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" msdata:Ordinal="1" />
+              <xsd:attribute name="type" type="xsd:string" msdata:Ordinal="3" />
+              <xsd:attribute name="mimetype" type="xsd:string" msdata:Ordinal="4" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="resheader">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" />
+            </xsd:complexType>
+          </xsd:element>
+        </xsd:choice>
+      </xsd:complexType>
+    </xsd:element>
+  </xsd:schema>
+  <resheader name="resmimetype">
+    <value>text/microsoft-resx</value>
+  </resheader>
+  <resheader name="version">
+    <value>2.0</value>
+  </resheader>
+  <resheader name="reader">
+    <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <resheader name="writer">
+    <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <data name="Actions" xml:space="preserve">
+    <value>Hozzászólások</value>
+  </data>
+  <data name="Add" xml:space="preserve">
+    <value>hozzáad</value>
+  </data>
+  <data name="AdditionalDetails" xml:space="preserve">
+    <value>további részletek</value>
+  </data>
+  <data name="AdditionalDetailsList" xml:space="preserve">
+    <value>További részletek Lista</value>
+  </data>
+  <data name="Address" xml:space="preserve">
+    <value>cím</value>
+  </data>
+  <data name="Advisor" xml:space="preserve">
+    <value>tanácsadó</value>
+  </data>
+  <data name="AfterPriceLabel" xml:space="preserve">
+    <value>Árcímke után</value>
+  </data>
+  <data name="Agent" xml:space="preserve">
+    <value>Ügynök</value>
+  </data>
+  <data name="AgentsList" xml:space="preserve">
+    <value>Ügynökök listája</value>
+  </data>
+  <data name="AllRequest" xml:space="preserve">
+    <value>Minden kérés</value>
+  </data>
+  <data name="AreYouSure" xml:space="preserve">
+    <value>Biztosan törli</value>
+  </data>
+  <data name="AssignAgent" xml:space="preserve">
+    <value>Assign Agent</value>
+  </data>
+  <data name="Bathrooms" xml:space="preserve">
+    <value>A fürdőszobákban</value>
+  </data>
+  <data name="Bedrooms" xml:space="preserve">
+    <value>hálószoba</value>
+  </data>
+  <data name="BeforePriceLabel" xml:space="preserve">
+    <value>Árcímke előtt</value>
+  </data>
+  <data name="Cancel" xml:space="preserve">
+    <value>megszünteti</value>
+  </data>
+  <data name="ChangeCommition" xml:space="preserve">
+    <value>Változtassa meg az elrendezést</value>
+  </data>
+  <data name="ChangeStatus" xml:space="preserve">
+    <value>Állapotváltozás</value>
+  </data>
+  <data name="ChooseFile" xml:space="preserve">
+    <value>Válassz fájlt</value>
+  </data>
+  <data name="City" xml:space="preserve">
+    <value>Város</value>
+  </data>
+  <data name="Close" xml:space="preserve">
+    <value>Bezárás</value>
+  </data>
+  <data name="Commission" xml:space="preserve">
+    <value>jutalék</value>
+  </data>
+  <data name="Country" xml:space="preserve">
+    <value>Ország</value>
+  </data>
+  <data name="Create" xml:space="preserve">
+    <value>létrehozása</value>
+  </data>
+  <data name="Currency" xml:space="preserve">
+    <value>Valuta</value>
+  </data>
+  <data name="Dashboard" xml:space="preserve">
+    <value>Irányítópult</value>
+  </data>
+  <data name="Date" xml:space="preserve">
+    <value>Dátum</value>
+  </data>
+  <data name="Delete" xml:space="preserve">
+    <value>töröl</value>
+  </data>
+  <data name="DeletePermission" xml:space="preserve">
+    <value>Engedély törlése</value>
+  </data>
+  <data name="DeleteThisItem" xml:space="preserve">
+    <value>törli ezt az elemet?</value>
+  </data>
+  <data name="Description" xml:space="preserve">
+    <value>Leírás</value>
+  </data>
+  <data name="Details" xml:space="preserve">
+    <value>részletek</value>
+  </data>
+  <data name="Edit" xml:space="preserve">
+    <value>szerkesztés</value>
+  </data>
+  <data name="Email" xml:space="preserve">
+    <value>Email</value>
+  </data>
+  <data name="Empty" xml:space="preserve">
+    <value>Üres</value>
+  </data>
+  <data name="Estate" xml:space="preserve">
+    <value>Birtok</value>
+  </data>
+  <data name="Fax" xml:space="preserve">
+    <value>Fax</value>
+  </data>
+  <data name="Features" xml:space="preserve">
+    <value>jellemzők</value>
+  </data>
+  <data name="First" xml:space="preserve">
+    <value>Első</value>
+  </data>
+  <data name="Firstname" xml:space="preserve">
+    <value>keresztnév</value>
+  </data>
+  <data name="FloorName" xml:space="preserve">
+    <value>Emelet neve</value>
+  </data>
+  <data name="FloorPrice" xml:space="preserve">
+    <value>Alapár</value>
+  </data>
+  <data name="Floors" xml:space="preserve">
+    <value>emelet</value>
+  </data>
+  <data name="FloorSize" xml:space="preserve">
+    <value>Padlóméret</value>
+  </data>
+  <data name="FloorsList" xml:space="preserve">
+    <value>szintjei</value>
+  </data>
+  <data name="ForgetMyPassword" xml:space="preserve">
+    <value>Felejtsd el a jelszavam</value>
+  </data>
+  <data name="ForgotPassword" xml:space="preserve">
+    <value>Elfelejtett jelszó</value>
+  </data>
+  <data name="Garages" xml:space="preserve">
+    <value>műhelyek</value>
+  </data>
+  <data name="Group" xml:space="preserve">
+    <value>csoport</value>
+  </data>
+  <data name="HasPublishingAuthorization" xml:space="preserve">
+    <value>Van kiadási engedély?</value>
+  </data>
+  <data name="HistoryOfStatus" xml:space="preserve">
+    <value>Az állapot története</value>
+  </data>
+  <data name="Home" xml:space="preserve">
+    <value>itthon</value>
+  </data>
+  <data name="IForgotPassword" xml:space="preserve">
+    <value>Elfelejtettem a jelszót</value>
+  </data>
+  <data name="Image" xml:space="preserve">
+    <value>Kép</value>
+  </data>
+  <data name="ImageCaption" xml:space="preserve">
+    <value>Képfelirat</value>
+  </data>
+  <data name="ImagePriority" xml:space="preserve">
+    <value>Kép prioritása</value>
+  </data>
+  <data name="Images" xml:space="preserve">
+    <value>képek</value>
+  </data>
+  <data name="Is360View" xml:space="preserve">
+    <value>A 360 nézet</value>
+  </data>
+  <data name="IsDone" xml:space="preserve">
+    <value>Kész?</value>
+  </data>
+  <data name="IsFinish" xml:space="preserve">
+    <value>Is Finish?</value>
+  </data>
+  <data name="IsMain" xml:space="preserve">
+    <value>Fő</value>
+  </data>
+  <data name="IsMenu" xml:space="preserve">
+    <value>Menü?</value>
+  </data>
+  <data name="Isresponsible" xml:space="preserve">
+    <value>Felelős?</value>
+  </data>
+  <data name="LandArea" xml:space="preserve">
+    <value>Földterület</value>
+  </data>
+  <data name="Language" xml:space="preserve">
+    <value>Nyelv</value>
+  </data>
+  <data name="Last" xml:space="preserve">
+    <value>Utolsó</value>
+  </data>
+  <data name="Lastname" xml:space="preserve">
+    <value>vezetéknév</value>
+  </data>
+  <data name="List" xml:space="preserve">
+    <value>Lista</value>
+  </data>
+  <data name="Location" xml:space="preserve">
+    <value>elhelyezkedés</value>
+  </data>
+  <data name="Login" xml:space="preserve">
+    <value>Belépés</value>
+  </data>
+  <data name="Logout" xml:space="preserve">
+    <value>Kijelentkezés</value>
+  </data>
+  <data name="Media" xml:space="preserve">
+    <value>média</value>
+  </data>
+  <data name="Menu" xml:space="preserve">
+    <value>Menü</value>
+  </data>
+  <data name="MiddleName" xml:space="preserve">
+    <value>Középső név</value>
+  </data>
+  <data name="MoreInfoAndEdit" xml:space="preserve">
+    <value>további információ és szerkesztés</value>
+  </data>
+  <data name="MoreInformation" xml:space="preserve">
+    <value>további információ</value>
+  </data>
+  <data name="Name" xml:space="preserve">
+    <value>név</value>
+  </data>
+  <data name="New" xml:space="preserve">
+    <value>Új</value>
+  </data>
+  <data name="NotAssigned" xml:space="preserve">
+    <value>Nem kijelölt</value>
+  </data>
+  <data name="NotReady" xml:space="preserve">
+    <value>Nem áll készen</value>
+  </data>
+  <data name="OnlyDigit" xml:space="preserve">
+    <value>csak számjegyek</value>
+  </data>
+  <data name="Page" xml:space="preserve">
+    <value>oldal</value>
+  </data>
+  <data name="PageManagment" xml:space="preserve">
+    <value>Oldalkezelés</value>
+  </data>
+  <data name="PageManagmentList" xml:space="preserve">
+    <value>Oldalkezelési lista</value>
+  </data>
+  <data name="Parent" xml:space="preserve">
+    <value>szülő</value>
+  </data>
+  <data name="Password" xml:space="preserve">
+    <value>Jelszó</value>
+  </data>
+  <data name="Permissions" xml:space="preserve">
+    <value>Engedélyek</value>
+  </data>
+  <data name="Phone" xml:space="preserve">
+    <value>telefon</value>
+  </data>
+  <data name="Price" xml:space="preserve">
+    <value>Ár</value>
+  </data>
+  <data name="PriceOnCall" xml:space="preserve">
+    <value>Ár hívásonként</value>
+  </data>
+  <data name="PricePostfix" xml:space="preserve">
+    <value>Ár utótag</value>
+  </data>
+  <data name="Property" xml:space="preserve">
+    <value>Ingatlan</value>
+  </data>
+  <data name="PropertyFeature" xml:space="preserve">
+    <value>Ingatlan jellemző</value>
+  </data>
+  <data name="PropertyFeatureList" xml:space="preserve">
+    <value>Tulajdonságok listája</value>
+  </data>
+  <data name="PropertyLabel" xml:space="preserve">
+    <value>ingatlan cimke</value>
+  </data>
+  <data name="PropertyLabelList" xml:space="preserve">
+    <value>Ingatlan-jegyzék</value>
+  </data>
+  <data name="PropertyList" xml:space="preserve">
+    <value>Ingatlan Lista</value>
+  </data>
+  <data name="PropertyStatus" xml:space="preserve">
+    <value>Tulajdonság állapota</value>
+  </data>
+  <data name="PropertyStatusList" xml:space="preserve">
+    <value>Tulajdonságok állapota</value>
+  </data>
+  <data name="PropertyType" xml:space="preserve">
+    <value>Ingatlan típusa</value>
+  </data>
+  <data name="PropertyTypeList" xml:space="preserve">
+    <value>Tulajdonságtípus lista</value>
+  </data>
+  <data name="Publish" xml:space="preserve">
+    <value>közzétesz</value>
+  </data>
+  <data name="Published" xml:space="preserve">
+    <value>Közzétett</value>
+  </data>
+  <data name="ReadPermission" xml:space="preserve">
+    <value>Olvassa el az Engedélyt</value>
+  </data>
+  <data name="ReadyForPublish" xml:space="preserve">
+    <value>Közzétételre kész</value>
+  </data>
+  <data name="RealEstateAdvisor" xml:space="preserve">
+    <value>Ingatlan tanácsadó</value>
+  </data>
+  <data name="Region" xml:space="preserve">
+    <value>vidék</value>
+  </data>
+  <data name="Request" xml:space="preserve">
+    <value>kérés</value>
+  </data>
+  <data name="RequestList" xml:space="preserve">
+    <value>Kérési lista</value>
+  </data>
+  <data name="Requests" xml:space="preserve">
+    <value>kéri</value>
+  </data>
+  <data name="Role" xml:space="preserve">
+    <value>Szerep</value>
+  </data>
+  <data name="RoleType" xml:space="preserve">
+    <value>Szerep típusa</value>
+  </data>
+  <data name="Rooms" xml:space="preserve">
+    <value>szobák</value>
+  </data>
+  <data name="Save" xml:space="preserve">
+    <value>megment</value>
+  </data>
+  <data name="SaveChanges" xml:space="preserve">
+    <value>Változtatások mentése</value>
+  </data>
+  <data name="Send" xml:space="preserve">
+    <value>Küld</value>
+  </data>
+  <data name="SharedInfo" xml:space="preserve">
+    <value>megosztott információ</value>
+  </data>
+  <data name="ShowAll" xml:space="preserve">
+    <value>Mutasd az összeset</value>
+  </data>
+  <data name="Size" xml:space="preserve">
+    <value>Méret</value>
+  </data>
+  <data name="SizePostfix" xml:space="preserve">
+    <value>Méret utótag</value>
+  </data>
+  <data name="State" xml:space="preserve">
+    <value>állapot</value>
+  </data>
+  <data name="Status" xml:space="preserve">
+    <value>Állapot</value>
+  </data>
+  <data name="Subscribe" xml:space="preserve">
+    <value>Iratkozz fel</value>
+  </data>
+  <data name="Summary" xml:space="preserve">
+    <value>összefoglalás</value>
+  </data>
+  <data name="Title" xml:space="preserve">
+    <value>Cím</value>
+  </data>
+  <data name="TotalAgents" xml:space="preserve">
+    <value>Összes ügynök</value>
+  </data>
+  <data name="TotalEarnings" xml:space="preserve">
+    <value>Összes bevétel</value>
+  </data>
+  <data name="TotalProperties" xml:space="preserve">
+    <value>Összes ingatlan</value>
+  </data>
+  <data name="TotalSales" xml:space="preserve">
+    <value>Teljes értékesítés</value>
+  </data>
+  <data name="TotalShares" xml:space="preserve">
+    <value>Összes részvény</value>
+  </data>
+  <data name="TranslateList" xml:space="preserve">
+    <value>Lista fordítása</value>
+  </data>
+  <data name="Type" xml:space="preserve">
+    <value>típus</value>
+  </data>
+  <data name="UniqId" xml:space="preserve">
+    <value>Egyéni azonosító</value>
+  </data>
+  <data name="Unit" xml:space="preserve">
+    <value>Mértékegység</value>
+  </data>
+  <data name="Unpublish" xml:space="preserve">
+    <value>nem közzétett</value>
+  </data>
+  <data name="UpdatePermission" xml:space="preserve">
+    <value>Frissítse az engedélyt</value>
+  </data>
+  <data name="User" xml:space="preserve">
+    <value>Felhasználói</value>
+  </data>
+  <data name="UserCommission" xml:space="preserve">
+    <value>Felhasználói Bizottság</value>
+  </data>
+  <data name="Username" xml:space="preserve">
+    <value>felhasználónév</value>
+  </data>
+  <data name="Value" xml:space="preserve">
+    <value>ÉRTÉK</value>
+  </data>
+  <data name="VatCode" xml:space="preserve">
+    <value>VAT Code</value>
+  </data>
+  <data name="WebSiteUrl" xml:space="preserve">
+    <value>Weboldal URL</value>
+  </data>
+  <data name="WithoutParent" xml:space="preserve">
+    <value>Szülő nélkül</value>
+  </data>
+  <data name="YearOfBuild" xml:space="preserve">
+    <value>év építeni</value>
+  </data>
+  <data name="YourRequests" xml:space="preserve">
+    <value>A kérésed</value>
+  </data>
+  <data name="ZipCode" xml:space="preserve">
+    <value>Irányítószám</value>
+  </data>
+</root>

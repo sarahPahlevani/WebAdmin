@@ -1,0 +1,202 @@
+﻿@model RealEstateAdmin.Models.ModelDtos.Organization.RealEstateDto
+@{
+    ViewData["Title"] = RealEstateAdmin.Resources.Text.Edit + " " + RealEstateAdmin.Resources.Text.Estate;
+}
+
+<!--Page-Header-->
+<div class="page-header">
+    <h4 class="page-title">@RealEstateAdmin.Resources.Text.Edit @RealEstateAdmin.Resources.Text.Estate</h4>
+    <ol class="breadcrumb">
+        <li class="breadcrumb-item"><a href="~/">@RealEstateAdmin.Resources.Text.Home</a></li>
+        <li class="breadcrumb-item"><a href="~/RealEstateManagement">@RealEstateAdmin.Resources.Text.Estate @RealEstateAdmin.Resources.Text.List</a></li>
+        <li class="breadcrumb-item active" aria-current="page">@RealEstateAdmin.Resources.Text.Edit @RealEstateAdmin.Resources.Text.Estate</li>
+    </ol>
+</div>
+<!--/Page-Header-->
+
+<form asp-action="setting" asp-controller="RealEstateManagement" id="RealEstateManagement-form" enctype="multipart/form-data" method="post">
+    <div class="row">
+        <div class="col-md-12">
+            <div class="card m-b-20">
+                <div class="card-header">
+                    <h3 class="card-title">Real Estate Setting</h3>
+                </div>
+                <div class="card-body">
+                    <nav>
+                        <div class="nav nav-tabs" id="nav-tab" role="tablist">
+                            <a class="nav-item nav-link active" id="nav-info-tab" data-toggle="tab" href="#nav-info" role="tab" aria-controls="nav-info" aria-selected="true">Information</a>
+                            <a class="nav-item nav-link" id="nav-social-network-tab" data-toggle="tab" href="#nav-social-network" role="tab" aria-controls="nav-social-network" aria-selected="true">Social Network</a>
+                            <a class="nav-item nav-link" id="nav-about-footer-tab" data-toggle="tab" href="#nav-about-footer" role="tab" aria-controls="nav-about-footer" aria-selected="false">About Footer</a>
+                            @*<a class="nav-item nav-link" id="nav-about-page-tab" data-toggle="tab" href="#nav-about-page" role="tab" aria-controls="nav-about-page" aria-selected="false">About Page</a>
+                            <a class="nav-item nav-link" id="nav-contact-page-tab" data-toggle="tab" href="#nav-contact-page" role="tab" aria-controls="nav-contact-page" aria-selected="false">Contact Page</a>*@
+                            <a class="nav-item nav-link" id="nav-logo-tab" data-toggle="tab" href="#nav-logo" role="tab" aria-controls="nav-logo" aria-selected="false">Logo</a>
+                            <a class="nav-item nav-link" id="nav-top-pic-tab" data-toggle="tab" href="#nav-top-pic" role="tab" aria-controls="nav-top-pic" aria-selected="false">Top Pictures</a>
+                        </div>
+                    </nav>
+                    <div class="tab-content" id="nav-tabContent">
+                        <div class="tab-pane fade pt-3 show active" id="nav-info" role="tabpanel" aria-labelledby="nav-info-tab">
+                            <div class="form-row">
+                                <div class="form-group col-md-6">
+                                    <label class="form-label" for="Name">Name</label>
+                                    <input type="text" class="form-control" name="Name" id="Name" value="@Model.Name">
+                                </div>
+                            </div>
+                            <div class="form-row">
+                                <div class="form-group col-md-6">
+                                    <label class="form-label" for="Email">Email</label>
+                                    <input type="text" class="form-control" id="Email" name="Email" value="@Model.Email">
+                                </div>
+                                <div class="form-group col-md-6">
+                                    <label class="form-label" for="WebsiteUrl">Website Url</label>
+                                    <input type="text" class="form-control" id="WebsiteUrl" name="WebsiteUrl" value="@Model.WebsiteUrl">
+                                </div>
+                            </div>
+                            <div class="form-row">
+                                <div class="form-group col-12">
+                                    <label class="form-label" for="Address01">Address 1</label>
+                                    <input type="text" class="form-control" id="Address01" name="Address01" value="@Model.Address01">
+                                </div>
+                                <div class="form-group col-12">
+                                    <label class="form-label" for="Address02">Address 2</label>
+                                    <input type="text" class="form-control" id="Address02" name="Address02" value="@Model.Address02">
+                                </div>
+                            </div>
+                            <div class="form-row">
+                                <div class="form-group col-md-4">
+                                    <label class="form-label" for="Phone01">Phone 1</label>
+                                    <input type="text" class="form-control" id="Phone01" name="Phone01" value="@Model.Phone01">
+                                </div>
+                                <div class="form-group col-md-4">
+                                    <label class="form-label" for="Phone02">Phone 2</label>
+                                    <input type="text" class="form-control" id="Phone02" name="Phone02" value="@Model.Phone02">
+                                </div>
+                                <div class="form-group col-md-4">
+                                    <label class="form-label" for="Phone02">Phone 3</label>
+                                    <input type="text" class="form-control" id="Phone03" name="Phone03" value="@Model.Phone03">
+                                </div>
+                            </div>
+                            <div class="form-row">
+                                <div class="form-group col-md-6">
+                                    <label class="form-label" for="Fax">Fax</label>
+                                    <input type="text" class="form-control" id="Fax" name="Fax" value="@Model.Fax">
+                                </div>
+                                <div class="form-group col-md-6">
+                                    <label class="form-label" for="ZipCode">Zip Code</label>
+                                    <input type="text" class="form-control" id="ZipCode" name="ZipCode" value="@Model.ZipCode">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="tab-pane fade pt-3" id="nav-social-network" role="tabpanel" aria-labelledby="nav-social-network-tab">
+                            <div class="form-row">
+                                <div class="form-group col-md-6">
+                                    @Html.LabelFor(m => m.Metadata.Facebook, new { @class = "form-label" })
+                                    @Html.TextBoxFor(m => m.Metadata.Facebook, new { @class = "form-control" })
+                                </div>
+                                <div class="form-group col-md-6">
+                                    @Html.LabelFor(m => m.Metadata.Twitter, new { @class = "form-label" })
+                                    @Html.TextBoxFor(m => m.Metadata.Twitter, new { @class = "form-control" })
+                                </div>
+                                <div class="form-group col-md-6">
+                                    @Html.LabelFor(m => m.Metadata.LinkedIn, new { @class = "form-label" })
+                                    @Html.TextBoxFor(m => m.Metadata.LinkedIn, new { @class = "form-control" })
+                                </div>
+                            </div>
+                        </div>
+                        <div class="tab-pane fade pt-3" id="nav-about-footer" role="tabpanel" aria-labelledby="nav-about-footer-tab">
+                            <div class="col-12">
+                                <div class="form-group">
+                                    @Html.TextAreaFor(m => m.Metadata.AboutFooter, new { @class = "form-control", @rows = "10" })
+                                </div>
+                            </div>
+                        </div>
+                        @*<div class="tab-pane fade pt-3" id="nav-about-page" role="tabpanel" aria-labelledby="nav-about-page-tab">
+                            <div class="col-12">
+                                <div class="form-group">
+                                    @Html.TextAreaFor(m => m.Metadata.AboutPage, new { @class = "form-control content", @rows = "10" })
+                                </div>
+                            </div>
+                        </div>
+                        <div class="tab-pane fade pt-3" id="nav-contact-page" role="tabpanel" aria-labelledby="nav-contact-page-tab">
+                            <div class="col-12">
+                                <div class="form-group">
+                                    @Html.TextAreaFor(m => m.Metadata.ContactPage, new { @class = "form-control content2", @rows = "10" })
+                                </div>
+                            </div>
+                        </div>*@
+                        <div class="tab-pane fade pt-3" id="nav-logo" role="tabpanel" aria-labelledby="nav-logo-tab">
+                            <div class="col-md-6">
+                                <div class="alert alert-info" role="alert">
+                                    <h4 class="alert-heading">Requirement:</h4>
+                                    <ul>
+                                        <li>Accepted type is .png</li>
+                                        <li>Max width 125px</li>
+                                    </ul>
+                                </div>
+                                <div class="form-group">
+                                    <label for="logoFile">Logo</label>
+                                    <div class="custom-file">
+                                        <input type="file" class="custom-file-input image-file" id="logoFile" name="logoFile">
+                                        <label class="custom-file-label">@RealEstateAdmin.Resources.Text.ChooseFile</label>
+                                        <label class="fileName"></label>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label for="logoMobFile">Logo Mobile</label>
+                                    <div class="custom-file">
+                                        <input type="file" class="custom-file-input image-file" id="logoMobFile" name="logoMobFile">
+                                        <label class="custom-file-label">@RealEstateAdmin.Resources.Text.ChooseFile</label>
+                                        <label class="fileName"></label>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="tab-pane fade pt-3" id="nav-top-pic" role="tabpanel" aria-labelledby="nav-top-pic-tab">
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label for="headerBackgroundFile">Header Background Picture</label>
+                                    <div class="custom-file">
+                                        <input type="file" class="custom-file-input image-file" id="headerBackgroundFile" name="headerBackgroundFile">
+                                        <label class="custom-file-label">@RealEstateAdmin.Resources.Text.ChooseFile</label>
+                                        <label class="fileName"></label>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label for="headerPicFile">Top Picture</label>
+                                    <div class="custom-file">
+                                        <input type="file" class="custom-file-input image-file" id="headerPicFile" name="headerPicFile">
+                                        <label class="custom-file-label">@RealEstateAdmin.Resources.Text.ChooseFile</label>
+                                        <label class="fileName"></label>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <hr />
+                    <div class="text-center">
+                        <button type="submit" id="save" class="btn mx-2 btn-primary "><i class="fa fa-dot-circle-o"></i> @RealEstateAdmin.Resources.Text.Save</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</form>
+
+@section Scripts{ 
+
+    <script>
+        $(".image-file").on("change", function () {
+            var fullPath = $(this).val();
+            var label = $(this).next('.custom-file-label');
+            if (fullPath) {
+                var startIndex = (fullPath.indexOf('\\') >= 0 ? fullPath.lastIndexOf('\\') : fullPath.lastIndexOf('/'));
+                var filename = fullPath.substring(startIndex);
+                if (filename.indexOf('\\') === 0 || filename.indexOf('/') === 0) {
+                    filename = filename.substring(1);
+                }
+                $(label).html(filename);
+            }
+        });
+    </script>
+
+}

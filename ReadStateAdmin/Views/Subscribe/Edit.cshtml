@@ -1,0 +1,81 @@
+﻿@model RealEstateAdmin.Models.ModelDtos.Organization.RealEstateDto
+@{
+    ViewData["Title"] = RealEstateAdmin.Resources.Text.Edit + " " + RealEstateAdmin.Resources.Text.Estate;
+}
+
+<!--Page-Header-->
+<div class="page-header">
+    <h4 class="page-title">@RealEstateAdmin.Resources.Text.Edit @RealEstateAdmin.Resources.Text.Estate</h4>
+    <ol class="breadcrumb">
+        <li class="breadcrumb-item"><a href="~/">@RealEstateAdmin.Resources.Text.Home</a></li>
+        <li class="breadcrumb-item"><a href="~/RealEstateManagement">@RealEstateAdmin.Resources.Text.Estate @RealEstateAdmin.Resources.Text.List</a></li>
+        <li class="breadcrumb-item active" aria-current="page">@RealEstateAdmin.Resources.Text.Edit @RealEstateAdmin.Resources.Text.Estate</li>
+    </ol>
+</div>
+<!--/Page-Header-->
+<div class="row">
+    <div class="col-md-12">
+        <div class="card m-b-20">
+            <div class="card-header">
+                <h3 class="card-title">@RealEstateAdmin.Resources.Text.Edit @RealEstateAdmin.Resources.Text.Estate</h3>
+            </div>
+            <div class="card-body">
+                <form asp-action="edit" asp-controller="RealEstateManagement" id="RealEstateManagement-form" method="post">
+                    <div class="form-row">
+                        <div class="form-group col-md-4">
+                            <div class="form-group">
+                                <label class="form-label" for="Name">@RealEstateAdmin.Resources.Text.Name</label>
+                                <input asp-for="Name" type="text" class="form-control" name="Name" id="Name">
+                            </div>
+                        </div>
+                        <div class="form-group col-md-4">
+                            <div class="form-group">
+                                <label class="form-label" for="Email">@RealEstateAdmin.Resources.Text.Email</label>
+                                <input type="text" asp-for="Email" class="form-control" id="Email" name="Email">
+                            </div>
+                        </div>
+                        <div class="form-group col-md-4">
+                            <div class="form-group">
+                                <label class="form-label" for="phone01">@RealEstateAdmin.Resources.Text.Phone</label>
+                                <input type="text" asp-for="Phone01" class="form-control" id="phone01" name="phone01">
+
+                            </div>
+                        </div>
+                        <div class="form-group col-md-4">
+                            <div class="form-group">
+                                <label class="form-label" for="address01">@RealEstateAdmin.Resources.Text.Address</label>
+                                <input type="text" asp-for="Address01" class="form-control" id="address01" name="address01">
+
+                            </div>
+                        </div>
+                        <div class="form-group col-md-4">
+                            <div class="form-group">
+                                <label class="form-label" for="fax">@RealEstateAdmin.Resources.Text.Fax</label>
+                                <input type="text" asp-for="Fax" class="form-control" id="fax" name="fax">
+
+                            </div>
+                        </div>
+                        <div class="form-group col-md-4">
+                            <div class="form-group">
+                                <label class="form-label" for="zipCode">@RealEstateAdmin.Resources.Text.ZipCode</label>
+                                <input type="text" asp-for="ZipCode" class="form-control" id="zipCode" name="zipCode">
+
+                            </div>
+                        </div>
+                        <div class="form-group col-md-4">
+                            <div class="form-group">
+                                <label class="form-label" for="websiteUrl">@RealEstateAdmin.Resources.Text.WebSiteUrl</label>
+                                <input type="text" asp-for="WebsiteUrl" class="form-control" id="websiteUrl" name="websiteUrl">
+
+                            </div>
+                        </div>
+                    </div>
+                    <div class="text-center">
+                        <a href="~/RealEstateManagement" class="btn mx-2 btn-default"> <i class="fa fa-ban"></i> @RealEstateAdmin.Resources.Text.Cancel</a>
+                        <button type="submit" id="save" class="btn mx-2 btn-primary "><i class="fa fa-dot-circle-o"></i> @RealEstateAdmin.Resources.Text.Save</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,114 @@
+﻿@model RealEstateAdmin.Models.ModelDtos.RBAC.PageManagmentDto
+
+@{
+    var RoleMenu = ((RealEstateAdmin.Models.ModelDtos.RBAC.PageManagmentCreate)(ViewData["PageManagmentCreate"]));
+
+
+    <!--Page-Header-->
+    ViewData["Title"] = RealEstateAdmin.Resources.Text.Edit + " " + RealEstateAdmin.Resources.Text.PageManagment;
+}
+
+<div class="side-app">
+
+    <div class="page-header">
+        <h4 class="page-title">@RealEstateAdmin.Resources.Text.Edit @RealEstateAdmin.Resources.Text.PageManagment</h4>
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item"><a href="~/">@RealEstateAdmin.Resources.Text.Home</a></li>
+            <li class="breadcrumb-item"><a href="~/PageManagment">@RealEstateAdmin.Resources.Text.PageManagmentList</a></li>
+            <li class="breadcrumb-item active" aria-current="page">@RealEstateAdmin.Resources.Text.Create @RealEstateAdmin.Resources.Text.PageManagment</li>
+        </ol>
+    </div>
+    <!--/Page-Header-->
+    <!-- end row -->
+    <div class="row">
+        <div class="col-md-12">
+            <div class="card m-b-20">
+                <div class="card-header">
+                    <h3 class="card-title">@RealEstateAdmin.Resources.Text.Edit @RealEstateAdmin.Resources.Text.PageManagment</h3>
+                </div>
+                <div class="card-body">
+                    <form asp-action="Edits" asp-controller="PageManagment" method="post">
+                        @Html.HiddenFor(m => m.Id)
+                          
+                        <div class="form-row">
+                            <input type="hidden" asp-for="@Model.Id" name="Id" />
+                            <div class="form-group col-md-3">
+                                <label class="form-label"> @RealEstateAdmin.Resources.Text.Menu</label>
+                                <select name="MenuId" id="MenuId" class="form-control select2-show-search" data-placeholder="Choose one (with optgroup)">
+                                    @foreach (var item in RoleMenu.MenuType)
+                                    {
+                                        if (Model.MenuId == item.Id)
+                                        {
+                                            <option value="@item.Id" selected>@item.MenuTypeName </option>
+                                        }
+                                        else
+                                        {
+                                            <option value="@item.Id">@item.MenuTypeName </option>
+                                        }
+                                    }
+                                </select>
+                            </div>
+                            <div class="form-group col-md-3">
+                                <label class="form-label"> @RealEstateAdmin.Resources.Text.RoleType *</label>
+                                <select name="UserGroupId" id="UserGroupId" class="form-control select2-show-search" data-placeholder="Choose one (with optgroup)">
+                                    @foreach (var item in RoleMenu.RoleType)
+                                    {
+
+                                        if (Model.UserGroupId == item.Id)
+                                        {
+                                            <option value="@item.Id" selected>@item.Name </option>
+                                        }
+                                        else
+                                        {
+                                            <option value="@item.Id">@item.Name </option>
+                                        }
+
+                                    }
+                                </select>
+                            </div>
+
+
+                            <div class="form-group col-md-2">
+                                <div class="form-group">
+
+                                    <label class="custom-control custom-checkbox"></label>
+                                    <label class="custom-control custom-checkbox">
+                                        <input type="checkbox" class="custom-control-input" asp-for="@Model.ReadPermission" name="ReadPermission" id="ReadPermission" value="true">
+                                        <span class="custom-control-label">@RealEstateAdmin.Resources.Text.ReadPermission</span>
+                                    </label>
+                                </div>
+                            </div>
+                            <div class="form-group col-md-2">
+                                <div class="form-group">
+
+                                    <label class="custom-control custom-checkbox"></label>
+                                    <label class="custom-control custom-checkbox">
+                                        <input type="checkbox" class="custom-control-input" asp-for="@Model.UpdatePermission" name="UpdatePermission" id="UpdatePermission" value="true">
+                                        <span class="custom-control-label">@RealEstateAdmin.Resources.Text.UpdatePermission</span>
+                                    </label>
+                                </div>
+                            </div>
+                            <div class="form-group col-md-2">
+                                <div class="form-group">
+
+                                    <label class="custom-control custom-checkbox"></label>
+                                    <label class="custom-control custom-checkbox">
+                                        <input type="checkbox" class="custom-control-input" asp-for="@Model.DeletePermission" name="DeletePermission" id="DeletePermission" value="true">
+                                        <span class="custom-control-label">@RealEstateAdmin.Resources.Text.DeletePermission</span>
+                                    </label>
+                                </div>
+                            </div>
+
+
+                        </div>
+                        <div class="text-center">
+                            <a href="~/PageManagment" class="btn mx-2 btn-default"> <i class="fa fa-ban"></i> @RealEstateAdmin.Resources.Text.Cancel</a>
+                            <button type="submit" class="btn mx-2 btn-primary "><i class="fa fa-dot-circle-o"></i> @RealEstateAdmin.Resources.Text.Save</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
